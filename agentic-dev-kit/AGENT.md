@@ -50,6 +50,7 @@
 | `/handoff` | 生成跨会话交接备忘录 | `.agent/workflows/handoff.md` |
 | `/resume` | 从检查点恢复任务上下文 | `.agent/workflows/resume.md` |
 | `/evolve` | 规则进化与清理（Spa Day） | `.agent/workflows/evolve.md` |
+| `/stress-test` | 合规压测（标准任务 + 自动评分） | `.agent/workflows/stress-test.md` |
 | `/context-reset` | 清理上下文污染并按协议恢复 | `.agent/workflows/context-reset.md` |
 
 ---
