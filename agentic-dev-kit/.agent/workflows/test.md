@@ -12,6 +12,10 @@ description: 编写和运行自动化测试 — 按测试金字塔和 Test-First
 1. **确认测试范围**
    - 向用户确认需要测试的模块或功能
    - 读取相关代码文件和现有测试文件
+   - 📊 如果代码图谱可用，查询已有测试覆盖：
+     - `query_graph(pattern="tests_for", target="<目标函数/类>")` — 避免重复编写已有测试
+     - `query_graph(pattern="children_of", target="<目标文件>")` — 了解文件中有哪些函数需要覆盖
+     - 对比已有测试和目标函数列表，识别覆盖缺口
 
 2. **确认测试基础设施**
    - 确认项目使用的测试框架（如 pytest、jest、mocha 等）

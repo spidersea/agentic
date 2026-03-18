@@ -231,7 +231,10 @@ project-root/
 | `/new-feature` | Phase 1 调研 + Phase 3 编码 | `query_graph` + `get_impact_radius` |
 | `/review` | 步骤 1 精准上下文 + 步骤 3 证据链 | `get_review_context` + `query_graph` |
 | `/debug` | 步骤 3 调用链追踪 + 步骤 7 同类搜索 | `query_graph` + `semantic_search` |
+| `/tdd` | 步骤 2 诊断 + 步骤 3 测试清单 + 步骤 4 重构 | `query_graph` + `get_impact_radius` |
+| `/test` | 步骤 1 测试覆盖缺口分析 | `query_graph` |
 | `/resume` | 步骤 3.5 变更感知恢复 | `get_impact_radius` |
+| `/context-reset` | 步骤 4 恢复时精准文件选择 | `get_impact_radius` |
 
 > **优雅降级**：所有图谱相关步骤在未安装 `code-review-graph` 时自动降级为 grep/find/git diff，不阻塞任何工作流。安装方式：`pip install code-review-graph`
 

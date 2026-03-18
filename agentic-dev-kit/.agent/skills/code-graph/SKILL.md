@@ -160,4 +160,9 @@ Review guidance:
 | `/review` | 步骤 3 风险扫描 | `query_graph` (tests_for) |
 | `/debug` | 步骤 3 调用链 | `query_graph` (callers_of, callees_of, tests_for) |
 | `/debug` | 步骤 7 同类搜索 | `semantic_search_nodes` |
+| `/tdd` | 步骤 2 诊断 | `query_graph` (callers_of, callees_of, tests_for) |
+| `/tdd` | 步骤 3 测试清单 | `query_graph` (tests_for) |
+| `/tdd` | 步骤 4 重构 | `get_impact_radius` |
+| `/test` | 步骤 1 测试范围 | `query_graph` (tests_for, children_of) |
 | `/resume` | 步骤 3.5 变更感知 | `get_impact_radius` |
+| `/context-reset` | 步骤 4 恢复加载 | `get_impact_radius` |
