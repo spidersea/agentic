@@ -236,6 +236,11 @@ project-root/
 | `/resume` | 步骤 3.5 变更感知恢复 | `get_impact_radius` |
 | `/context-reset` | 步骤 4 恢复时精准文件选择 | `get_impact_radius` |
 
+**已知局限：**
+- ⚠️ **跨语言盲区** — 无法识别跨语言调用链（如 TypeScript ↔ Lua、DSL 生成 ↔ 消费方），涉及跨语言交互时需手动追踪
+- ⚠️ **动态调用** — 反射、`eval`、依赖注入等动态调用方式无法被静态解析检测到
+- ⚠️ **语义变更** — 函数签名不变但返回值含义变更（如阈值从 90 天改为 60 天）无法感知
+
 > **优雅降级**：所有图谱相关步骤在未安装 `code-review-graph` 时自动降级为 grep/find/git diff，不阻塞任何工作流。安装方式：`pip install code-review-graph`
 
 ## 维护建议
