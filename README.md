@@ -13,6 +13,7 @@
 - 🔄 规则自进化协议（反馈捕获、退化检测、Spa Day 清理）
 - 📁 模块化规则系统（路径范围限定、渐进式加载、本地覆盖）
 - 🚦 TDD 编程范式（Red-Green-Refactor 循环、适用场景指南、反模式清单）
+- 📊 代码知识图谱集成（基于 [code-review-graph](https://github.com/tirth8205/code-review-graph)，影响分析、精准文件选择、优雅降级）
 
 ## 目录结构
 
@@ -22,6 +23,8 @@ AGENT.local.md                        ← 个人本地覆盖（加入 .gitignore
 .agent/
 ├── skills/
 │   ├── world_class_coding/           ← 核心编码技能（四阶段 SOP、TDD、对抗验收）
+│   │   └── SKILL.md
+│   ├── code-graph/                   ← 代码知识图谱（影响分析、依赖查询、精准文件选择）
 │   │   └── SKILL.md
 │   ├── frontend-design/              ← 前端设计技能（生产级 UI 开发）
 │   │   └── SKILL.md
@@ -105,6 +108,7 @@ cp -r .agent /path/to/your-project/
 | 技能 | 说明 | 调用方式 |
 |---|---|---|
 | `world_class_coding` | 核心编码技能：四阶段 SOP、TDD、对抗验收、检查点协议 | 自动加载（通过 AGENT.md 路由） |
+| `code-graph` | 代码知识图谱：影响分析、依赖查询、精准文件选择（基于 code-review-graph） | 自动加载（通过 AGENT.md 路由） |
 
 #### 前端设计 (Frontend Design) — 来自 impeccable.style
 
@@ -209,6 +213,28 @@ project-root/
 
 > 无论你之前使用 CLAUDE.md、Cursor Rules 还是其他 AI 编程规范，本套件的理念和机制都是兼容且互补的。
 
+## 代码知识图谱集成 (Code Knowledge Graph)
+
+本套件集成了 [code-review-graph](https://github.com/tirth8205/code-review-graph) 的代码知识图谱能力，将 Agent "凭直觉猜该读哪些文件" 升级为 "用图谱算该读哪些文件"。
+
+**核心能力：**
+- 📊 **影响分析** — 修改文件前自动计算波及范围（blast radius），精准选择 ≤5 个最相关文件
+- 🔍 **依赖查询** — 8 种预定义查询（callers_of、tests_for、importers_of 等）
+- 🎯 **审查上下文** — 自动生成 token 优化的审查上下文 + 测试覆盖缺口报告
+- 🔄 **增量感知** — 跨会话恢复时自动检测检查点以来的代码变更
+
+**深度集成的工作流：**
+
+| 工作流 | 集成点 | 图谱操作 |
+|---|---|---|
+| `/init` | 步骤 4：初始化时构建图谱 | `build` + `status` |
+| `/new-feature` | Phase 1 调研 + Phase 3 编码 | `query_graph` + `get_impact_radius` |
+| `/review` | 步骤 1 精准上下文 + 步骤 3 证据链 | `get_review_context` + `query_graph` |
+| `/debug` | 步骤 3 调用链追踪 + 步骤 7 同类搜索 | `query_graph` + `semantic_search` |
+| `/resume` | 步骤 3.5 变更感知恢复 | `get_impact_radius` |
+
+> **优雅降级**：所有图谱相关步骤在未安装 `code-review-graph` 时自动降级为 grep/find/git diff，不阻塞任何工作流。安装方式：`pip install code-review-graph`
+
 ## 维护建议
 
 | 周期 | 行动 | 快捷方式 |
@@ -220,4 +246,3 @@ project-root/
 | 上下文被不相关任务污染时 | 清理上下文并按协议恢复 | `/context-reset` |
 
 > ⚠️ `AGENT.md` 总行数建议不超过 80 行有效内容。规则超过 5 条时，应拆分为独立的 `.agent/rules/*.md` 文件并通过路由引用。
-
