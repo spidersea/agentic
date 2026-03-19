@@ -14,6 +14,9 @@
 - 📁 模块化规则系统（路径范围限定、渐进式加载、本地覆盖）
 - 🚦 TDD 编程范式（Red-Green-Refactor 循环、适用场景指南、反模式清单）
 - 📊 代码知识图谱集成（基于 [code-review-graph](https://github.com/tirth8205/code-review-graph)，影响分析、精准文件选择、优雅降级）
+- ⛔ Iron Law 调试铁律（NO FIXES WITHOUT ROOT CAUSE + 合理化借口预防）
+- ✅ 证据先行验证纪律（禁止未执行验证命令就声称完成）
+- 🎯 苏格拉底式设计（每次只问一个问题 + 必须提 2-3 方案 + DRY/YAGNI 检查）
 
 ## 目录结构
 
