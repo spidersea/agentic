@@ -104,39 +104,59 @@ cp -r .agent /path/to/your-project/
 
 ### 技能分类速查 (Skills Catalog)
 
-技能分为两大类，分别侧重代码开发和前端设计：
+> ⭐ = 可选增强 | ⭐⭐ = 推荐使用 | ⭐⭐⭐ = 核心必备
 
 #### 编码方法论 (Coding Methodology)
 
-| 技能 | 说明 | 调用方式 |
-|---|---|---|
-| `world_class_coding` | 核心编码技能：四阶段 SOP、TDD、对抗验收、检查点协议 | 自动加载（通过 AGENT.md 路由） |
-| `code-graph` | 代码知识图谱：影响分析、依赖查询、精准文件选择（基于 code-review-graph） | 自动加载（通过 AGENT.md 路由） |
+| 重要度 | 技能 | 说明 | 关联内容 |
+|---|---|---|---|
+| ⭐⭐⭐ | `world_class_coding` | 核心编码技能：四阶段 SOP（Research → Contract → Execution → Verification）、TDD、对抗验收（A/B/C）、检查点协议、防御性提示 | 所有工作流的行为基础，自动加载 |
+| ⭐⭐⭐ | `code-graph` | 代码知识图谱：影响分析（blast radius）、8 种依赖查询、精准文件选择（≤5 个）、审查上下文生成。未安装时自动降级 | 集成于 8 条工作流 13 个步骤，基于 code-review-graph |
+| ⭐⭐ | `autoresearch` | 自主迭代研究：基于 Karpathy 的 autoresearch 原则，修改→验证→保留/丢弃→重复循环，支持 `Iterations: N` 配置 | 参考文档在 `references/` 子目录含 8 个专题 |
 
 #### 前端设计 (Frontend Design) — 来自 impeccable.style
 
-> 这些技能可在聊天框中用自然语言调用，如：“帮我 animate 这个卡片组件”、“对首页做一次 audit”。
+> 自然语言调用，如："帮我 animate 这个卡片组件"、"对首页做一次 audit"
 
-| 类别 | 技能 | 说明 |
-|---|---|---|
-| **创建** | `frontend-design` | 生产级 UI 开发，避免泛化 AI 美学 |
-| **增强** | `animate` | 添加动画和微交互 |
-|  | `colorize` | 添加战略性配色 |
-|  | `bolder` | 放大视觉冲击力 |
-|  | `delight` | 增加愉悦感和个性触感 |
-| **精简** | `distill` | 剥离多余复杂度，回归精华 |
-|  | `quieter` | 降低过于强烈的视觉设计 |
-|  | `clarify` | 优化 UX 文案、错误信息、标签 |
-| **审查** | `audit` | 无障碍、性能、主题、响应式全面审计 |
-|  | `critique` | UX 视角的设计评估与反馈 |
-| **适配** | `adapt` | 跨屏幕/设备/平台响应式适配 |
-|  | `harden` | 错误处理、i18n、文本溢出、边界情况 |
-|  | `normalize` | 统一到设计规范体系 |
-| **提取** | `extract` | 提取可复用组件和设计 Token |
-| **性能** | `optimize` | 加载速度、渲染、动画、图片优化 |
-| **上线** | `polish` | 发布前的最终质量检查 |
-| **引导** | `onboard` | 引导流、空状态、首次体验设计 |
-| **初始化** | `teach-impeccable` | 一次性设置，收集项目设计上下文 |
+| 重要度 | 类别 | 技能 | 说明 | 关联内容 |
+|---|---|---|---|---|
+| ⭐⭐⭐ | 创建 | `frontend-design` | 生产级 UI 开发，遵循真实设计原则，避免泛化 AI 美学 | `reference/` 含 7 个专题（配色、排版、动效、响应式等） |
+| ⭐⭐ | 增强 | `animate` | 添加动画和微交互，提升界面动感 | 参考 `reference/motion-design.md` |
+| ⭐⭐ | | `colorize` | 添加战略性配色，构建配色系统 | 参考 `reference/color-and-contrast.md` |
+| ⭐ | | `bolder` | 放大视觉冲击力，让关键元素更突出 | 与 `quieter` 互为反向操作 |
+| ⭐ | | `delight` | 增加愉悦感和个性触感，提升情感体验 | 与 `animate` 配合效果最佳 |
+| ⭐⭐ | 精简 | `distill` | 剥离多余复杂度，回归设计精华 | 执行 YAGNI 设计原则 |
+| ⭐ | | `quieter` | 降低过于强烈的视觉设计，让界面更克制 | 与 `bolder` 互为反向操作 |
+| ⭐⭐ | | `clarify` | 优化 UX 文案、错误信息、标签 | 参考 `reference/ux-writing.md` |
+| ⭐⭐⭐ | 审查 | `audit` | 无障碍、性能、主题、响应式全面审计 | 建议在 `/review` 后使用 |
+| ⭐⭐ | | `critique` | UX 视角的设计评估与反馈 | 与 `audit` 配合：先 critique 后 audit |
+| ⭐⭐ | 适配 | `adapt` | 跨屏幕/设备/平台响应式适配 | 参考 `reference/responsive-design.md` |
+| ⭐⭐ | | `harden` | 错误处理、i18n、文本溢出、边界情况强化 | 建议在 `polish` 前使用 |
+| ⭐ | | `normalize` | 统一到设计规范体系（Token、间距、颜色） | 参考 `reference/spatial-design.md` |
+| ⭐⭐ | 提取 | `extract` | 提取可复用组件和设计 Token | 适合重构阶段使用 |
+| ⭐⭐ | 性能 | `optimize` | 加载速度、渲染、动画、图片优化 | 建议在 `audit` 发现问题后使用 |
+| ⭐⭐⭐ | 上线 | `polish` | 发布前的最终质量检查 | 上线前最后一步 |
+| ⭐⭐ | 引导 | `onboard` | 引导流、空状态、首次体验设计 | 参考 `reference/interaction-design.md` |
+| ⭐ | 初始化 | `teach-impeccable` | 一次性设置，收集项目设计上下文 | 新项目首次使用前端设计技能前执行 |
+
+### 工作流详细说明 (Workflows Reference)
+
+> ⭐ = 辅助工具 | ⭐⭐ = 常用流程 | ⭐⭐⭐ = 核心流程
+
+| 重要度 | 命令 | 用途 | 详细说明 | 关联内容 |
+|---|---|---|---|---|
+| ⭐⭐⭐ | `/init` | 项目初始化 | 扫描项目结构 → 生成 AGENT.md（含 8 条强制规则）→ 创建 .agent 目录 → 构建代码图谱 → 配置 .gitignore | 自动检测技术栈和测试框架 |
+| ⭐⭐⭐ | `/new-feature` | 新功能开发 | 苏格拉底式需求确认（每次 1 问 + 必提 2-3 方案）→ 细粒度计划（2-5min 任务）→ 严格上下文编码 → 对抗验证 → 闸门式闭环验收 | 自动调用 `/checkpoint` `/test` `/review`，支持 git worktree |
+| ⭐⭐⭐ | `/debug` | 中立 Debug | 铁律（NO FIXES WITHOUT ROOT CAUSE）→ 中立审查（禁偏见提示）→ 对比分析 → 对抗验证 → 修复（3 次重试）→ 举一反三 → 回测 | 含合理化借口预防表，图谱辅助调用链追踪 |
+| ⭐⭐⭐ | `/review` | 对抗式代码审查 | 确认范围（图谱增强）→ 中立阅读 → 专家 A 风险扫描 → 辩手 B 反驳 → 裁判 C 裁定 → 联动修复 | 使用 `code-review.md` 6 维度标准 |
+| ⭐⭐ | `/test` | 自动化测试 | 确认范围（图谱查覆盖缺口）→ 测试基础设施 → 金字塔编写（单元→集成→E2E）→ 质量检查 → 执行 → 汇报 | 遵循 SKILL.md 测试纪律 |
+| ⭐⭐ | `/tdd` | TDD 驱动开发 | 智能诊断（图谱调用链追踪）→ 测试清单（查已有覆盖）→ Red-Green-Refactor 循环（重构前查影响）→ 集成验证 | 含 Bug 修复智能模式 |
+| ⭐⭐ | `/checkpoint` | 保存检查点 | 确认状态 → 收集数据（Phase/文件/测试/决策）→ 生成标准检查点 → 确认记录 | CP-1 至 CP-4 对应四阶段 |
+| ⭐⭐ | `/handoff` | 跨会话交接 | 收集状态 → 提炼背景（≤5 句）→ 整理文件（≤5 个）→ 记录决策 → 生成备忘录 | 与 `/resume` 成对使用 |
+| ⭐⭐ | `/resume` | 断点恢复 | 读取路由 → 加载规范 → 定位检查点 → 变更感知（图谱增强）→ 恢复上下文 → 确认 → 继续 | 与 `/handoff` 成对使用 |
+| ⭐⭐ | `/evolve` | 规则进化清理 | 健康检查 → 回顾摩擦 → 盘点 → 分类 → 去重 → 冲突检测 → 淘汰 → 重组 → 自动化评估 | 建议每 2-4 周或规则 >20 条时执行 |
+| ⭐ | `/stress-test` | 合规压测 | 健康检查 → 标准任务（fibonacci）走四阶段 → 6 项评分（满分 100）→ 压测报告 → 清理 | 建议每月或 `/evolve` 后执行 |
+| ⭐⭐ | `/context-reset` | 上下文重置 | 诊断健康 → 保存进度 → 清理 → 按协议恢复（图谱辅助文件选择）→ 确认 | 适用于厨房水槽会话、纠正螺旋、上下文溢出 |
 
 ### 4. 验证生效
 
