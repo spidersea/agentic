@@ -111,7 +111,7 @@ cp -r .agent /path/to/your-project/
 | 重要度 | 技能 | 说明 | 关联内容 |
 |---|---|---|---|
 | ⭐⭐⭐ | `world_class_coding` | 核心编码技能：四阶段 SOP（Research → Contract → Execution → Verification）、TDD、对抗验收（A/B/C）、检查点协议、防御性提示 | 所有工作流的行为基础，自动加载 |
-| ⭐⭐⭐ | `code-graph` | 代码知识图谱：影响分析（blast radius）、8 种依赖查询、精准文件选择（≤5 个）、审查上下文生成。未安装时自动降级 | 集成于 8 条工作流 13 个步骤，基于 code-review-graph |
+| ⭐⭐ | `code-graph` | 代码知识图谱：影响分析（blast radius）、8 种依赖查询、精准文件选择（≤5 个）、审查上下文生成。未安装时自动降级 | 集成于 8 条工作流 13 个步骤，基于 code-review-graph |
 | ⭐⭐ | `autoresearch` | 自主迭代研究：基于 Karpathy 的 autoresearch 原则，修改→验证→保留/丢弃→重复循环，支持 `Iterations: N` 配置 | 参考文档在 `references/` 子目录含 8 个专题 |
 
 #### 前端设计 (Frontend Design) — 来自 impeccable.style
@@ -128,7 +128,7 @@ cp -r .agent /path/to/your-project/
 | ⭐⭐ | 精简 | `distill` | 剥离多余复杂度，回归设计精华 | 执行 YAGNI 设计原则 |
 | ⭐ | | `quieter` | 降低过于强烈的视觉设计，让界面更克制 | 与 `bolder` 互为反向操作 |
 | ⭐⭐ | | `clarify` | 优化 UX 文案、错误信息、标签 | 参考 `reference/ux-writing.md` |
-| ⭐⭐⭐ | 审查 | `audit` | 无障碍、性能、主题、响应式全面审计 | 建议在 `/review` 后使用 |
+| ⭐⭐ | 审查 | `audit` | 无障碍、性能、主题、响应式全面审计 | 建议在 `/review` 后使用 |
 | ⭐⭐ | | `critique` | UX 视角的设计评估与反馈 | 与 `audit` 配合：先 critique 后 audit |
 | ⭐⭐ | 适配 | `adapt` | 跨屏幕/设备/平台响应式适配 | 参考 `reference/responsive-design.md` |
 | ⭐⭐ | | `harden` | 错误处理、i18n、文本溢出、边界情况强化 | 建议在 `polish` 前使用 |
@@ -151,7 +151,7 @@ cp -r .agent /path/to/your-project/
 | ⭐⭐⭐ | `/review` | 对抗式代码审查 | 确认范围（图谱增强）→ 中立阅读 → 专家 A 风险扫描 → 辩手 B 反驳 → 裁判 C 裁定 → 联动修复 | 使用 `code-review.md` 6 维度标准 |
 | ⭐⭐⭐ | `/test` | 自动化测试 | 确认范围（图谱查覆盖缺口）→ 测试基础设施 → 金字塔编写（单元→集成→E2E）→ 质量检查 → 执行 → 汇报 | 遵循 SKILL.md 测试纪律 |
 | ⭐⭐⭐ | `/tdd` | TDD 驱动开发 | 智能诊断（图谱调用链追踪）→ 测试清单（查已有覆盖）→ Red-Green-Refactor 循环（重构前查影响）→ 集成验证 | 含 Bug 修复智能模式 |
-| ⭐⭐ | `/checkpoint` | 保存检查点 | 确认状态 → 收集数据（Phase/文件/测试/决策）→ 生成标准检查点 → 确认记录 | CP-1 至 CP-4 对应四阶段 |
+| ⭐⭐⭐ | `/checkpoint` | 保存检查点 | 确认状态 → 收集数据（Phase/文件/测试/决策）→ 生成标准检查点 → 确认记录 | CP-1 至 CP-4 对应四阶段 |
 | ⭐⭐ | `/handoff` | 跨会话交接 | 收集状态 → 提炼背景（≤5 句）→ 整理文件（≤5 个）→ 记录决策 → 生成备忘录 | 与 `/resume` 成对使用 |
 | ⭐⭐ | `/resume` | 断点恢复 | 读取路由 → 加载规范 → 定位检查点 → 变更感知（图谱增强）→ 恢复上下文 → 确认 → 继续 | 与 `/handoff` 成对使用 |
 | ⭐⭐ | `/evolve` | 规则进化清理 | 健康检查 → 回顾摩擦 → 盘点 → 分类 → 去重 → 冲突检测 → 淘汰 → 重组 → 自动化评估 | 建议每 2-4 周或规则 >20 条时执行 |
