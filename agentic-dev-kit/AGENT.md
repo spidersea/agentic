@@ -32,6 +32,7 @@
 | 前端 UI 开发 | `.agent/skills/frontend-design/SKILL.md` | 全文 |
 | 设计增强/精简/审查 | 对应名称的 `.agent/skills/{名称}/SKILL.md` | 全文 |
 | 代码结构分析、影响评估、依赖查询 | `.agent/skills/code-graph/SKILL.md` | 全文 |
+| 需求规格管理、行为契约定义、变更归档 | `.agent/skills/spec-driven/SKILL.md` | 全文 |
 | 持续优化、自主迭代、安全审计、发布流程 | `.agent/skills/autoresearch/SKILL.md` | 全文（仅手动触发） |
 
 > **渐进式加载**: Agent 首次只需读取技能的 frontmatter（name + description）。判断相关后再加载全文。避免不必要的上下文消耗。
@@ -66,6 +67,8 @@
 | `/evolve` | 规则进化与清理（Spa Day） | `.agent/workflows/evolve.md` |
 | `/stress-test` | 合规压测（标准任务 + 自动评分） | `.agent/workflows/stress-test.md` |
 | `/context-reset` | 清理上下文污染并按协议恢复 | `.agent/workflows/context-reset.md` |
+| `/spec:propose` | 创建规格驱动的变更提案（proposal + specs + design + tasks） | `.agent/workflows/spec-propose.md` |
+| `/spec:archive` | 归档已完成变更并合并 delta specs 到主规格 | `.agent/workflows/spec-archive.md` |
 | `/autoresearch` | 自主迭代优化（修改→验证→保留/回滚→重复） | `.agent/skills/autoresearch/SKILL.md` |
 | `/autoresearch:security` | 自主安全审计（STRIDE + OWASP + 红队） | `.agent/skills/autoresearch/SKILL.md` |
 | `/autoresearch:ship` | 通用发布流程（8 阶段） | `.agent/skills/autoresearch/SKILL.md` |

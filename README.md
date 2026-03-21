@@ -39,7 +39,9 @@ AGENT.local.md                        ← 个人本地覆盖（加入 .gitignore
 │   ├── clarify/                      ← UX 文案优化  │ delight/   ← 愉悦体验增强
 │   ├── extract/                      ← 组件提取     │ normalize/ ← 设计规范化
 │   ├── onboard/                      ← 引导流设计   │ optimize/  ← 性能优化
-│   └── teach-impeccable/              ← 设计上下文初始化
+│   ├── teach-impeccable/              ← 设计上下文初始化
+│   └── spec-driven/                   ← 规格驱动开发（行为规格、变更管理、delta 合并）
+│       └── SKILL.md
 ├── workflows/
 │   ├── init.md                       ← /init — 项目初始化配置
 │   ├── new-feature.md                ← /new-feature — 新功能开发流
@@ -51,7 +53,9 @@ AGENT.local.md                        ← 个人本地覆盖（加入 .gitignore
 │   ├── handoff.md                    ← /handoff — 跨会话交接
 │   ├── resume.md                     ← /resume — 断点恢复
 │   ├── evolve.md                     ← /evolve — 规则进化清理
-│   └── context-reset.md              ← /context-reset — 上下文重置恢复
+│   ├── context-reset.md              ← /context-reset — 上下文重置恢复
+│   ├── spec-propose.md               ← /spec:propose — 规格驱动变更提案
+│   └── spec-archive.md               ← /spec:archive — 变更归档与规格合并
 └── rules/
     ├── code-style.md                 ← 代码风格规则（路径范围限定）
     ├── code-review.md                ← 代码审查标准（6 维度清单）
@@ -99,6 +103,8 @@ cp -r .agent /path/to/your-project/
 | 暂停，下次继续 | `/handoff` → 关会话 → 新会话 `/resume` | 安全交接并恢复 |
 | 清理规则膨胀 | `/evolve` | 盘点、去重、合并、清理 |
 | 清理上下文 | `/context-reset` | 清理无关上下文，按协议恢复必要信息 |
+| 规格驱动开发新功能 | `/spec:propose` | 生成 proposal → specs → design → tasks 全套变更产物 |
+| 归档已完成变更 | `/spec:archive` | 三维验证 + delta 合并到主规格 + 审计归档 |
 
 > **你不需要记住 SKILL.md 的全部内容。** AI 会自动加载。你只需要记住这几个 `/命令`。
 
@@ -112,6 +118,7 @@ cp -r .agent /path/to/your-project/
 |---|---|---|---|
 | ⭐⭐⭐ | `world_class_coding` | 核心编码技能：四阶段 SOP（Research → Contract → Execution → Verification）、TDD、对抗验收（A/B/C）、检查点协议、防御性提示 | 所有工作流的行为基础，自动加载 |
 | ⭐⭐ | `code-graph` | 代码知识图谱：影响分析（blast radius）、8 种依赖查询、精准文件选择（≤5 个）、审查上下文生成。未安装时自动降级 | 集成于 8 条工作流 13 个步骤，基于 code-review-graph |
+| ⭐⭐ | `spec-driven` | 规格驱动开发：行为规格管理（RFC 2119 + Given/When/Then）、变更文件夹、delta specs 增量合并、归档历史。融合 [OpenSpec](https://github.com/Fission-AI/OpenSpec/) 框架精华 | 含完整规格格式示例和渐进严格度指南 |
 | ⭐⭐ | `autoresearch` | 自主迭代研究：基于 Karpathy 的 autoresearch 原则，修改→验证→保留/丢弃→重复循环，支持 `Iterations: N` 配置 | 参考文档在 `references/` 子目录含 8 个专题 |
 
 #### 前端设计 (Frontend Design) — 来自 impeccable.style
@@ -161,6 +168,8 @@ cp -r .agent /path/to/your-project/
 | ⭐⭐ | `/autoresearch:security` | 安全审计 | STRIDE 威胁建模 → OWASP Top 10 → 红队（4 对抗角色）→ 迭代验证 → 严重等级报告 | 支持 `--diff` 增量审计、`--fix` 自动修复 |
 | ⭐⭐ | `/autoresearch:ship` | 通用发布 | 识别发布物 → 清单检查 → 迭代修复 → 干跑 → 发布 → 验证 → 日志 | 支持 PR、部署、内容、营销等 8 种发布类型 |
 | ⭐ | `/autoresearch:fix` | 自主修复 | 自动循环修复测试/类型/lint/构建错误直到归零 | 与 `/autoresearch:debug` 配合使用 |
+| ⭐⭐ | `/spec:propose` | 规格驱动提案 | 创建变更文件夹 + 生成 proposal → delta specs → design → tasks 全套产物 | 可独立使用或在 `/new-feature` Phase 1 中自动调用 |
+| ⭐⭐ | `/spec:archive` | 规格归档 | 三维验证（完整性/正确性/一致性）→ delta 合并到主规格 → 移入 archive | 补充 Phase 4 之后的知识沉淀 |
 
 ### 4. 验证生效
 
@@ -269,6 +278,102 @@ project-root/
 - ⚠️ **语义变更** — 函数签名不变但返回值含义变更（如阈值从 90 天改为 60 天）无法感知
 
 > **优雅降级**：所有图谱相关步骤在未安装 `code-review-graph` 时自动降级为 grep/find/git diff，不阻塞任何工作流。安装方式：`pip install code-review-graph`
+
+## 规格驱动开发集成 (Spec-Driven Development)
+
+基于 [OpenSpec](https://github.com/Fission-AI/OpenSpec/) 框架的核心理念，本套件集成了**规格驱动开发 (SDD)** 能力，在编码之前通过结构化的行为规格让人类和 AI 先就"构建什么"达成一致，从结构层面减少 AI 幻觉。
+
+**核心概念：**
+- 📋 **Specs（规格）** — 系统行为的单一事实来源，使用 RFC 2119 关键词 + Given/When/Then 场景格式
+- 📂 **Changes（变更）** — 每个功能对应一个独立文件夹，包含 proposal → specs → design → tasks 四层产物
+- 🔄 **Delta Specs（增量规格）** — 描述"什么在变"而非重写整个规格，适合已有项目
+- 📦 **Archive（归档）** — 完成后将增量合并回主规格，保留完整审计轨迹
+
+**新增命令：**
+
+| 命令 | 用途 | 与四阶段 SOP 的关系 |
+|---|---|---|
+| `/spec:propose <name>` | 创建变更文件夹 + 生成全部规划产物 | 增强 Phase 1（调研→规格化） |
+| `/spec:archive [name]` | 三维验证 + delta 合并 + 归档 | 补充 Phase 4 之后的知识沉淀 |
+
+**规格目录结构：**
+
+```
+openspec/
+├── specs/            ← 主规格（系统如何工作的事实来源）
+│   ├── auth/spec.md
+│   └── ui/spec.md
+├── changes/          ← 活跃变更（每个功能一个文件夹）
+│   ├── add-dark-mode/
+│   │   ├── proposal.md    ← 为什么做 + 范围
+│   │   ├── specs/         ← 行为变什么（delta）
+│   │   ├── design.md      ← 怎么做
+│   │   └── tasks.md       ← 做哪些步骤
+│   └── archive/      ← 已完成变更的审计轨迹
+```
+
+**与现有体系的关系：**
+
+| 已有能力 | OpenSpec 补充 |
+|---|---|
+| 四阶段 SOP（流程纪律） | 规格层（需求管理） |
+| 对抗验收 A/B/C（验证深度） | 三维验证：完整性 × 正确性 × 一致性 |
+| 检查点协议（面向会话） | 变更文件夹（面向功能） |
+| 证据先行（防幻觉） | 规格先于代码（结构性防幻觉） |
+
+> **渐进引入**：规格驱动开发为可选增强。当 `/new-feature` 流程检测到 `openspec/` 目录存在时自动融入，否则保持原有流程不变。初始化方式：`mkdir -p openspec/specs openspec/changes`
+
+### 使用步骤
+
+**第零步：初始化（仅首次）**
+
+```bash
+mkdir -p openspec/specs openspec/changes
+```
+
+**第一步：`/spec:propose <功能名>` — 规划**
+
+```text
+你: /spec:propose add-user-profile
+```
+
+AI 依次生成 4 个产物：
+
+| 产物 | 回答的问题 | 示例 |
+|---|---|---|
+| `proposal.md` | 为什么做？ | 意图、范围（in/out scope）、大方向 |
+| `specs/{domain}/spec.md` | 变什么？ | 行为规格（Given/When/Then 场景） |
+| `design.md` | 怎么做？ | 技术方案、架构决策、文件清单 |
+| `tasks.md` | 做哪些步骤？ | 逐项实施清单（带 checkbox） |
+
+> AI 会在每一步与你确认，你可以随时要求修改任何产物（没有阶段限制）。
+
+**第二步：编码实现**
+
+按 `tasks.md` 清单逐项编码，完成后打勾。可手动编码，也可配合 `/new-feature` Phase 2-3 自动执行。
+
+**第三步：`/spec:archive` — 归档**
+
+```text
+你: /spec:archive add-user-profile
+```
+
+AI 执行：三维验证（完整性/正确性/一致性）→ delta specs 合并到主规格 → 变更文件夹移入 `archive/`
+
+### 与 `/new-feature` 的关系
+
+| 方式 | 说明 |
+|---|---|
+| **独立使用** | `/spec:propose` → 手动编码 → `/spec:archive` |
+| **融入 SOP** | `/new-feature` Phase 1 自动调用 `/spec:propose` → Phase 2-4 正常走 → `/spec:archive` |
+
+### 何时使用 / 不使用
+
+| ✅ 推荐使用 | ❌ 不需要 |
+|---|---|
+| 新功能开发（≥3 文件） | 简单 bug 修复、配置修改 |
+| API 或公共接口变更 | 内部函数小改、文案调整 |
+| 架构重构、多会话协作 | 一次性脚本 |
 
 ## 维护建议
 
