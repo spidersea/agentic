@@ -25,7 +25,21 @@ description: 完成开发分支 — 标准化的分支收尾与清理流程
    ```
    如果测试失败，**停止**，不可继续分支操作。修复后重新运行。
 
-2. **确定基础分支**
+2. **文档同步检查**
+   在分支操作前，确保文档与代码变更保持一致：
+   ```bash
+   git diff main --name-only 2>/dev/null || git diff origin/main --name-only
+   ```
+   - 读取项目中所有 `.md` 文档文件（README、CHANGELOG、docs/ 等）
+   - 对照变更文件列表，检查以下内容是否需要同步：
+     - **README**: 目录结构、命令列表、安装步骤中是否有引用已改名/新增/删除的文件
+     - **CHANGELOG**: 是否需要记录本次变更（新功能/breaking change）
+     - **API 文档**: 公共接口变更是否已同步
+   - **自动修复**（无需用户确认）：README 目录结构树、命令表中的新命令/删除命令
+   - **询问用户**（有主观判断成分）：版本号更新、CHANGELOG 内容措辞、重要架构变更描述
+   - 如果无文档需要更新，跳过此步骤
+
+3. **确定基础分支**
    ```bash
    git log --oneline -1 origin/main 2>/dev/null || git log --oneline -1 origin/master
    ```
