@@ -40,29 +40,11 @@
 | 响应式适配 | `.agent/skills/adapt/SKILL.md` | 全文 |
 | UI 健壮性（错误处理/i18n/溢出） | `.agent/skills/harden/SKILL.md` | 全文 |
 
-### Tier 2 — 微调技能（按需调用，不主动加载）
+### Tier 2 — 微调技能（用自然语言触发，不主动加载）
 
-> 用户用自然语言描述时自动触发，无需 AI 主动扫描。
-> 示例：「帮我给这段 UI 加动画」→ 加载 `animate`；「这个设计太重，帮我精简」→ 加载 `distill`
+> 描述需求时自动匹配：`animate`（动画/微交互）· `colorize`（配色体系）· `bolder`/`quieter`（视觉强度）· `delight`（愉悦感）· `distill`（精简复杂度）· `clarify`（UX 文案）· `critique`（设计评估）· `normalize`（Token 规范）· `extract`（组件提取）· `optimize`（性能优化）· `onboard`（引导流/空状态）· `teach-impeccable`（设计上下文初始化）
 
-| 技能 | 触发语境 |
-|---|---|
-| `animate` | 添加动画和微交互 |
-| `colorize` | 配色优化、构建色彩体系 |
-| `bolder` / `quieter` | 视觉强度调整（对立操作） |
-| `delight` | 增加愉悦感和个性触感 |
-| `distill` | 剥离复杂度、精简设计 |
-| `clarify` | 优化 UX 文案和标签 |
-| `critique` | UX 视角设计评估 |
-| `normalize` | 统一到设计 Token 规范 |
-| `extract` | 提取可复用组件 |
-| `optimize` | 性能优化（加载/渲染/图片） |
-| `onboard` | 引导流和空状态设计 |
-| `teach-impeccable` | 一次性设计上下文初始化 |
-
-> **渐进式加载**: Agent 首次只需读取技能的 frontmatter（name + description）。判断相关后再加载全文。避免不必要的上下文消耗。
-
-> **Debug 场景选择**：`/debug` 适用于单次根因分析；`/autoresearch:debug` 适用于自主持续 bug 猎手。
+> **渐进式加载**: 首次只读 frontmatter，相关后再全量加载。**Debug**: `/debug` 单次根因 / `/autoresearch:debug` 持续扫描。
 
 ### Token 效率原则（质量优先，不降低标准前提下减少浪费）
 
