@@ -354,3 +354,23 @@ See `references/core-principles.md` for the 7 generalizable principles from auto
 | Fixing | Error count (lower) | Target files | `/autoresearch:fix` | `npm test` |
 
 Adapt the loop to your domain. The PRINCIPLES are universal; the METRICS are domain-specific.
+
+## Integration with 4-Phase SOP
+
+`autoresearch` 是与 4 阶段 SOP 并行的**自主执行模式**，而非替代品。以下是两者的整合点：
+
+| autoresearch 子命令 | 在 SOP 中的位置 | 说明 |
+|---|---|---|
+| `/autoresearch:plan` | Phase 1 之前 | 将目标转化为可执行的 autoresearch 配置 |
+| `/autoresearch:security` | Phase 4 之后（或独立） | 安全审计补充 Phase 4 对抗验证 |
+| `/autoresearch:fix` | Phase 3 内部 | 自动修复编码阶段产生的测试/类型/lint 错误 |
+| `/autoresearch:debug` | Phase 3 受阻时 | 自主 bug 猎手，配合 /debug 手动根因分析 |
+| `/autoresearch:ship` | Phase 4 完成后 | 发布流程，复杂场景替代 `/finish` |
+
+**检查点整合**: autoresearch 产出的 `security/`, `debug/`, `fix/`, `ship/` 目录内容应在 `/checkpoint` 状态文件中引用，确保跨会话可追踪。
+
+**关键约束保留**: autoresearch 在 SOP 框架下运行时，以下全规范规则**始终生效**，autoresearch 不覆盖：
+- 修改测试前必须人类确认
+- 禁止引入未授权第三方依赖
+- 禁止修改 Guard/测试文件
+

@@ -161,6 +161,7 @@ Pick the highest-priority unfixed item and make ONE focused change.
 **Rules:**
 - ONE fix per iteration. Not two. Not "while I'm here."
 - Fix the IMPLEMENTATION, not the test (unless the test is genuinely wrong)
+- **⚠️ HUMAN GATE — Modifying tests**: If the agent believes a test is genuinely wrong and needs modification, it **MUST STOP and ask for human confirmation** before making any change to the test file. Never modify tests autonomously. This aligns with the global spec rule: "禁止修改测试来通过验收 — 除非测试本身有设计错误且经人类确认".
 - Never add `@ts-ignore`, `eslint-disable`, `# type: ignore` to suppress errors
 - Never use any|any escape hatch never solves type errors — use proper narrowed types or generics
 - Never delete test|delete test coverage never improves code — fix the implementation to satisfy tests

@@ -54,7 +54,11 @@ description: 创建规格驱动的变更提案 — 生成 proposal + delta specs
    - 基于 design 拆分为具体实施步骤
    - 按功能模块分组，使用层级编号（1.1, 1.2 ...）
    - 每个任务粒度控制在 2-5 分钟可完成
-   - 包含验证命令和预期输出
+   - **每个任务必须包含（P0 可执行标准）**:
+     - 精确文件路径（Create / Modify / Test）
+     - **完整代码**（不可写"添加验证逻辑"等模糊描述，必须给出可直接粘贴的代码片段）
+     - **精确运行命令 + 预期输出**（如 `pytest tests/auth/ -v` → 预期 PASS）
+     - 验证步骤（如何确认这一步成功）
    - 产出 `openspec/changes/<change-name>/tasks.md`
 
 // turbo

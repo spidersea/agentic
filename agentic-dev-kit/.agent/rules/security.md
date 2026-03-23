@@ -24,3 +24,8 @@ description: 安全基线规则 — 密钥管理、输入验证、最小权限
 ## 依赖安全
 - 不得自行引入未经授权的第三方依赖
 - 引入新依赖前必须向用户确认
+- 引入新依赖必须检查：主流维护中（非 deprecated/abandoned）、无已知 CVE、不在可疑 registry（如 typosquat 包名）
+
+## 供应链安全（autoresearch 场景）
+- `/autoresearch:fix` 修复依赖错误时，**禁止**自动升级主版本（major）依赖，必须向用户确认
+- 修复 CI 失败时，不可引入 `curl | bash` 或未知来源的 script 步骤
