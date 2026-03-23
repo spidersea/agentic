@@ -22,22 +22,47 @@
 
 ## 技能路由 (Skill Routing)
 
+### Tier 1 — 核心技能（主动加载）
+
 | 场景 | 加载技能 | 重点章节 |
 |---|---|---|
 | 新功能开发、核心代码修改、重构 | `.agent/skills/world_class_coding/SKILL.md` | 全文 |
-| TDD 驱动开发 | `.agent/skills/world_class_coding/SKILL.md` | §10.5 TDD 编程范式 + §10 测试纪律 |
+| TDD 驱动开发 | `.agent/skills/world_class_coding/SKILL.md` | §10.5 TDD + §10 测试纪律 |
 | Debug、排查问题 | `.agent/skills/world_class_coding/SKILL.md` | Phase 4 + 中立提示词 |
 | 编写或修改测试 | `.agent/skills/world_class_coding/SKILL.md` | Phase 2（契约）+ Phase 4（验证） |
 | 跨会话任务续作 | `.agent/skills/world_class_coding/SKILL.md` | 第五章：可持续节点协议 |
-| 前端 UI 开发 | `.agent/skills/frontend-design/SKILL.md` | 全文 |
-| 设计增强/精简/审查 | 对应名称的 `.agent/skills/{名称}/SKILL.md` | 全文 |
 | 代码结构分析、影响评估、依赖查询 | `.agent/skills/code-graph/SKILL.md` | 全文 |
 | 需求规格管理、行为契约定义、变更归档 | `.agent/skills/spec-driven/SKILL.md` | 全文 |
 | 持续优化、自主迭代、安全审计、发布流程 | `.agent/skills/autoresearch/SKILL.md` | 全文（仅手动触发） |
+| 前端 UI 开发（生产级界面创建） | `.agent/skills/frontend-design/SKILL.md` | 全文 |
+| 上线前质量检查 | `.agent/skills/polish/SKILL.md` | 全文 |
+| 审计（无障碍/性能/响应式） | `.agent/skills/audit/SKILL.md` | 全文 |
+| 响应式适配 | `.agent/skills/adapt/SKILL.md` | 全文 |
+| UI 健壮性（错误处理/i18n/溢出） | `.agent/skills/harden/SKILL.md` | 全文 |
 
-> **Debug 场景选择**：`/debug` 适用于单次根因分析（定位一个具体 bug 的原因）；`/autoresearch:debug` 适用于自主持续 bug 猎手（自动扫描整个代码库中的所有潜在 bug，无界迭代）。
+### Tier 2 — 微调技能（按需调用，不主动加载）
+
+> 用户用自然语言描述时自动触发，无需 AI 主动扫描。
+> 示例：「帮我给这段 UI 加动画」→ 加载 `animate`；「这个设计太重，帮我精简」→ 加载 `distill`
+
+| 技能 | 触发语境 |
+|---|---|
+| `animate` | 添加动画和微交互 |
+| `colorize` | 配色优化、构建色彩体系 |
+| `bolder` / `quieter` | 视觉强度调整（对立操作） |
+| `delight` | 增加愉悦感和个性触感 |
+| `distill` | 剥离复杂度、精简设计 |
+| `clarify` | 优化 UX 文案和标签 |
+| `critique` | UX 视角设计评估 |
+| `normalize` | 统一到设计 Token 规范 |
+| `extract` | 提取可复用组件 |
+| `optimize` | 性能优化（加载/渲染/图片） |
+| `onboard` | 引导流和空状态设计 |
+| `teach-impeccable` | 一次性设计上下文初始化 |
 
 > **渐进式加载**: Agent 首次只需读取技能的 frontmatter（name + description）。判断相关后再加载全文。避免不必要的上下文消耗。
+
+> **Debug 场景选择**：`/debug` 适用于单次根因分析；`/autoresearch:debug` 适用于自主持续 bug 猎手。
 
 ### Token 效率原则（质量优先，不降低标准前提下减少浪费）
 
