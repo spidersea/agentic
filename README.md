@@ -1,214 +1,222 @@
-# Agentic Dev Kit — 可移植 AI 开发规范套件
+# Agentic Dev Kit
 
-## 这是什么？
+> 把 AI 从「会写代码的助手」升级为「遵守工程纪律的开发团队成员」的可移植规范套件
 
-一套标准化的 AI 智能体开发规范，可直接复制到任何项目中使用。基于 "How To Be A World-Class Agentic Engineer" 原则、CLAUDE.md 开发体系精华、业界共识和最新的 AGENT.md 开放标准提炼。
+**30 秒安装 · 零配置 · 支持 Antigravity IDE / Gemini CLI**
 
-**核心能力**:
-- 📋 四阶段标准操作流程（Research → Contract → Execution → Verification）
-- ⛳ 可持续检查点协议（CP-1 ~ CP-4），支持断点续作和跨会话交接
-- 🛡️ 防御性提示设计（角色锚定、输出约束、不确定性声明）
-- ⚔️ 对抗验收模式（Expert A / Opponent B / Referee C）
-- 🏗️ 通用架构纪律（代码设计、Go/Rust/JS/Python 错误处理、安全基线）
-- 🔄 规则自进化协议（规则触发分析 + git 工程效能指标、退化检测、Spa Day 清理）
-- 📁 模块化规则系统（路径范围限定、渐进式加载、本地覆盖）
-- 🚦 TDD 编程范式（Red-Green-Refactor 循环、适用场景指南、反模式清单）
-- 📊 代码知识图谱集成（基于 [code-review-graph](https://github.com/tirth8205/code-review-graph)，影响分析、精准文件选择、优雅降级）
-- ⛔ Iron Law 调试铁律（NO FIXES WITHOUT ROOT CAUSE + 范围声明 + 3次失败质疑架构）
-- ✅ 证据先行验证纪律（禁止未执行验证命令就声称完成）
-- 🎯 苏格拉底式设计（前提挑战 + 每次只问一个问题 + 必须提 2-3 方案 + DRY/YAGNI 检查）
-- 📐 计划可执行性标准（每个任务含完整代码 + 精确命令 + 预期输出，不可模糊描述）
-- 🎯 覆盖率目标驱动（核心逻辑 ≥80%；关键路径 auth/支付/写入 ≥95%）
-- 🔒 供应链安全规则（依赖引入须验证 CVE/维护状态，autoresearch 禁止自动升级 major 版本）
-- 🏁 完整性原则 Boil the Lake（方案差距 ≤30% 选完整实现；测试/错误处理不可用 deadline 跳过）
-- 📝 自动文档同步（/finish 前自动 diff 文档，同步 README/CHANGELOG，防止文档漂移）
+---
 
-## 目录结构
-
-```
-AGENT.md                              ← 复制到项目根目录（逻辑路由表）
-AGENT.local.md                        ← 个人本地覆盖（加入 .gitignore）
-.agent/
-├── skills/
-│   ├── world_class_coding/           ← 核心编码技能（四阶段 SOP、TDD、对抗验收）
-│   │   └── SKILL.md
-│   ├── code-graph/                   ← 代码知识图谱（影响分析、依赖查询、精准文件选择）
-│   │   └── SKILL.md
-│   ├── frontend-design/              ← 前端设计技能（生产级 UI 开发）
-│   │   └── SKILL.md
-│   ├── animate/                      ← 动画增强     │ colorize/  ← 配色优化
-│   ├── audit/                        ← 界面质量审计   │ critique/  ← 设计评估
-│   ├── adapt/                        ← 响应式适配   │ harden/    ← 健壮性增强
-│   ├── polish/                       ← 发布前打磨   │ distill/   ← 精简设计
-│   ├── bolder/                       ← 加强视觉冲击 │ quieter/   ← 降低视觉强度
-│   ├── clarify/                      ← UX 文案优化  │ delight/   ← 愉悦体验增强
-│   ├── extract/                      ← 组件提取     │ normalize/ ← 设计规范化
-│   ├── onboard/                      ← 引导流设计   │ optimize/  ← 性能优化
-│   ├── teach-impeccable/              ← 设计上下文初始化
-│   └── spec-driven/                   ← 规格驱动开发（行为规格、变更管理、delta 合并）
-│       └── SKILL.md
-├── workflows/
-│   ├── init.md                       ← /init — 项目初始化配置
-│   ├── new-feature.md                ← /new-feature — 新功能开发流
-│   ├── debug.md                      ← /debug — 中立 Debug 流
-│   ├── review.md                     ← /review — 对抗式代码审查
-│   ├── test.md                       ← /test — 自动化测试
-│   ├── tdd.md                        ← /tdd — TDD 驱动开发
-│   ├── checkpoint.md                 ← /checkpoint — 生成检查点
-│   ├── handoff.md                    ← /handoff — 跨会话交接
-│   ├── resume.md                     ← /resume — 断点恢复
-│   ├── evolve.md                     ← /evolve — 规则进化清理
-│   ├── context-reset.md              ← /context-reset — 上下文重置恢复
-│   ├── finish.md                     ← /finish — 分支完成收尾
-│   ├── spec-propose.md               ← /spec:propose — 规格驱动变更提案
-│   └── spec-archive.md               ← /spec:archive — 变更归档与规格合并
-└── rules/
-    ├── code-style.md                 ← 代码风格规则（路径范围限定）
-    ├── code-review.md                ← 代码审查标准（6 维度清单）
-    ├── testing.md                    ← 测试规范规则
-    └── security.md                   ← 安全基线规则
-
-# autoresearch 技能运行时自动创建（建议加入 .gitignore）
-security/{YYMMDD}-{HHMM}-*/          ← /autoresearch:security 安全审计产物
-debug/{YYMMDD}-{HHMM}-*/             ← /autoresearch:debug 调试产物
-fix/{YYMMDD}-{HHMM}-*/               ← /autoresearch:fix 修复日志
-ship/{YYMMDD}-{HHMM}-*/              ← /autoresearch:ship 发布记录
-```
-
-## 支持环境
-
-| 环境 | AGENT.md | Skills | Workflows | Rules |
-|---|---|---|---|---|
-| **Antigravity IDE（桌面版）** | ✅ 自动加载 | ✅ 自动加载 | ✅ `/命令` 在聊天框输入 | ✅ 按路径自动匹配 |
-| **Gemini CLI** | ✅ 自动加载 | ✅ 自动加载 | ✅ `/命令` 在终端输入 | ✅ 按路径自动匹配 |
-
-> 不需要任何额外配置。复制文件到项目根目录后，AI 自动识别并加载。
-
-## 快速开始
-
-### 1. 复制到新项目
+## ⚡ 30 秒快速开始
 
 ```bash
+# 1. 复制到你的项目
 cp AGENT.md /path/to/your-project/
 cp -r .agent /path/to/your-project/
+
+# 2. 打开项目，在 AI 聊天框输入
+/init
 ```
 
-也可以直接在 Finder 中拖拽复制，效果一样。
+就这两步。AI 会自动扫描项目、生成定制配置，然后你就可以开始用了。
 
-### 2. 初始化项目（推荐）
+---
 
-在聊天框中输入 `/init`，AI 会自动扫描项目并定制配置。
+## 🗺️ 这是什么，解决什么问题
 
-### 3. 打开项目，直接用
+| 没有这套规范时 | 有这套规范后 |
+|---|---|
+| AI 直接写代码，跳过需求确认 | 每次新功能先挑战需求假设，再确认方案 |
+| 不会写测试或测试覆盖率极低 | 强制先写测试（TDD），覆盖率目标 80%/95% |
+| Bug 修复靠猜，越改越乱 | Iron Law：先找根因再修复，3次失败就质疑架构 |
+| 跨会话丢失上下文 | 标准化交接备忘录 + 断点恢复协议 |
+| 引入不需要的依赖或版本 | 禁止未授权依赖，引入前必须验证 CVE |
+| 代码改了但文档没更新 | `/finish` 前自动 diff 文档，同步 README/CHANGELOG |
+| AI 声称完成但没真正验证 | 证据先行：必须运行命令看到输出才算完成 |
 
-在 Antigravity IDE 中打开项目后，在聊天框中直接输入斜杠命令：
+**核心机制**：四阶段 SOP（调研 → 契约 → 编码 → 验证）+ 结构化规格（spec）+ 闭环检查点
 
-| 你想做什么 | 输入 | AI 会做什么 |
-|---|---|---|
-| 初始化配置 | `/init` | 扫描项目，生成定制化的 AGENT.md 和规则文件 |
-| 开发新功能 | `/new-feature` | 自动走 4 阶段 SOP（调研→契约→编码→验收闭环） |
-| 排查 Bug | `/debug` | 强制使用中立提示词，单次根因分析 |
-| 自主持续猎 Bug | `/autoresearch:debug` | 自动扫描整个代码库，无界迭代直到干净 |
-| 规划 autoresearch | `/autoresearch:plan` | 由目标生成完整 Scope/Metric/Direction/Verify 配置 |
-| 审查代码 | `/review` | Expert A / Opponent B / Referee C 对抗审查 |
-| 写测试 | `/test` | 按测试金字塔编写，覆盖率目标 80%/95%，失败 3 次后上报 |
-| TDD 开发 | `/tdd` | 按 Red-Green-Refactor 循环驱动开发 |
-| 保存进度 | `/checkpoint` | 生成标准检查点文件（含 autoresearch 产物引用）|
-| 暂停，下次继续 | `/handoff` → 关会话 → 新会话 `/resume` | 安全交接（含 git commit hash + 可执行下一步）并恢复 |
-| 清理规则膨胀 | `/evolve` | 规则触发分析 → 去重 → 合并 → 清理 |
-| 清理上下文 | `/context-reset` | 清理无关上下文，按协议恢复必要信息 |
-| 规格驱动开发新功能 | `/spec:propose` | 生成 proposal → specs → design → tasks（含完整代码）全套变更产物 |
-| 归档已完成变更 | `/spec:archive` | 三维验证 + delta 合并到主规格 + 审计归档 |
-| 完成分支收尾 | `/finish` | 4 选项（merge/PR/keep/discard）+ worktree 清理 |
+---
 
-> **你不需要记住 SKILL.md 的全部内容。** AI 会自动加载。你只需要记住这几个 `/命令`。
+## 🎯 日常使用——你只需要记住这几个命令
 
-### 技能分类速查 (Skills Catalog)
+### 开发新功能（最常用）
 
-> ⭐ = 可选增强 | ⭐⭐ = 推荐使用 | ⭐⭐⭐ = 核心必备
+```
+/new-feature
+```
 
-#### 编码方法论 (Coding Methodology)
+AI 会自动走完整流程：
+1. **前提挑战** — 主动质疑需求假设（「你要加弹窗，但真正要解决的问题是什么？」）
+2. **需求确认** — 每次只问一个问题 + 必须提 2-3 个方案对比
+3. **规格文档** — 自动创建 `openspec/` 变更文件夹（proposal + specs + design + tasks）
+4. **计划拆分** — 每个任务含完整代码 + 精确命令 + 预期输出（可直接粘贴执行）
+5. **编码验证** — 每完成一个模块立即跑测试，不等到最后再统一验证
+6. **闭环验收** — 测试全绿 + 契约核验 + 文档同步 → 提交你审批
+7. **分支收尾** → 自动调用 `/finish`
 
-| 重要度 | 技能 | 说明 | 关联内容 |
-|---|---|---|---|
-| ⭐⭐⭐ | `world_class_coding` | 核心编码技能：四阶段 SOP（Research → Contract → Execution → Verification）、TDD、对抗验收（A/B/C）、检查点协议、防御性提示 | 所有工作流的行为基础，自动加载 |
-| ⭐⭐ | `code-graph` | 代码知识图谱：影响分析（blast radius）、8 种依赖查询、精准文件选择（≤5 个）、审查上下文生成。未安装时自动降级 | 集成于 8 条工作流 13 个步骤，基于 code-review-graph |
-| ⭐⭐ | `spec-driven` | 规格驱动开发：行为规格管理（RFC 2119 + Given/When/Then）、变更文件夹、delta specs 增量合并、归档历史。融合 [OpenSpec](https://github.com/Fission-AI/OpenSpec/) 框架精华 | 含完整规格格式示例和渐进严格度指南 |
-| ⭐⭐ | `autoresearch` | 自主迭代研究：基于 Karpathy 的 autoresearch 原则，修改→验证→保留/丢弃→重复循环，支持 `Iterations: N` 配置 | 参考文档在 `references/` 子目录含 8 个专题 |
+### 排查 Bug
 
-#### 前端设计 (Frontend Design) — 来自 impeccable.style
+```
+/debug
+```
 
-> 自然语言调用，如："帮我 animate 这个卡片组件"、"对首页做一次 audit"
+强制流程：分析 → 声明范围边界（防止改出边界）→ 3次修复失败自动质疑是否架构问题 → 举一反三扫描同类问题
 
-| 重要度 | 类别 | 技能 | 说明 | 关联内容 |
-|---|---|---|---|---|
-| ⭐⭐⭐ | 创建 | `frontend-design` | 生产级 UI 开发，遵循真实设计原则，避免泛化 AI 美学 | `reference/` 含 7 个专题（配色、排版、动效、响应式等） |
-| ⭐⭐ | 增强 | `animate` | 添加动画和微交互，提升界面动感 | 参考 `reference/motion-design.md` |
-| ⭐⭐ | | `colorize` | 添加战略性配色，构建配色系统 | 参考 `reference/color-and-contrast.md` |
-| ⭐ | | `bolder` | 放大视觉冲击力，让关键元素更突出 | 与 `quieter` 互为反向操作 |
-| ⭐ | | `delight` | 增加愉悦感和个性触感，提升情感体验 | 与 `animate` 配合效果最佳 |
-| ⭐⭐ | 精简 | `distill` | 剥离多余复杂度，回归设计精华 | 执行 YAGNI 设计原则 |
-| ⭐ | | `quieter` | 降低过于强烈的视觉设计，让界面更克制 | 与 `bolder` 互为反向操作 |
-| ⭐⭐ | | `clarify` | 优化 UX 文案、错误信息、标签 | 参考 `reference/ux-writing.md` |
-| ⭐⭐ | 审查 | `audit` | 无障碍、性能、主题、响应式全面审计 | 建议在 `/review` 后使用 |
-| ⭐⭐ | | `critique` | UX 视角的设计评估与反馈 | 与 `audit` 配合：先 critique 后 audit |
-| ⭐⭐ | 适配 | `adapt` | 跨屏幕/设备/平台响应式适配 | 参考 `reference/responsive-design.md` |
-| ⭐⭐ | | `harden` | 错误处理、i18n、文本溢出、边界情况强化 | 建议在 `polish` 前使用 |
-| ⭐ | | `normalize` | 统一到设计规范体系（Token、间距、颜色） | 参考 `reference/spatial-design.md` |
-| ⭐⭐ | 提取 | `extract` | 提取可复用组件和设计 Token | 适合重构阶段使用 |
-| ⭐⭐ | 性能 | `optimize` | 加载速度、渲染、动画、图片优化 | 建议在 `audit` 发现问题后使用 |
-| ⭐⭐⭐ | 上线 | `polish` | 发布前的最终质量检查 | 上线前最后一步 |
-| ⭐⭐ | 引导 | `onboard` | 引导流、空状态、首次体验设计 | 参考 `reference/interaction-design.md` |
-| ⭐ | 初始化 | `teach-impeccable` | 一次性设置，收集项目设计上下文 | 新项目首次使用前端设计技能前执行 |
+> 需要自主持续扫描整个仓库的 bug？用 `/autoresearch:debug`（无界迭代直到干净）
 
-### 工作流详细说明 (Workflows Reference)
+### 代码审查
 
-> ⭐ = 辅助工具 | ⭐⭐ = 常用流程 | ⭐⭐⭐ = 核心流程
+```
+/review
+```
 
-| 重要度 | 命令 | 用途 | 详细说明 | 关联内容 |
-|---|---|---|---|---|
-| ⭐⭐⭐ | `/init` | 项目初始化 | 扫描项目结构 → 生成 AGENT.md（含 9 条强制规则）→ 创建 .agent 目录 → 构建代码图谱 → 配置 .gitignore | 自动检测技术栈和测试框架 |
-| ⭐⭐⭐ | `/new-feature` | 新功能开发 | **前提挑战**（主动质疑需求假设）→ 苏格拉底式确认（1 问 + 2-3 方案）→ 强制 `/spec:propose` → 细粒度计划（含完整代码）→ 严格上下文编码 → 对抗验证 → 闸门式闭环 | 自动调用 `/checkpoint` `/test` `/review`，支持 git worktree |
-| ⭐⭐⭐ | `/debug` | 中立 Debug | 铁律（NO FIXES WITHOUT ROOT CAUSE）→ **范围声明**（限定修改边界）→ 中立审查 → 对抗验证 → 修复（3 次重试）→ 第3次失败**质疑架构** → 举一反三 → 回测 | 含合理化借口预防表，图谱辅助调用链追踪 |
-| ⭐⭐⭐ | `/review` | 对抗式代码审查 | 确认范围（图谱增强）→ 中立阅读 → 专家 A 风险扫描 → 辩手 B 反驳 → 裁判 C 裁定 → 联动修复 | 使用 `code-review.md` 6 维度标准 |
-| ⭐⭐⭐ | `/test` | 自动化测试 | 确认范围（图谱查覆盖缺口）→ 测试基础设施 → 金字塔编写（单元→集成→E2E）→ 质量检查 → 执行 → 汇报 | 覆盖率目标：核心 ≥80% / 关键路径 ≥95%；失败 3 次后必须上报人类 |
-| ⭐⭐⭐ | `/tdd` | TDD 驱动开发 | 智能诊断（图谱调用链追踪）→ 测试清单（查已有覆盖）→ Red-Green-Refactor 循环（重构前查影响）→ 集成验证 | 含 Bug 修复智能模式 |
-| ⭐⭐⭐ | `/checkpoint` | 保存检查点 | 确认状态 → 收集数据（Phase/文件/测试/决策/autoresearch 产物）→ 生成标准检查点 → 确认记录 | CP-1 至 CP-4 对应四阶段 |
-| ⭐⭐ | `/handoff` | 跨会话交接 | 收集状态 → 提炼背景（≤5 句）→ 整理文件（≤5 个）→ 记录 git commit hash → 生成含可执行命令的备忘录 | 与 `/resume` 成对使用 |
-| ⭐⭐ | `/resume` | 断点恢复 | 读取路由 → 加载规范 → 定位检查点 → git diff 变更感知（图谱增强）→ 恢复上下文 → 确认 → 继续 | 与 `/handoff` 成对使用 |
-| ⭐⭐ | `/evolve` | 规则进化清理 | 健康检查 → **git 工程效能指标**（LOC/测试占比/热点文件）→ 规则触发分析 → 去重 → 冲突检测 → 淘汰 → 重组 | 建议每 2-4 周或规则 >20 条时执行 |
-| ⭐ | `/stress-test` | 合规压测 | 健康检查 → 标准任务（fibonacci）走四阶段 → **8 项评分**（满分 100，含计划可执行性 + 设计持久化）→ 压测报告 → 清理 | 建议每月或 `/evolve` 后执行 |
-| ⭐⭐ | `/context-reset` | 上下文重置 | 诊断健康 → 保存进度 → 清理 → 按协议恢复（图谱辅助文件选择）→ 确认 | 适用于厨房水槽会话、纠正螺旋、上下文溢出 |
-| ⭐⭐ | `/finish` | 分支完成 | 验证测试 → **文档同步检查**（diff 对照所有 .md，自动修复目录/命令表）→ 展示 4 选项（本地合并/创建 PR/保留/丢弃）→ 执行选择 → 清理 worktree | 在 `/new-feature` 闭环验收后自动链接 |
-| ⭐⭐ | `/autoresearch` | 自主迭代优化 | 定义目标+度量 → 自主循环（修改→验证→保留/回滚）→ 支持 `Iterations: N` 有界迭代 | 适合覆盖率、性能、包大小等指标优化，手动触发 |
-| ⭐⭐ | `/autoresearch:security` | 安全审计 | STRIDE 威胁建模 → OWASP Top 10 → 红队（4 对抗角色）→ 迭代验证 → 严重等级报告 | 支持 `--diff` 增量审计、`--fix` 自动修复 |
-| ⭐⭐ | `/autoresearch:ship` | 通用发布 | 识别发布物 → 清单检查 → 迭代修复 → 干跑 → 发布 → 验证 → 日志 | 支持 PR、部署、内容、营销等 8 种发布类型 |
-| ⭐ | `/autoresearch:fix` | 自主修复 | 自动循环修复测试/类型/lint/构建错误直到归零 | 与 `/autoresearch:debug` 配合使用 |
-| ⭐⭐ | `/spec:propose` | 规格驱动提案 | 创建变更文件夹 + 生成 proposal → delta specs → design → tasks 全套产物 | 可独立使用或在 `/new-feature` Phase 1 中自动调用 |
-| ⭐⭐ | `/spec:archive` | 规格归档 | 三维验证（完整性/正确性/一致性）→ delta 合并到主规格 → 移入 archive | 补充 Phase 4 之后的知识沉淀 |
+三角审查：**专家 A** 找所有风险点 → **辩手 B** 逐条反驳 → **裁判 C** 根据证据裁定真实问题列表
 
-### 4. 验证生效
+### 写测试 / TDD
 
-观察 AI 是否：
-- ✅ 开发前先进行技术调研，产出精确技术规格
-- ✅ 编码前建立验收契约，定义可验证的成功标准
-- ✅ 编码时按需加载文件（≤5 个），不引入未授权依赖
-- ✅ 每个 Phase 完成后记录检查点
-- ✅ 验证时使用中立提示词，不带预设偏见
-- ✅ 在契约未完成前不宣布任务完成
+```
+/test     ← 补写现有代码的测试（覆盖率目标 80%/95%）
+/tdd      ← 先写测试再写代码（Red-Green-Refactor 循环）
+```
 
-### 5. 添加项目规则
+### 跨会话保存 & 恢复
 
-在 `AGENT.md` 底部的"项目规则"区域添加：
+```
+/checkpoint    ← 保存当前进度（Phase/文件/测试/决策）
+/handoff       ← 生成交接备忘录（含 git commit hash + 可执行下一步）
+/resume        ← 新会话恢复（精确感知检查点后的代码变化）
+```
+
+> 标准流程：完成阶段性工作 → `/checkpoint` → 下次开新会话 → `/resume`
+
+### 自主优化（高级）
+
+```
+/autoresearch              ← 自主迭代优化（覆盖率/性能/包大小等指标）
+/autoresearch:security     ← OWASP + STRIDE 安全审计 + 自动修复
+/autoresearch:fix          ← 自动修复 lint/类型/构建/测试错误直到归零
+/autoresearch:ship         ← 发布流程（PR/部署/内容发布）
+```
+
+### 规范维护
+
+```
+/evolve        ← 每 2-4 周清理规则（触发率分析 + git 效能指标 + 去重）
+/stress-test   ← 每月合规压测（8 项自动评分，满分 100）
+/init          ← 新项目初始化（自动检测技术栈 + 生成定制配置）
+/context-reset ← 上下文被污染时清理恢复
+/finish        ← 分支收尾（测试验证 + 文档同步 + merge/PR/keep/discard）
+```
+
+---
+
+## 🏗️ 技能系统
+
+### 核心编程技能（自动加载）
+
+| 技能 | 作用 |
+|---|---|
+| `world_class_coding` | **所有工作流的行为基础**：四阶段 SOP + TDD + 对抗验收 + 检查点 + Boil the Lake 完整性原则 |
+| `code-graph` | 影响分析（blast radius）+ 8 种依赖查询 + 精准文件选择（≤5个）。未安装时自动降级 |
+| `spec-driven` | 规格驱动开发：RFC 2119 + Given/When/Then + delta specs 增量管理 |
+| `autoresearch` | 自主迭代：修改→验证→保留/回滚→重复，支持 `Iterations: N` 有界迭代 |
+
+### 全栈前端技能
+
+**Tier 1 — 高频场景（AI 主动识别加载）**
+
+| 技能 | 何时使用 |
+|---|---|
+| `frontend-design` | 创建生产级 UI（遵循真实设计原则，不是泛化 AI 美学） |
+| `audit` | 无障碍 / 性能 / 响应式 全面审计（建议在 `/review` 后使用）|
+| `adapt` | 跨设备响应式适配 |
+| `harden` | 错误处理、i18n、文本溢出、边界情况强化 |
+| `polish` | **上线前最后一步**——全面质量门禁 |
+
+**Tier 2 — 微调场景（自然语言触发，说需求即可）**
+
+```
+animate     ← 「给这个卡片加微交互动画」
+colorize    ← 「帮我优化配色，建立色彩体系」
+bolder      ← 「视觉冲击力不够，关键元素不突出」
+quieter     ← 「设计太重了，太抢眼」
+delight     ← 「加一些愉悦感和个性触感」
+distill     ← 「太复杂了，帮我精简」
+clarify     ← 「优化按钮文案和错误提示」
+critique    ← 「从 UX 角度评估这个设计」
+normalize   ← 「统一 Token、间距、颜色规范」
+extract     ← 「把这段 UI 提取成可复用组件」
+optimize    ← 「加载太慢，渲染性能有问题」
+onboard     ← 「设计引导流和空状态页面」
+```
+
+---
+
+## 📁 项目结构
+
+```
+AGENT.md                    ← 复制到项目根目录（AI 路由表，<80行有效内容）
+AGENT.local.md              ← 个人本地偏好（自动加入 .gitignore）
+.agent/
+├── skills/                 ← 技能（AI 按场景自动加载）
+│   ├── world_class_coding/ ← 核心编码规范
+│   ├── code-graph/         ← 代码知识图谱
+│   ├── spec-driven/        ← 规格驱动开发
+│   ├── autoresearch/       ← 自主迭代优化
+│   ├── frontend-design/    ← 前端 UI 开发
+│   └── [17 个前端子技能]/  ← animate/audit/polish 等（按需调用）
+├── workflows/              ← 工作流（/命令 触发）
+│   ├── new-feature.md      ← /new-feature
+│   ├── debug.md            ← /debug
+│   ├── review.md           ← /review
+│   ├── test.md / tdd.md    ← /test / /tdd
+│   ├── checkpoint.md       ← /checkpoint
+│   ├── handoff.md          ← /handoff
+│   ├── resume.md           ← /resume
+│   ├── finish.md           ← /finish
+│   ├── evolve.md           ← /evolve
+│   ├── init.md             ← /init
+│   ├── spec-propose.md     ← /spec:propose
+│   ├── spec-archive.md     ← /spec:archive
+│   ├── stress-test.md      ← /stress-test
+│   └── context-reset.md    ← /context-reset
+└── rules/                  ← 规则（按文件路径自动匹配）
+    ├── code-style.md       ← JS/TS/Python/Go/Rust 代码风格
+    ├── code-review.md      ← 6 维度审查标准
+    ├── testing.md          ← 测试规范
+    └── security.md         ← 安全基线 + 供应链规则
+
+# autoresearch 运行时产物（建议加入 .gitignore）
+security/  debug/  fix/  ship/
+```
+
+---
+
+## ⚙️ 支持环境
+
+| 环境 | 状态 |
+|---|---|
+| **Antigravity IDE（桌面版）** | ✅ 全功能支持，`/命令` 在聊天框输入 |
+| **Gemini CLI** | ✅ 全功能支持，`/命令` 在终端输入 |
+
+> 复制文件到项目根目录后，AI 自动识别并加载，无需任何额外配置。
+
+---
+
+## 🔧 定制化
+
+### 添加项目专属规则
+
+在 `AGENT.md` 底部的 `## 项目规则` 区域添加：
 
 ```markdown
-## 项目规则 (Project-Specific Rules)
+## 项目规则
 - 本项目使用 Python 3.12 + FastAPI
 - 所有 API 必须有 OpenAPI 文档
 - 当编写 API 代码时 → 读取 `.agent/rules/api-conventions.md`
 ```
 
-也可以创建独立规则文件到 `.agent/rules/` 目录，支持 `paths` frontmatter 路径范围限定：
+或在 `.agent/rules/` 创建独立规则文件（支持 `paths` 路径范围限定）：
 
 ```yaml
 ---
@@ -216,190 +224,47 @@ description: API 开发规则
 paths:
   - "src/api/**/*.py"
 ---
-# API 开发规则
 - 所有端点必须包含输入验证
 - 使用标准错误响应格式
 ```
 
-### 6. 个人偏好覆盖
+### 个人偏好覆盖
 
-创建 `AGENT.local.md`（自动加入 `.gitignore`），添加个人偏好而不影响团队配置：
+创建 `AGENT.local.md`（自动加入 `.gitignore`），添加个人偏好而不影响团队配置。
 
-```markdown
-# 个人配置覆盖
-- 我偏好使用 Vim 风格的快捷键
-- 代码注释使用中文
-```
-
-### 7. 层级嵌套（大型项目）
-
-对于 monorepo 或大型项目，可在子目录中放置更具体的 `AGENT.md`：
+### 大型项目 / Monorepo
 
 ```
 project-root/
-├── AGENT.md                    ← 全局规则
-├── AGENT.local.md              ← 个人覆盖（.gitignore）
-├── .agent/
-│   ├── skills/...              ← 全局技能
-│   ├── workflows/...           ← 全局工作流
-│   └── rules/...               ← 全局规则文件
+├── AGENT.md          ← 全局规则
+├── .agent/           ← 全局技能 + 工作流 + 规则
 ├── frontend/
-│   └── AGENT.md                ← 前端特有规则（覆盖全局）
+│   └── AGENT.md      ← 前端特有规则（覆盖全局）
 └── backend/
-    └── AGENT.md                ← 后端特有规则（覆盖全局）
+    └── AGENT.md      ← 后端特有规则（覆盖全局）
 ```
 
-## CLAUDE.md 融合说明
+---
 
-本套件融合了 Anthropic CLAUDE.md 开发体系的精华理念：
+## 🔄 规范自维护建议
 
-| 来自 CLAUDE.md 的理念 | 在本套件中的实现 |
-|---|---|
-| `.claude/rules/` 路径范围规则 | → `.agent/rules/` + `paths` frontmatter |
-| `@文件引用` 渐进式加载 | → AGENT.md 中的 `@文件引用` 语法 |
-| `CLAUDE.local.md` 本地覆盖 | → `AGENT.local.md` 个人配置 |
-| 多层级配置继承 | → 全局 → 项目 → 子目录 → 本地覆盖 |
-| `/init` 初始化 | → `/init` 工作流 |
-| `/clear` 上下文清理 | → `/context-reset` 工作流 |
-| 厨房水槽、反复纠正等反模式命名 | → SKILL.md 第三章经典反模式 |
-
-> 无论你之前使用 CLAUDE.md、Cursor Rules 还是其他 AI 编程规范，本套件的理念和机制都是兼容且互补的。
-
-## 代码知识图谱集成 (Code Knowledge Graph)
-
-本套件集成了 [code-review-graph](https://github.com/tirth8205/code-review-graph) 的代码知识图谱能力，将 Agent "凭直觉猜该读哪些文件" 升级为 "用图谱算该读哪些文件"。
-
-**核心能力：**
-- 📊 **影响分析** — 修改文件前自动计算波及范围（blast radius），精准选择 ≤5 个最相关文件
-- 🔍 **依赖查询** — 8 种预定义查询（callers_of、tests_for、importers_of 等）
-- 🎯 **审查上下文** — 自动生成 token 优化的审查上下文 + 测试覆盖缺口报告
-- 🔄 **增量感知** — 跨会话恢复时自动检测检查点以来的代码变更
-
-**深度集成的工作流：**
-
-| 工作流 | 集成点 | 图谱操作 |
+| 周期 | 行动 | 命令 |
 |---|---|---|
-| `/init` | 步骤 4：初始化时构建图谱 | `build` + `status` |
-| `/new-feature` | Phase 1 调研 + Phase 3 编码 | `query_graph` + `get_impact_radius` |
-| `/review` | 步骤 1 精准上下文 + 步骤 3 证据链 | `get_review_context` + `query_graph` |
-| `/debug` | 步骤 3 调用链追踪 + 步骤 7 同类搜索 | `query_graph` + `semantic_search` |
-| `/tdd` | 步骤 2 诊断 + 步骤 3 测试清单 + 步骤 4 重构 | `query_graph` + `get_impact_radius` |
-| `/test` | 步骤 1 测试覆盖缺口分析 | `query_graph` |
-| `/resume` | 步骤 3.5 变更感知恢复 | `get_impact_radius` |
-| `/context-reset` | 步骤 4 恢复时精准文件选择 | `get_impact_radius` |
+| 每次发现 AI 不良行为 | 添加一条针对性规则 | 手动编辑 `AGENT.md` 或 `.agent/rules/` |
+| 每 2-4 周 | 清理规则（触发率分析 + git效能指标）| `/evolve` |
+| 规则超过 20 条 | 必须清理合并 | `/evolve` |
+| 每月 / `/evolve` 后 | 合规压测（8 项，满分 100）| `/stress-test` |
+| 上下文被污染 | 清理并恢复 | `/context-reset` |
 
-**已知局限：**
-- ⚠️ **跨语言盲区** — 无法识别跨语言调用链（如 TypeScript ↔ Lua、DSL 生成 ↔ 消费方），涉及跨语言交互时需手动追踪
-- ⚠️ **动态调用** — 反射、`eval`、依赖注入等动态调用方式无法被静态解析检测到
-- ⚠️ **语义变更** — 函数签名不变但返回值含义变更（如阈值从 90 天改为 60 天）无法感知
+---
 
-> **优雅降级**：所有图谱相关步骤在未安装 `code-review-graph` 时自动降级为 grep/find/git diff，不阻塞任何工作流。安装方式：`pip install code-review-graph`
+## 📚 延伸阅读
 
-## 规格驱动开发集成 (Spec-Driven Development)
+本套件融合了以下框架的精华：
 
-基于 [OpenSpec](https://github.com/Fission-AI/OpenSpec/) 框架的核心理念，本套件集成了**规格驱动开发 (SDD)** 能力，在编码之前通过结构化的行为规格让人类和 AI 先就"构建什么"达成一致，从结构层面减少 AI 幻觉。
-
-**核心概念：**
-- 📋 **Specs（规格）** — 系统行为的单一事实来源，使用 RFC 2119 关键词 + Given/When/Then 场景格式
-- 📂 **Changes（变更）** — 每个功能对应一个独立文件夹，包含 proposal → specs → design → tasks 四层产物
-- 🔄 **Delta Specs（增量规格）** — 描述"什么在变"而非重写整个规格，适合已有项目
-- 📦 **Archive（归档）** — 完成后将增量合并回主规格，保留完整审计轨迹
-
-**新增命令：**
-
-| 命令 | 用途 | 与四阶段 SOP 的关系 |
-|---|---|---|
-| `/spec:propose <name>` | 创建变更文件夹 + 生成全部规划产物 | 增强 Phase 1（调研→规格化） |
-| `/spec:archive [name]` | 三维验证 + delta 合并 + 归档 | 补充 Phase 4 之后的知识沉淀 |
-
-**规格目录结构：**
-
-```
-openspec/
-├── specs/            ← 主规格（系统如何工作的事实来源）
-│   ├── auth/spec.md
-│   └── ui/spec.md
-├── changes/          ← 活跃变更（每个功能一个文件夹）
-│   ├── add-dark-mode/
-│   │   ├── proposal.md    ← 为什么做 + 范围
-│   │   ├── specs/         ← 行为变什么（delta）
-│   │   ├── design.md      ← 怎么做
-│   │   └── tasks.md       ← 做哪些步骤
-│   └── archive/      ← 已完成变更的审计轨迹
-```
-
-**与现有体系的关系：**
-
-| 已有能力 | OpenSpec 补充 |
-|---|---|
-| 四阶段 SOP（流程纪律） | 规格层（需求管理） |
-| 对抗验收 A/B/C（验证深度） | 三维验证：完整性 × 正确性 × 一致性 |
-| 检查点协议（面向会话） | 变更文件夹（面向功能） |
-| 证据先行（防幻觉） | 规格先于代码（结构性防幻觉） |
-
-> **渐进引入**：规格驱动开发为可选增强。当 `/new-feature` 流程检测到 `openspec/` 目录存在时自动融入，否则保持原有流程不变。初始化方式：`mkdir -p openspec/specs openspec/changes`
-
-### 使用步骤
-
-**第零步：初始化（仅首次）**
-
-```bash
-mkdir -p openspec/specs openspec/changes
-```
-
-**第一步：`/spec:propose <功能名>` — 规划**
-
-```text
-你: /spec:propose add-user-profile
-```
-
-AI 依次生成 4 个产物：
-
-| 产物 | 回答的问题 | 示例 |
-|---|---|---|
-| `proposal.md` | 为什么做？ | 意图、范围（in/out scope）、大方向 |
-| `specs/{domain}/spec.md` | 变什么？ | 行为规格（Given/When/Then 场景） |
-| `design.md` | 怎么做？ | 技术方案、架构决策、文件清单 |
-| `tasks.md` | 做哪些步骤？ | 逐项实施清单（带 checkbox） |
-
-> AI 会在每一步与你确认，你可以随时要求修改任何产物（没有阶段限制）。
-
-**第二步：编码实现**
-
-按 `tasks.md` 清单逐项编码，完成后打勾。可手动编码，也可配合 `/new-feature` Phase 2-3 自动执行。
-
-**第三步：`/spec:archive` — 归档**
-
-```text
-你: /spec:archive add-user-profile
-```
-
-AI 执行：三维验证（完整性/正确性/一致性）→ delta specs 合并到主规格 → 变更文件夹移入 `archive/`
-
-### 与 `/new-feature` 的关系
-
-| 方式 | 说明 |
-|---|---|
-| **独立使用** | `/spec:propose` → 手动编码 → `/spec:archive` |
-| **融入 SOP** | `/new-feature` Phase 1 自动调用 `/spec:propose` → Phase 2-4 正常走 → `/spec:archive` |
-
-### 何时使用 / 不使用
-
-| ✅ 推荐使用 | ❌ 不需要 |
-|---|---|
-| 新功能开发（≥3 文件） | 简单 bug 修复、配置修改 |
-| API 或公共接口变更 | 内部函数小改、文案调整 |
-| 架构重构、多会话协作 | 一次性脚本 |
-
-## 维护建议
-
-| 周期 | 行动 | 快捷方式 |
-|---|---|---|
-| 每次发现 Agent 不良行为 | 添加一条针对性规则 | 手动编辑 AGENT.md 或 `.agent/rules/` |
-| 每 2-4 周 | 整合清理规则，分析规则触发率（从未触发 → 候选淘汰） | `/evolve` |
-| 规则超过 20 条时 | 必须进行一次全面清理合并 | `/evolve` |
-| 每月 / `/evolve` 后 | 合规压测验证 Agent 是否遵循 SOP（8 项评分） | `/stress-test` |
-| Agent 需要读取 >5 个 md 文件才能开工时 | 必须精简 | `/evolve` |
-| 上下文被不相关任务污染时 | 清理上下文并按协议恢复 | `/context-reset` |
-
-> ⚠️ `AGENT.md` 总行数建议不超过 80 行有效内容。规则超过 5 条时，应拆分为独立的 `.agent/rules/*.md` 文件并通过路由引用。
+- [How To Be A World-Class Agentic Engineer](https://github.com/spidersea/agentic) — 核心方法论
+- [Anthropic CLAUDE.md 规范](https://docs.anthropic.com/claude-code) — 规则系统设计
+- [OpenSpec](https://github.com/Fission-AI/OpenSpec/) — 规格驱动开发
+- [code-review-graph](https://github.com/tirth8205/code-review-graph) — 代码知识图谱
+- [gstack](https://github.com/garrytan/gstack) — 工程效能哲学（Boil the Lake）
+- [superpowers](https://github.com/obra/superpowers) — 计划可执行性标准
