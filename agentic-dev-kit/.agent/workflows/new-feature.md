@@ -41,8 +41,10 @@ description: 启动新功能开发流程 — 自动按四阶段 SOP 执行
        - **精确运行命令 + 预期输出**（如 `pytest tests/auth/ -v` → 预期 PASS）
        - 验证步骤（如何确认这一步成功）
      - **DRY / YAGNI 检查**: 每个功能点自问"这真的需要吗？有没有更简单的方式？"
-   - 📋 **规格驱动增强（可选）**：如果 `openspec/` 目录已存在，自动调用 `/spec:propose` 生成结构化变更产物（proposal → delta specs → design → tasks）。如果不存在，跳过此步骤，保持原有流程。
-   - 📄 **设计文件固化**：将技术规格保存为文件（优先 `openspec/` 目录，否则 `docs/specs/YYYY-MM-DD-<功能名>.md`），并执行 `git add` + `git commit -m "docs: <功能名> 技术规格"`
+   - 📋 **规格驱动（强制）**：每次 `/new-feature` 必须执行 `/spec:propose` 生成结构化变更产物（proposal → delta specs → design → tasks）。
+     - 如果 `openspec/` 目录不存在，先自动初始化：`mkdir -p openspec/specs openspec/changes`
+     - 然后调用 `/spec:propose <功能名>`，完整产出变更文件夹
+   - 📄 **设计文件固化**：`/spec:propose` 产物即持久化产物，执行 `git add openspec/ && git commit -m "docs: <功能名> 技术规格"` 固化到版本库
    - 🔍 **设计审查（推荐）**：对设计文件执行 `/review` 快速模式（仅中立阅读 + A 风险扫描），发现结构性问题时在用户审查前修正
    - 将技术规格以实施计划的形式提交用户确认（用户确认后方可进入 Phase 2）
    - ⛳ CP-1: 执行 `/checkpoint` 记录技术规格状态
