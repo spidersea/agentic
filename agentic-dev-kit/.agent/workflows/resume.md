@@ -17,6 +17,13 @@ description: 跨会话恢复流程 — 从检查点安全恢复任务上下文
 2. **加载开发规范**
    读取 `.agent/skills/world_class_coding/SKILL.md`，恢复行为规范。
 
+// turbo
+2.5 **执行会话启动钩子**
+   ```bash
+   bash .agent/scripts/session-start.sh
+   ```
+   读取输出，获取上次会话的状态摘要（检查点、git 变更、本能系统状态）。
+
 3. **定位检查点**
    - 搜索项目中最新的检查点文件或状态记录
    - 如果找到检查点：读取并解析检查点内容，确认：

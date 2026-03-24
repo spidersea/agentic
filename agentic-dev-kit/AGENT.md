@@ -2,7 +2,7 @@
 
 > 本文件是 AI 智能体的**逻辑路由表**，不是规则大全。
 > 它只负责告诉 Agent：在什么场景下，去读哪个文件。
-> 保持精简（<80 行有效内容），超出时拆分为独立文件并在此路由引用。
+> 保持精简（<200 行有效内容），超出时拆分为独立文件并在此路由引用。
 
 ---
 
@@ -11,10 +11,11 @@
 **每次会话开始或上下文压缩/重置后，Agent 必须按以下顺序执行恢复：**
 
 1. 读取本文件 `AGENT.md`
-2. 根据当前任务场景，加载对应的 Skill（见下方路由表）
-3. 读取最新的检查点或状态文件（如存在）
-4. 读取当前任务的实施计划和验收契约
-5. 读取当前正在修改的核心文件（≤5 个）
+2. 执行 `bash .agent/scripts/session-start.sh`（自动发现最新检查点和本能状态）
+3. 根据当前任务场景，加载对应的 Skill（见下方路由表）
+4. 读取最新的检查点或状态文件（如存在）
+5. 读取当前任务的实施计划和验收契约
+6. 读取当前正在修改的核心文件（≤5 个）
 
 ⚠️ **禁止凭"记忆残影"继续工作。** 如果无法找到检查点文件，必须向用户确认当前状态后再继续。
 
@@ -50,6 +51,12 @@
 | 审计（无障碍/性能/响应式） | `.agent/skills/audit/SKILL.md` | 全文 |
 | 响应式适配 | `.agent/skills/adapt/SKILL.md` | 全文 |
 | UI 健壮性（错误处理/i18n/溢出） | `.agent/skills/harden/SKILL.md` | 全文 |
+| 持续学习、本能提取与进化 | `.agent/skills/continuous-learning/SKILL.md` | 全文 |
+| 会话生命周期钩子（自动 checkpoint） | `.agent/skills/hooks-lifecycle/SKILL.md` | 全文 |
+| API 文档检索（Phase 1 增强） | `.agent/skills/doc-lookup/SKILL.md` | 全文 |
+
+> **按需加载技能**（使用对应命令时加载，不主动加载）：
+> `config-security`（`/config-scan` 时）· `skill-creator`（`/skill-create` 时）
 
 ### Tier 2 — 微调技能（用自然语言触发，不主动加载）
 
@@ -94,6 +101,13 @@
 | `/autoresearch:security` | 自主安全审计（STRIDE + OWASP + 红队） | `.agent/skills/autoresearch/SKILL.md` |
 | `/autoresearch:ship` | 通用发布流程（8 阶段） | `.agent/skills/autoresearch/SKILL.md` |
 | `/autoresearch:fix` | 自主修复循环（测试/类型/lint/构建错误归零） | `.agent/skills/autoresearch/SKILL.md` |
+| `/autoresearch:debug` | 自主 Bug 猎手（科学方法 + 迭代追查） | `.agent/skills/autoresearch/SKILL.md` |
+| `/learn` | 从当前会话提取编码模式为本能 | `.agent/workflows/learn.md` |
+| `/instinct` | 本能管理（status/import/export/prune） | `.agent/workflows/instinct.md` |
+| `/hooks` | 会话生命周期钩子管理 | `.agent/workflows/hooks.md` |
+| `/config-scan` | Agent 配置安全扫描（密钥/权限/注入） | `.agent/workflows/config-scan.md` |
+| `/harness-audit` | 配置健康度审计 + 模型路由建议 | `.agent/workflows/harness-audit.md` |
+| `/skill-create` | 从 Git 历史生成项目编码规范技能 | `.agent/workflows/skill-create.md` |
 
 ---
 
@@ -110,6 +124,22 @@
 | 所有场景 | `.agent/rules/security.md` |
 
 > **扩展**: 当项目规则超过 5 条时，应创建新的 `.agent/rules/{主题}.md` 文件并在此路由。
+
+---
+
+## Agent 委派路由 (Agent Delegation)
+
+> 专职 Sub-Agent 定义在 `.agent/agents/` 目录中。主 Agent 可委派特定任务给 Sub-Agent，每个 Sub-Agent 有限定的工具集和职责。
+
+| Agent | 职责 | 限定工具 | 定义文件 |
+|---|---|---|---|
+| planner | Phase 1 技术规格规划 | Read, Search, List | `.agent/agents/planner.md` |
+| reviewer | 代码审查（A/B/C 对抗） | Read, Grep, Search | `.agent/agents/reviewer.md` |
+| tester | 测试编写和运行 | Read, Write, Execute | `.agent/agents/tester.md` |
+| security-reviewer | 安全审查（OWASP/STRIDE） | Read, Grep, Search | `.agent/agents/security-reviewer.md` |
+| doc-updater | 代码变更后文档同步 | Read, Write, Search | `.agent/agents/doc-updater.md` |
+
+> **使用原则**: 并行任务（如同时 review + 写文档）时委派更高效。简单顺序任务使用主 Agent 加载不同 Skill 即可。
 
 ---
 
