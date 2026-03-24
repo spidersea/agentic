@@ -364,8 +364,10 @@ Adapt the loop to your domain. The PRINCIPLES are universal; the METRICS are dom
 | `/autoresearch:plan` | Phase 1 之前 | 将目标转化为可执行的 autoresearch 配置 |
 | `/autoresearch:security` | Phase 4 之后（或独立） | 安全审计补充 Phase 4 对抗验证 |
 | `/autoresearch:fix` | Phase 3 内部 | 自动修复编码阶段产生的测试/类型/lint 错误 |
-| `/autoresearch:debug` | Phase 3 受阻时 | 自主 bug 猎手，配合 /debug 手动根因分析 |
+| `/autoresearch:debug` | Phase 3 受阻时 | 自主 bug 猎手，配合 /debug 手动根因分析。参见 `references/methodology-router.md` 获取方法论切换链 |
 | `/autoresearch:ship` | Phase 4 完成后 | 发布流程，复杂场景替代 `/finish` |
+
+> 💡 **连续失败时**：debug/fix 循环在连续失败时自动触发 `escalation` 压力升级（参见 `../escalation/SKILL.md`），并通过 `references/methodology-router.md` 的方法论路由切换解决思路。
 
 **检查点整合**: autoresearch 产出的 `security/`, `debug/`, `fix/`, `ship/` 目录内容应在 `/checkpoint` 状态文件中引用，确保跨会话可追踪。
 

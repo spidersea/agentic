@@ -463,3 +463,45 @@ Iterations: 20
 ```
 
 When `--fix` is specified, after the debug loop completes, automatically switches to `/autoresearch:fix` targeting the discovered issues.
+
+## Escalation & Methodology Router Integration
+
+> 参考：`escalation/SKILL.md` +  `methodology-router.md`
+
+在 debug 循环中，Escalation 和方法论路由自动生效：
+
+### 压力升级触发
+
+| 循环事件 | Escalation 行为 |
+|---------|----------------|
+| 连续 2 次 hypothesis disproven（同一区域） | **L1**：切换本质不同的调查方向 |
+| 连续 3 次 discard | **L2**：强制执行搜索 + 读源码 + 列 3 个新假设 |
+| 连续 4 次无新发现 | **L3**：完成七项检查清单后才能继续 |
+| 连续 5+ 次失败 | **L4**：强制切换方法论（参见切换链） |
+
+### 方法论切换链（Debug 模式）
+
+```
+初始方法论 → RCA 根因分析
+   ↓ L4 触发
+搜索优先（是否遗漏已知问题/文档）
+   ↓ 仍然失败
+质疑→删除→简化（需求本身是否有问题）
+   ↓ 仍然失败
+数据驱动验证（用 profiling/日志定量分析）
+```
+
+### 七项清单在 Debug 中的应用
+
+达到 L3 时的七项清单与 debug Phase 1-4 自然映射：
+
+| 清单项 | Debug 对应 |
+|--------|-----------|
+| 逐字读完失败信号 | Phase 1: Gather |
+| 用工具搜索过核心问题 | Phase 2: Reconnaissance |
+| 读过失败位置原始上下文 | Phase 2: 读源码 50 行 |
+| 所有假设都用工具确认 | Phase 4: Test |
+| 试过完全相反的假设 | Phase 3: 认知偏见防护 |
+| 能在最小范围内复现 | Investigation: Minimal Reproduction |
+| 换过工具/方法/角度 | 方法论切换 |
+

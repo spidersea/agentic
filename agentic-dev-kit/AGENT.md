@@ -51,9 +51,10 @@
 | 审计（无障碍/性能/响应式） | `.agent/skills/audit/SKILL.md` | 全文 |
 | 响应式适配 | `.agent/skills/adapt/SKILL.md` | 全文 |
 | UI 健壮性（错误处理/i18n/溢出） | `.agent/skills/harden/SKILL.md` | 全文 |
-| 持续学习、本能提取与进化 | `.agent/skills/continuous-learning/SKILL.md` | 全文 |
-| 会话生命周期钩子（自动 checkpoint） | `.agent/skills/hooks-lifecycle/SKILL.md` | 全文 |
 | API 文档检索（Phase 1 增强） | `.agent/skills/doc-lookup/SKILL.md` | 全文 |
+
+> **情境触发技能**（检测到特定条件时自动加载，不常驻）：
+> `escalation`（连续失败 2+ 次时）· `hooks-lifecycle`（会话开始/结束/压缩时）· `continuous-learning`（`/learn`/`/evolve`/`/handoff` 时）
 
 > **按需加载技能**（使用对应命令时加载，不主动加载）：
 > `config-security`（`/config-scan` 时）· `skill-creator`（`/skill-create` 时）
@@ -108,6 +109,7 @@
 | `/config-scan` | Agent 配置安全扫描（密钥/权限/注入） | `.agent/workflows/config-scan.md` |
 | `/harness-audit` | 配置健康度审计 + 模型路由建议 | `.agent/workflows/harness-audit.md` |
 | `/skill-create` | 从 Git 历史生成项目编码规范技能 | `.agent/workflows/skill-create.md` |
+| `/escalate` | 手动触发压力升级（强制进入 L3 高压模式） | `.agent/workflows/escalate.md` |
 
 ---
 
@@ -122,6 +124,7 @@
 | 编辑或创建测试文件 | `.agent/rules/testing.md` |
 | 代码审查 / `/review` 工作流 | `.agent/rules/code-review.md` |
 | 所有场景 | `.agent/rules/security.md` |
+| 所有场景 | `.agent/rules/red-lines.md` |
 
 > **扩展**: 当项目规则超过 5 条时，应创建新的 `.agent/rules/{主题}.md` 文件并在此路由。
 
@@ -179,8 +182,8 @@ Git 工作流 → @docs/git-workflow.md
 5. **检查点纪律**: 每个 Phase 完成后必须记录检查点，跨会话时必须产出交接备忘录
 6. **不确定时停下**: 当不确定某个实现细节时（置信度 < 80%），必须标注 `[不确定]` 并提供备选方案，不可自行猜测并继续
 7. **影响感知**: 修改任何被其他模块依赖的公共函数/类/接口前，必须先分析调用方列表并评估影响范围。如果代码图谱可用，必须通过 `get_impact_radius` 量化。修改公共 API 签名、参数、返回值后，必须搜索并同步更新所有引用该接口的文档（README、API 文档、JSDoc/注释、CHANGELOG 等）。
-8. **证据先行**: 禁止在未执行验证命令并确认输出的情况下声称"完成"、"通过"、"修复"。"应该没问题"、"看起来正确"、"大概率通过"等措辞等同于未验证。必须：运行命令 → 读取输出 → 确认结果 → 才能声称。
-9. **第一性原理**: 从原始需求和问题本身出发，拒绝路径盲从。接收到任务时必须先评估：用户描述的是真正目标还是中间手段（XY 问题）？当前路径是否最优？若目标模糊，停下讨论；若路径非最优，在执行的同时主动建议更短、更低成本的替代方案。
+8. **证据先行**: 禁止未验证就声称完成。详见 `.agent/rules/red-lines.md` 红线一（闭环意识）
+9. **第一性原理**: 从原始需求出发，拒绝路径盲从，评估 XY 问题。详见 `.agent/rules/red-lines.md` 红线二（事实驱动）
 
 ---
 
