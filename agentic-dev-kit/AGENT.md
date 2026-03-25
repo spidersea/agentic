@@ -44,6 +44,7 @@
 | 编写或修改测试 | `.agent/skills/world_class_coding/SKILL.md` | Phase 2（契约）+ Phase 4（验证） |
 | 跨会话任务续作 | `.agent/skills/world_class_coding/SKILL.md` | 第五章：可持续节点协议 |
 | 代码结构分析、影响评估、依赖查询 | `.agent/skills/code-graph/SKILL.md` | 全文 |
+| 疑难杂症经验结晶 (按需提取微型技能) | `.agent/skills/captured/{名称}.md` | 全文 |
 | 需求规格管理、行为契约定义、变更归档 | `.agent/skills/spec-driven/SKILL.md` | 全文 |
 | 持续优化、自主迭代、安全审计、发布流程 | `.agent/skills/autoresearch/SKILL.md` | 全文（仅手动触发） |
 | 前端 UI 开发（生产级界面创建） | `.agent/skills/frontend-design/SKILL.md` | 全文 |
@@ -92,6 +93,7 @@
 | `/checkpoint` | 生成标准检查点记录 | `.agent/workflows/checkpoint.md` |
 | `/handoff` | 生成跨会话交接备忘录 | `.agent/workflows/handoff.md` |
 | `/resume` | 从检查点恢复任务上下文 | `.agent/workflows/resume.md` |
+| `/skill:capture` | 从复杂任务中提炼避坑经验和解决模式为微型技能 | `.agent/workflows/skill-capture.md` |
 | `/evolve` | 规则进化与清理（Spa Day） | `.agent/workflows/evolve.md` |
 | `/stress-test` | 合规压测（标准任务 + 自动评分） | `.agent/workflows/stress-test.md` |
 | `/context-reset` | 清理上下文污染并按协议恢复 | `.agent/workflows/context-reset.md` |
