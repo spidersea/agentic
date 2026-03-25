@@ -384,18 +384,83 @@ graph TB
 
 ---
 
+## 🔨 开发者工具（CLI & 自动化）
+
+> 📦 **新增功能**
+
+除了 AI 聊天命令，还提供了**可直接在终端运行**的开发者工具：
+
+### CLI 工具
+
+```bash
+# 初始化新项目
+bin/agentic init ./my-project
+
+# 验证框架结构完整性（17 项检查）
+bin/agentic validate
+
+# 运行健康检查（指令膨胀检测）
+bin/agentic health
+
+# 量化评分（5 维度，满分 100）
+bin/agentic stress-test
+```
+
+### Makefile 快捷命令
+
+| 命令 | 做什么 | 打个比方 |
+|---|---|---|
+| `make test` | 运行全量自动化测试（4 套件，20+ 断言） | 期末考试 📝 |
+| `make validate` | 检查框架结构完整性（17 项） | 消防检查 🧯 |
+| `make health` | 检测指令文件膨胀 | 体重秤 ⚖️ |
+| `make stress-test` | 量化评分（A/B/C/D/F） | 体检报告 🏥 |
+| `make lint` | 脚本语法检查 | 拼写检查 ✏️ |
+
+### 压力升级状态机
+
+> 将 Markdown 里的 L1-L4 规则变成了**可执行程序**：
+
+```bash
+# 记录一次失败（自动升级压力等级）
+bash .agent/scripts/escalation-tracker.sh fail
+
+# 查看当前等级
+bash .agent/scripts/escalation-tracker.sh status
+
+# 成功后重置
+bash .agent/scripts/escalation-tracker.sh reset
+```
+
+---
+
 ## 📁 文件一览
 
 ```
 你的项目/
 ├── AGENT.md                   ← AI 的「课程表」（告诉它什么时候翻什么教科书）
 ├── AGENT.local.md             ← 你的个人设置（不会上传到 git）
+├── Makefile                   ← 一键命令入口（make test / validate / health）
+├── bin/
+│   └── agentic                ← CLI 工具（init / validate / health / stress-test）
+├── tests/                     ← 🧪 自动化测试（4 套件，20+ 断言）
+│   ├── test-all.sh            ← 测试 Runner
+│   ├── test-scripts-syntax.sh ← 脚本语法检查
+│   ├── test-validate-structure.sh ← 结构验证器测试
+│   ├── test-escalation-tracker.sh ← 状态机行为测试（11 cases）
+│   └── test-health-check.sh   ← 健康检查测试
 └── .agent/
     ├── skills/                ← 📕 教科书（28 本，含 escalation 新增）
     ├── workflows/             ← 📋 标准流程（22 个，含 /escalate 新增）
     ├── agents/                ← 🤖 专职助手（5 个）
     ├── rules/                 ← 📏 规矩（编码风格、测试、安全、红线等）
-    ├── scripts/               ← ⚙️ 自动化脚本（存档、健康检查等）
+    ├── scripts/               ← ⚙️ 自动化脚本（7 个，含验证器和状态机）
+    │   ├── validate-structure.sh   ← 框架结构验证器（7 类 17 项检查）
+    │   ├── escalation-tracker.sh   ← 压力升级状态机（L0-L4）
+    │   ├── stress-test-engine.sh   ← 量化评分引擎（5 维度 100 分制）
+    │   ├── health-check.sh         ← 指令膨胀检测
+    │   ├── session-start.sh        ← 会话启动检查
+    │   ├── session-end.sh          ← 会话结束自动保存
+    │   └── setup-graph.sh          ← 代码图谱初始化
     └── instincts/             ← 🧠 经验笔记（AI 学到的东西）
 ```
 
@@ -436,10 +501,12 @@ graph TB
 |---|---|---|
 | 每次聊完天 | 让 AI 记笔记 | `/learn` |
 | 每 2-4 周 | 让 AI 整理笔记、清理旧规矩 | `/evolve` |
-| 每个月 | 考试看看规矩还有没有效 | `/stress-test` |
+| 每个月 | 考试看看规矩还有没有效 | `make stress-test` 或 `/stress-test` |
 | 偶尔 | 检查配置安全 | `/config-scan` |
+| 偶尔 | 检查框架结构 | `make validate` |
+| 提交代码前 | 跑一遍自动化测试 | `make test` |
 | AI 脑子乱了 | 重置 | `/context-reset` |
-| 新项目 | 从历史学习 | `/skill-create` |
+| 新项目 | 初始化 + 从历史学习 | `bin/agentic init` + `/skill-create` |
 
 ---
 

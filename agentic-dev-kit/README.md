@@ -19,38 +19,46 @@
 ```
 AGENT.md                              ← 复制到项目根目录（逻辑路由表）
 AGENT.local.md                        ← 个人本地覆盖（加入 .gitignore）
+Makefile                              ← 一键命令入口（make test / validate / health）
+bin/
+└── agentic                           ← CLI 工具（init / validate / health / stress-test）
+tests/                                ← 🧪 自动化测试（4 套件，20+ 断言）
+├── test-all.sh                       ← 测试 Runner
+├── test-scripts-syntax.sh            ← 脚本语法检查
+├── test-validate-structure.sh        ← 结构验证器测试
+├── test-escalation-tracker.sh        ← 状态机行为测试（11 cases）
+└── test-health-check.sh              ← 健康检查测试
 .agent/
 ├── skills/
 │   ├── world_class_coding/           ← 核心编码技能（四阶段 SOP、TDD、对抗验收）
 │   │   └── SKILL.md
 │   ├── frontend-design/              ← 前端设计技能（生产级 UI 开发）
 │   │   └── SKILL.md
-│   ├── animate/                      ← 动画增强     │ colorize/  ← 配色优化
-│   ├── audit/                        ← 界面质量审计   │ critique/  ← 设计评估
-│   ├── adapt/                        ← 响应式适配   │ harden/    ← 健壮性增强
-│   ├── polish/                       ← 发布前打磨   │ distill/   ← 精简设计
-│   ├── bolder/                       ← 加强视觉冲击 │ quieter/   ← 降低视觉强度
-│   ├── clarify/                      ← UX 文案优化  │ delight/   ← 愉悦体验增强
-│   ├── extract/                      ← 组件提取     │ normalize/ ← 设计规范化
-│   ├── onboard/                      ← 引导流设计   │ optimize/  ← 性能优化
-│   └── teach-impeccable/              ← 设计上下文初始化
-├── workflows/
-│   ├── init.md                       ← /init — 项目初始化配置
-│   ├── new-feature.md                ← /new-feature — 新功能开发流
-│   ├── debug.md                      ← /debug — 中立 Debug 流
-│   ├── review.md                     ← /review — 对抗式代码审查
-│   ├── test.md                       ← /test — 自动化测试
-│   ├── tdd.md                        ← /tdd — TDD 驱动开发
-│   ├── checkpoint.md                 ← /checkpoint — 生成检查点
-│   ├── handoff.md                    ← /handoff — 跨会话交接
-│   ├── resume.md                     ← /resume — 断点恢复
-│   ├── evolve.md                     ← /evolve — 规则进化清理
-│   └── context-reset.md              ← /context-reset — 上下文重置恢复
-└── rules/
-    ├── code-style.md                 ← 代码风格规则（路径范围限定）
-    ├── code-review.md                ← 代码审查标准（5 维度清单）
-    ├── testing.md                    ← 测试规范规则
-    └── security.md                   ← 安全基线规则
+│   ├── escalation/                   ← 失败压力升级（L1-L4）
+│   ├── continuous-learning/          ← 持续学习（本能提取）
+│   ├── hooks-lifecycle/              ← 会话生命周期钩子
+│   ├── autoresearch/                 ← 自主迭代引擎（6 个子命令）
+│   ├── code-graph/                   ← 代码知识图谱
+│   ├── spec-driven/                  ← 规格驱动开发
+│   ├── animate/ ~ teach-impeccable/  ← 12 个前端微调技能
+│   └── ...                           ← 共 28 个技能
+├── workflows/                        ← 📋 标准流程（22 个）
+├── agents/                           ← 🤖 专职助手（5 个）
+├── rules/                            ← 📏 规则文件（5 个）
+│   ├── code-style.md                 ← 代码风格规则
+│   ├── code-review.md                ← 代码审查标准
+│   ├── testing.md                    ← 测试规范规则
+│   ├── security.md                   ← 安全基线规则
+│   └── red-lines.md                  ← 三条红线（绝对底线）
+├── scripts/                          ← ⚙️ 自动化脚本（7 个）
+│   ├── validate-structure.sh         ← 框架结构验证器（7 类 17 项检查）
+│   ├── escalation-tracker.sh         ← 压力升级状态机（程序化 L0-L4）
+│   ├── stress-test-engine.sh         ← 量化评分引擎（5 维度 100 分制）
+│   ├── health-check.sh               ← 指令膨胀检测（Token 估算）
+│   ├── session-start.sh              ← 会话启动检查
+│   ├── session-end.sh                ← 会话结束自动保存
+│   └── setup-graph.sh                ← 代码图谱初始化
+└── instincts/                        ← 🧠 经验笔记（AI 学到的东西）
 ```
 
 ## 支持环境
@@ -209,6 +217,27 @@ project-root/
 
 > 无论你之前使用 CLAUDE.md、Cursor Rules 还是其他 AI 编程规范，本套件的理念和机制都是兼容且互补的。
 
+## 开发者工具
+
+### CLI
+
+```bash
+bin/agentic init ./my-project    # 初始化新项目
+bin/agentic validate             # 验证框架结构（17 项检查）
+bin/agentic health               # 指令膨胀检测
+bin/agentic stress-test          # 量化评分（满分 100）
+```
+
+### Makefile
+
+```bash
+make test           # 运行全量自动化测试（4 套件）
+make validate       # 框架结构验证
+make health         # 健康检查
+make stress-test    # 量化评分
+make lint           # 脚本语法检查
+```
+
 ## 维护建议
 
 | 周期 | 行动 | 快捷方式 |
@@ -216,7 +245,8 @@ project-root/
 | 每次发现 Agent 不良行为 | 添加一条针对性规则 | 手动编辑 AGENT.md 或 `.agent/rules/` |
 | 每 2-4 周 | 整合清理规则，移除过时或矛盾的条目 | `/evolve` |
 | 规则超过 20 条时 | 必须进行一次全面清理合并 | `/evolve` |
-| Agent 需要读取 >5 个 md 文件才能开工时 | 必须精简 | `/evolve` |
+| 提交代码前 | 跑一遍自动化测试 | `make test` |
+| 每月 | 检查框架结构和评分 | `make validate && make stress-test` |
 | 上下文被不相关任务污染时 | 清理上下文并按协议恢复 | `/context-reset` |
 
 > ⚠️ `AGENT.md` 总行数建议不超过 80 行有效内容。规则超过 5 条时，应拆分为独立的 `.agent/rules/*.md` 文件并通过路由引用。
