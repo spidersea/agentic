@@ -321,6 +321,14 @@ LOOP (FOREVER or N times):
   9. Repeat: Go to step 1.
      - If unbounded: NEVER STOP. NEVER ASK "should I continue?"
      - If bounded (N): Stop after N iterations, print final summary
+
+POST-LOOP (loop 结束或被中断后执行):
+  10. Learning: 从 results log 提取经验并沉淀
+      - 从 keep 记录中提取有效 Pattern（如"拆分大函数 → 覆盖率提升"）
+      - 从 discard 记录中提取无效 Anti-pattern（如"批量重命名 → 无覆盖率提升"）
+      - 如果 keep 率 < 30%，反思策略方向是否正确
+      - 将高价值经验调用 /learn 写入 continuous-learning 本能存储
+      - 输出：summary + 经验提取 + 建议下次起点
 ```
 
 ## Critical Rules
