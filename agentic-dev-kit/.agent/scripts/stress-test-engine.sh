@@ -210,20 +210,20 @@ echo ""
 
 D5_SCORE=0
 
-# Has CLI (3 points)
+# Has CLI (2 points)
 if [ -f "$PROJECT_ROOT/bin/agentic" ]; then
-    add_score 3 3 "CLI 入口 (bin/agentic)" "存在"
-    D5_SCORE=$((D5_SCORE + 3))
+    add_score 2 2 "CLI 入口 (bin/agentic)" "存在"
+    D5_SCORE=$((D5_SCORE + 2))
 else
-    add_score 0 3 "CLI 入口 (bin/agentic)" "缺失"
+    add_score 0 2 "CLI 入口 (bin/agentic)" "缺失"
 fi
 
-# Has Makefile (3 points)
+# Has Makefile (2 points)
 if [ -f "$PROJECT_ROOT/Makefile" ]; then
-    add_score 3 3 "Makefile" "存在"
-    D5_SCORE=$((D5_SCORE + 3))
+    add_score 2 2 "Makefile" "存在"
+    D5_SCORE=$((D5_SCORE + 2))
 else
-    add_score 0 3 "Makefile" "缺失"
+    add_score 0 2 "Makefile" "缺失"
 fi
 
 # Has test directory (3 points)
@@ -235,44 +235,144 @@ else
     add_score 0 3 "测试目录" "缺失或空"
 fi
 
-# Has escalation tracker (3 points)
+# Has escalation tracker (2 points)
 if [ -f "$SCRIPTS/escalation-tracker.sh" ]; then
-    add_score 3 3 "Escalation 状态机" "存在"
-    D5_SCORE=$((D5_SCORE + 3))
+    add_score 2 2 "Escalation 状态机" "存在"
+    D5_SCORE=$((D5_SCORE + 2))
 else
-    add_score 0 3 "Escalation 状态机" "缺失"
+    add_score 0 2 "Escalation 状态机" "缺失"
 fi
 
-# Has validate-structure (3 points)
+# Has validate-structure (2 points)
 if [ -f "$SCRIPTS/validate-structure.sh" ]; then
-    add_score 3 3 "结构验证器" "存在"
-    D5_SCORE=$((D5_SCORE + 3))
+    add_score 2 2 "结构验证器" "存在"
+    D5_SCORE=$((D5_SCORE + 2))
 else
-    add_score 0 3 "结构验证器" "缺失"
+    add_score 0 2 "结构验证器" "缺失"
 fi
 
+# Has instinct manager (2 points)
+if [ -f "$SCRIPTS/instinct-manager.sh" ]; then
+    add_score 2 2 "本能管理器" "存在"
+    D5_SCORE=$((D5_SCORE + 2))
+else
+    add_score 0 2 "本能管理器" "缺失"
+fi
+
+# Has stress-test-engine (2 points — self-reference, but valid)
+if [ -f "$SCRIPTS/stress-test-engine.sh" ]; then
+    add_score 2 2 "评分引擎" "存在"
+    D5_SCORE=$((D5_SCORE + 2))
+else
+    add_score 0 2 "评分引擎" "缺失"
+fi
 echo ""
 
 # =============================================================================
-# Final Score
+# Dimension 6: 社区与生态 (10 points)
+# =============================================================================
+echo -e "${BOLD}━━━ D6: 社区与生态 (10 分) ━━━${NC}"
+echo ""
+
+D6_SCORE=0
+
+# CONTRIBUTING.md (3 points)
+if [ -f "$PROJECT_ROOT/CONTRIBUTING.md" ]; then
+    add_score 3 3 "CONTRIBUTING.md" "存在"
+    D6_SCORE=$((D6_SCORE + 3))
+else
+    add_score 0 3 "CONTRIBUTING.md" "缺失"
+fi
+
+# CHANGELOG.md (3 points)
+if [ -f "$PROJECT_ROOT/CHANGELOG.md" ]; then
+    add_score 3 3 "CHANGELOG.md" "存在"
+    D6_SCORE=$((D6_SCORE + 3))
+else
+    add_score 0 3 "CHANGELOG.md" "缺失"
+fi
+
+# GitHub templates (2 points)
+TEMPLATE_COUNT=0
+[ -f "$PROJECT_ROOT/.github/ISSUE_TEMPLATE/bug_report.md" ] && TEMPLATE_COUNT=$((TEMPLATE_COUNT + 1))
+[ -f "$PROJECT_ROOT/.github/ISSUE_TEMPLATE/feature_request.md" ] && TEMPLATE_COUNT=$((TEMPLATE_COUNT + 1))
+[ -f "$PROJECT_ROOT/.github/pull_request_template.md" ] && TEMPLATE_COUNT=$((TEMPLATE_COUNT + 1))
+if [ "$TEMPLATE_COUNT" -ge 2 ]; then
+    add_score 2 2 "GitHub 模板" "${TEMPLATE_COUNT} 个模板"
+    D6_SCORE=$((D6_SCORE + 2))
+elif [ "$TEMPLATE_COUNT" -ge 1 ]; then
+    add_score 1 2 "GitHub 模板" "${TEMPLATE_COUNT} 个模板"
+    D6_SCORE=$((D6_SCORE + 1))
+else
+    add_score 0 2 "GitHub 模板" "缺失"
+fi
+
+# Platform adapter docs (2 points)
+if [ -f "$PROJECT_ROOT/docs/platform-adapters.md" ]; then
+    add_score 2 2 "平台适配文档" "存在"
+    D6_SCORE=$((D6_SCORE + 2))
+else
+    add_score 0 2 "平台适配文档" "缺失"
+fi
+echo ""
+
+# =============================================================================
+# Dimension 7: 参考项目 (5 points)
+# =============================================================================
+echo -e "${BOLD}━━━ D7: 参考项目 (5 分) ━━━${NC}"
+echo ""
+
+D7_SCORE=0
+
+# Has examples directory with content (3 points)
+if [ -d "$PROJECT_ROOT/examples" ]; then
+    EXAMPLE_FILES=$(find "$PROJECT_ROOT/examples" -type f 2>/dev/null | wc -l | tr -d ' ')
+    if [ "$EXAMPLE_FILES" -ge 3 ]; then
+        add_score 3 3 "参考项目" "${EXAMPLE_FILES} 个文件"
+        D7_SCORE=$((D7_SCORE + 3))
+    elif [ "$EXAMPLE_FILES" -ge 1 ]; then
+        add_score 1 3 "参考项目" "${EXAMPLE_FILES} 个文件（偏少）"
+        D7_SCORE=$((D7_SCORE + 1))
+    else
+        add_score 0 3 "参考项目" "目录为空"
+    fi
+else
+    add_score 0 3 "参考项目" "缺失"
+fi
+
+# Has example README with walkthrough (2 points)
+if find "$PROJECT_ROOT/examples" -name "README.md" -exec grep -q "Phase" {} \; 2>/dev/null; then
+    add_score 2 2 "端到端演示文档" "存在"
+    D7_SCORE=$((D7_SCORE + 2))
+else
+    add_score 0 2 "端到端演示文档" "缺失"
+fi
+echo ""
+
+# =============================================================================
+# Final Score (normalize to 100)
 # =============================================================================
 echo -e "${BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
 
+# Raw total out of 115, normalize to 100
+RAW_MAX=115
+NORMALIZED_SCORE=$(( (TOTAL_SCORE * 100) / RAW_MAX ))
+
 # Calculate grade
-if [ "$TOTAL_SCORE" -ge 90 ]; then
+if [ "$NORMALIZED_SCORE" -ge 90 ]; then
     GRADE="A"
     GRADE_COLOR=$GREEN
     EXIT_CODE=0
-elif [ "$TOTAL_SCORE" -ge 80 ]; then
+elif [ "$NORMALIZED_SCORE" -ge 80 ]; then
     GRADE="B"
     GRADE_COLOR=$GREEN
     EXIT_CODE=0
-elif [ "$TOTAL_SCORE" -ge 70 ]; then
+elif [ "$NORMALIZED_SCORE" -ge 70 ]; then
     GRADE="C"
     GRADE_COLOR=$YELLOW
     EXIT_CODE=1
-elif [ "$TOTAL_SCORE" -ge 60 ]; then
+elif [ "$NORMALIZED_SCORE" -ge 60 ]; then
     GRADE="D"
     GRADE_COLOR=$YELLOW
     EXIT_CODE=1
@@ -282,7 +382,7 @@ else
     EXIT_CODE=2
 fi
 
-echo -e "  ${BOLD}总分: ${GRADE_COLOR}${TOTAL_SCORE} / 100${NC}  评级: ${GRADE_COLOR}${BOLD}${GRADE}${NC}"
+echo -e "  ${BOLD}总分: ${GRADE_COLOR}${NORMALIZED_SCORE} / 100${NC} (原始 ${TOTAL_SCORE}/${RAW_MAX})  评级: ${GRADE_COLOR}${BOLD}${GRADE}${NC}"
 echo ""
 
 # Breakdown
@@ -292,17 +392,22 @@ printf "    %-25s %d / 20\n" "D2 健康检查" "$D2_SCORE"
 printf "    %-25s %d / 15\n" "D3 脚本可执行性" "$D3_SCORE"
 printf "    %-25s %d / 20\n" "D4 文档覆盖率" "$D4_SCORE"
 printf "    %-25s %d / 15\n" "D5 工具链完整性" "$D5_SCORE"
+printf "    %-25s %d / 10\n" "D6 社区与生态" "$D6_SCORE"
+printf "    %-25s %d / 5\n" "D7 参考项目" "$D7_SCORE"
 echo ""
 
 # Recommendations
-if [ "$TOTAL_SCORE" -lt 80 ]; then
+if [ "$NORMALIZED_SCORE" -lt 90 ]; then
     echo -e "  ${BOLD}改进建议:${NC}"
     [ "$D1_SCORE" -lt 25 ] && echo "    • D1: 修复路由引用或补全缺失文件"
     [ "$D2_SCORE" -lt 15 ] && echo "    • D2: 运行 /evolve 清理指令膨胀"
     [ "$D3_SCORE" -lt 12 ] && echo "    • D3: 修复脚本语法错误"
     [ "$D4_SCORE" -lt 15 ] && echo "    • D4: 给 Skill/Workflow 添加 YAML frontmatter"
     [ "$D5_SCORE" -lt 12 ] && echo "    • D5: 添加缺失的工具链组件"
+    [ "$D6_SCORE" -lt 8 ] && echo "    • D6: 添加 CONTRIBUTING.md, CHANGELOG.md, GitHub 模板"
+    [ "$D7_SCORE" -lt 4 ] && echo "    • D7: 创建参考项目和端到端演示"
     echo ""
 fi
 
 exit $EXIT_CODE
+
