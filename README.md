@@ -249,6 +249,141 @@ AI 会从每次工作中**学习经验**，就像学生的错题本：
 
 ---
 
+## 🗺️ 架构全景图（调用关系脑图）
+
+```mermaid
+graph TB
+    subgraph AGENT_LAYER["🏛️ Agent 层（始终生效）"]
+        direction LR
+        AGENT["AGENT.md<br/>路由总控"]
+        HOOKS["hooks-lifecycle<br/>会话钩子"]
+        REDLINES["red-lines.md<br/>三条红线"]
+        ESC_TRIGGER["escalation<br/>压力升级（情境触发）"]
+    end
+
+    subgraph WORKFLOW_LAYER["📋 工作流层（用户命令触发）"]
+        direction TB
+        subgraph DEV_FLOWS["🔨 开发流程"]
+            NF["/new-feature<br/>新功能开发"]
+            DEBUG["/debug<br/>中立调试"]
+            REVIEW["/review<br/>对抗审查"]
+            TEST["/test<br/>测试"]
+            TDD["/tdd<br/>测试驱动"]
+            FINISH["/finish<br/>分支收尾"]
+        end
+        subgraph AUTO_FLOWS["🤖 自动化流程"]
+            AR["/autoresearch<br/>自主优化"]
+            AR_DEBUG["/autoresearch:debug<br/>自主调试"]
+            AR_FIX["/autoresearch:fix<br/>自主修复"]
+            AR_SEC["/autoresearch:security<br/>安全审计"]
+        end
+        subgraph LIFECYCLE_FLOWS["💾 生命周期"]
+            CP["/checkpoint<br/>存档"]
+            HANDOFF["/handoff<br/>交接"]
+            RESUME["/resume<br/>恢复"]
+            ESCALATE["/escalate<br/>手动加压"]
+        end
+        subgraph EVOLVE_FLOWS["🧠 进化流程"]
+            LEARN["/learn<br/>学习经验"]
+            EVOLVE["/evolve<br/>规则清理"]
+            STRESS["/stress-test<br/>合规压测"]
+        end
+        subgraph SPEC_FLOWS["📋 规格管理"]
+            SPEC_P["/spec:propose<br/>变更提案"]
+            SPEC_A["/spec:archive<br/>变更归档"]
+            INIT["/init<br/>初始化"]
+        end
+    end
+
+    subgraph SKILL_LAYER["📕 技能层（教科书）"]
+        direction TB
+        subgraph CORE_SKILLS["核心技能（Tier 1）"]
+            WCC["world_class_coding<br/>四阶段 SOP + Phase 0"]
+            CG["code-graph<br/>代码图谱"]
+            SD["spec-driven<br/>规格驱动"]
+            ARS["autoresearch<br/>自主循环引擎"]
+            DL["doc-lookup<br/>文档检索"]
+        end
+        subgraph UI_SKILLS["前端技能"]
+            FD["frontend-design<br/>界面设计"]
+            POLISH["polish<br/>上线检查"]
+            AUDIT["audit<br/>审计"]
+            ADAPT["adapt<br/>响应式"]
+            HARDEN["harden<br/>健壮性"]
+        end
+        subgraph CONTEXT_SKILLS["情境触发技能"]
+            ESC["escalation<br/>L1-L4 压力升级"]
+            HOOKS_S["hooks-lifecycle<br/>自动存档恢复"]
+            CL["continuous-learning<br/>本能提取"]
+        end
+        subgraph REF_SKILLS["参考资料"]
+            MR["methodology-router<br/>方法论路由"]
+            DW["debug-workflow<br/>调试参考"]
+        end
+    end
+
+    subgraph RULE_LAYER["📏 规则层（行为约束）"]
+        direction LR
+        CS["code-style<br/>代码风格"]
+        TS["testing<br/>测试标准"]
+        CR["code-review<br/>审查标准"]
+        SEC["security<br/>安全规则"]
+        RL["red-lines<br/>三条红线"]
+    end
+
+    %% Agent 层 → 技能触发
+    AGENT -->|"路由加载"| WCC
+    HOOKS -->|"PostToolUse 失败检测"| ESC
+    HOOKS -->|"SessionStart/End"| HOOKS_S
+    REDLINES -.->|"违反时触发"| ESC
+
+    %% 工作流 → 技能调用
+    NF -->|"Phase 0-4"| WCC
+    NF -->|"调用"| TEST
+    NF -->|"调用"| REVIEW
+    NF -->|"调用"| DEBUG
+    NF -->|"完整模式"| SPEC_P
+    NF -->|"收尾"| FINISH
+
+    DEBUG -->|"Phase 4 中立验证"| WCC
+    DEBUG -->|"失败递进 L1-L4"| ESC
+    DEBUG -->|"方法论切换"| MR
+    DEBUG -->|"回测"| TEST
+
+    REVIEW -->|"审查标准"| CR
+
+    AR -->|"自主循环"| ARS
+    AR_DEBUG -->|"循环调试"| ESC
+    AR_FIX -->|"循环修复"| ESC
+
+    ESCALATE -->|"强制 L3"| ESC
+
+    LEARN -->|"提取经验"| CL
+    EVOLVE -->|"清理规则"| CL
+    STRESS -->|"合规检查"| WCC
+
+    SPEC_P -->|"规格管理"| SD
+
+    %% 技能间引用
+    ESC -->|"L4 方法论切换"| MR
+    ARS -->|"调试参考"| DW
+    DW -->|"escalation 集成"| ESC
+    WCC -->|"Phase 0 档位选择"| NF
+
+    %% 规则生效范围
+    CS -.->|"src/ lib/"| AGENT
+    TS -.->|"test/ spec/"| AGENT
+    SEC -.->|"全局"| AGENT
+    RL -.->|"全局"| AGENT
+```
+
+**图例说明**：
+- **实线箭头** `→` = 直接调用/加载
+- **虚线箭头** `⇢` = 规则约束/触发关系
+- **四层架构**：Agent 层（始终生效）→ 工作流层（命令触发）→ 技能层（教科书）→ 规则层（约束）
+
+---
+
 ## 📁 文件一览
 
 ```
