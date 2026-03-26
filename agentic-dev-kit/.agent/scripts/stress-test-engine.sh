@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ============================================================================
 # stress-test-engine.sh — 可复现的量化评分引擎
-# 5 维度评分，满分 100，输出评级 A-F
+# 6 维度评分，满分 100，输出评级 A-F
 # 用法: bash .agent/scripts/stress-test-engine.sh [项目根目录]
 # 退出码: 0=A/B, 1=C/D, 2=F
 # ============================================================================
@@ -269,70 +269,22 @@ fi
 echo ""
 
 # =============================================================================
-# Dimension 6: 社区与生态 (10 points)
+# Dimension 6: 参考项目 (5 points)
 # =============================================================================
-echo -e "${BOLD}━━━ D6: 社区与生态 (10 分) ━━━${NC}"
+echo -e "${BOLD}━━━ D6: 参考项目 (5 分) ━━━${NC}"
 echo ""
 
 D6_SCORE=0
-
-# CONTRIBUTING.md (3 points)
-if [ -f "$PROJECT_ROOT/CONTRIBUTING.md" ]; then
-    add_score 3 3 "CONTRIBUTING.md" "存在"
-    D6_SCORE=$((D6_SCORE + 3))
-else
-    add_score 0 3 "CONTRIBUTING.md" "缺失"
-fi
-
-# CHANGELOG.md (3 points)
-if [ -f "$PROJECT_ROOT/CHANGELOG.md" ]; then
-    add_score 3 3 "CHANGELOG.md" "存在"
-    D6_SCORE=$((D6_SCORE + 3))
-else
-    add_score 0 3 "CHANGELOG.md" "缺失"
-fi
-
-# GitHub templates (2 points)
-TEMPLATE_COUNT=0
-[ -f "$PROJECT_ROOT/.github/ISSUE_TEMPLATE/bug_report.md" ] && TEMPLATE_COUNT=$((TEMPLATE_COUNT + 1))
-[ -f "$PROJECT_ROOT/.github/ISSUE_TEMPLATE/feature_request.md" ] && TEMPLATE_COUNT=$((TEMPLATE_COUNT + 1))
-[ -f "$PROJECT_ROOT/.github/pull_request_template.md" ] && TEMPLATE_COUNT=$((TEMPLATE_COUNT + 1))
-if [ "$TEMPLATE_COUNT" -ge 2 ]; then
-    add_score 2 2 "GitHub 模板" "${TEMPLATE_COUNT} 个模板"
-    D6_SCORE=$((D6_SCORE + 2))
-elif [ "$TEMPLATE_COUNT" -ge 1 ]; then
-    add_score 1 2 "GitHub 模板" "${TEMPLATE_COUNT} 个模板"
-    D6_SCORE=$((D6_SCORE + 1))
-else
-    add_score 0 2 "GitHub 模板" "缺失"
-fi
-
-# Platform adapter docs (2 points)
-if [ -f "$PROJECT_ROOT/docs/platform-adapters.md" ]; then
-    add_score 2 2 "平台适配文档" "存在"
-    D6_SCORE=$((D6_SCORE + 2))
-else
-    add_score 0 2 "平台适配文档" "缺失"
-fi
-echo ""
-
-# =============================================================================
-# Dimension 7: 参考项目 (5 points)
-# =============================================================================
-echo -e "${BOLD}━━━ D7: 参考项目 (5 分) ━━━${NC}"
-echo ""
-
-D7_SCORE=0
 
 # Has examples directory with content (3 points)
 if [ -d "$PROJECT_ROOT/examples" ]; then
     EXAMPLE_FILES=$(find "$PROJECT_ROOT/examples" -type f 2>/dev/null | wc -l | tr -d ' ')
     if [ "$EXAMPLE_FILES" -ge 3 ]; then
         add_score 3 3 "参考项目" "${EXAMPLE_FILES} 个文件"
-        D7_SCORE=$((D7_SCORE + 3))
+        D6_SCORE=$((D6_SCORE + 3))
     elif [ "$EXAMPLE_FILES" -ge 1 ]; then
         add_score 1 3 "参考项目" "${EXAMPLE_FILES} 个文件（偏少）"
-        D7_SCORE=$((D7_SCORE + 1))
+        D6_SCORE=$((D6_SCORE + 1))
     else
         add_score 0 3 "参考项目" "目录为空"
     fi
@@ -343,7 +295,7 @@ fi
 # Has example README with walkthrough (2 points)
 if find "$PROJECT_ROOT/examples" -name "README.md" -exec grep -q "Phase" {} \; 2>/dev/null; then
     add_score 2 2 "端到端演示文档" "存在"
-    D7_SCORE=$((D7_SCORE + 2))
+    D6_SCORE=$((D6_SCORE + 2))
 else
     add_score 0 2 "端到端演示文档" "缺失"
 fi
@@ -355,8 +307,8 @@ echo ""
 echo -e "${BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
 
-# Raw total out of 115, normalize to 100
-RAW_MAX=115
+# Raw total out of 105, normalize to 100
+RAW_MAX=105
 NORMALIZED_SCORE=$(( (TOTAL_SCORE * 100) / RAW_MAX ))
 
 # Calculate grade
@@ -392,8 +344,7 @@ printf "    %-25s %d / 20\n" "D2 健康检查" "$D2_SCORE"
 printf "    %-25s %d / 15\n" "D3 脚本可执行性" "$D3_SCORE"
 printf "    %-25s %d / 20\n" "D4 文档覆盖率" "$D4_SCORE"
 printf "    %-25s %d / 15\n" "D5 工具链完整性" "$D5_SCORE"
-printf "    %-25s %d / 10\n" "D6 社区与生态" "$D6_SCORE"
-printf "    %-25s %d / 5\n" "D7 参考项目" "$D7_SCORE"
+printf "    %-25s %d / 5\n" "D6 参考项目" "$D6_SCORE"
 echo ""
 
 # Recommendations
@@ -404,8 +355,7 @@ if [ "$NORMALIZED_SCORE" -lt 90 ]; then
     [ "$D3_SCORE" -lt 12 ] && echo "    • D3: 修复脚本语法错误"
     [ "$D4_SCORE" -lt 15 ] && echo "    • D4: 给 Skill/Workflow 添加 YAML frontmatter"
     [ "$D5_SCORE" -lt 12 ] && echo "    • D5: 添加缺失的工具链组件"
-    [ "$D6_SCORE" -lt 8 ] && echo "    • D6: 添加 CONTRIBUTING.md, CHANGELOG.md, GitHub 模板"
-    [ "$D7_SCORE" -lt 4 ] && echo "    • D7: 创建参考项目和端到端演示"
+    [ "$D6_SCORE" -lt 4 ] && echo "    • D6: 创建参考项目和端到端演示"
     echo ""
 fi
 
