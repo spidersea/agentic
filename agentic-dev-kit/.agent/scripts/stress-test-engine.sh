@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ============================================================================
 # stress-test-engine.sh — 可复现的量化评分引擎
-# 6 维度评分，满分 100，输出评级 A-F
+# 5 维度评分，满分 100，输出评级 A-F
 # 用法: bash .agent/scripts/stress-test-engine.sh [项目根目录]
 # 退出码: 0=A/B, 1=C/D, 2=F
 # ============================================================================
@@ -269,46 +269,13 @@ fi
 echo ""
 
 # =============================================================================
-# Dimension 6: 参考项目 (5 points)
-# =============================================================================
-echo -e "${BOLD}━━━ D6: 参考项目 (5 分) ━━━${NC}"
-echo ""
-
-D6_SCORE=0
-
-# Has examples directory with content (3 points)
-if [ -d "$PROJECT_ROOT/examples" ]; then
-    EXAMPLE_FILES=$(find "$PROJECT_ROOT/examples" -type f 2>/dev/null | wc -l | tr -d ' ')
-    if [ "$EXAMPLE_FILES" -ge 3 ]; then
-        add_score 3 3 "参考项目" "${EXAMPLE_FILES} 个文件"
-        D6_SCORE=$((D6_SCORE + 3))
-    elif [ "$EXAMPLE_FILES" -ge 1 ]; then
-        add_score 1 3 "参考项目" "${EXAMPLE_FILES} 个文件（偏少）"
-        D6_SCORE=$((D6_SCORE + 1))
-    else
-        add_score 0 3 "参考项目" "目录为空"
-    fi
-else
-    add_score 0 3 "参考项目" "缺失"
-fi
-
-# Has example README with walkthrough (2 points)
-if find "$PROJECT_ROOT/examples" -name "README.md" -exec grep -q "Phase" {} \; 2>/dev/null; then
-    add_score 2 2 "端到端演示文档" "存在"
-    D6_SCORE=$((D6_SCORE + 2))
-else
-    add_score 0 2 "端到端演示文档" "缺失"
-fi
-echo ""
-
-# =============================================================================
-# Final Score (normalize to 100)
+# Final Score
 # =============================================================================
 echo -e "${BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
 
-# Raw total out of 105, normalize to 100
-RAW_MAX=105
+# Raw total out of 100
+RAW_MAX=100
 NORMALIZED_SCORE=$(( (TOTAL_SCORE * 100) / RAW_MAX ))
 
 # Calculate grade
@@ -344,7 +311,6 @@ printf "    %-25s %d / 20\n" "D2 健康检查" "$D2_SCORE"
 printf "    %-25s %d / 15\n" "D3 脚本可执行性" "$D3_SCORE"
 printf "    %-25s %d / 20\n" "D4 文档覆盖率" "$D4_SCORE"
 printf "    %-25s %d / 15\n" "D5 工具链完整性" "$D5_SCORE"
-printf "    %-25s %d / 5\n" "D6 参考项目" "$D6_SCORE"
 echo ""
 
 # Recommendations
@@ -355,7 +321,6 @@ if [ "$NORMALIZED_SCORE" -lt 90 ]; then
     [ "$D3_SCORE" -lt 12 ] && echo "    • D3: 修复脚本语法错误"
     [ "$D4_SCORE" -lt 15 ] && echo "    • D4: 给 Skill/Workflow 添加 YAML frontmatter"
     [ "$D5_SCORE" -lt 12 ] && echo "    • D5: 添加缺失的工具链组件"
-    [ "$D6_SCORE" -lt 4 ] && echo "    • D6: 创建参考项目和端到端演示"
     echo ""
 fi
 
