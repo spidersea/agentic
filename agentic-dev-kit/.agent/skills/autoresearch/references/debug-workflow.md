@@ -182,12 +182,14 @@ Design a minimal experiment that definitively proves or disproves the hypothesis
 
 **Append to debug-results.tsv:**
 ```tsv
-iteration	type	hypothesis	result	severity	location	description
-1	hypothesis	JWT skips alg check	confirmed	CRITICAL	auth.ts:42	Algorithm confusion vulnerability
-2	hypothesis	Rate limit missing	disproven	-	-	Rate limiter exists in middleware
-3	discovery	-	new_lead	-	db.ts:88	Unhandled promise rejection in insert
-4	hypothesis	DB insert missing await	confirmed	HIGH	db.ts:88	Silent failure on write errors
+iteration	type	hypothesis	result	severity	location	description	esc_level	methodology
+1	hypothesis	JWT skips alg check	confirmed	CRITICAL	auth.ts:42	Algorithm confusion vulnerability	L0	RCA根因分析
+2	hypothesis	Rate limit missing	disproven	-	-	Rate limiter exists in middleware	L1	RCA根因分析
+3	discovery	-	new_lead	-	db.ts:88	Unhandled promise rejection in insert	L2	搜索优先
+4	hypothesis	DB insert missing await	confirmed	HIGH	db.ts:88	Silent failure on write errors	L0	搜索优先
 ```
+
+> `esc_level` 和 `methodology` 列为必填。hypothesis confirmed 后压力重置为 L0。
 
 **Every 5 iterations, print progress:**
 ```
@@ -196,6 +198,8 @@ Bugs found: 3 (1 Critical, 1 High, 1 Medium)
 Hypotheses tested: 8 (3 confirmed, 4 disproven, 1 inconclusive)
 Files investigated: 14 / 47 in scope
 Techniques used: direct inspection, trace, binary search
+
+Escalation: peak L2, 1 methodology switch (RCA→搜索优先), 0 L3 checklists
 ```
 
 ## Phase 7: Repeat — Next Investigation
@@ -445,8 +449,17 @@ Root Fix: fix the email regex to require at least one character before @
 Creates `debug/{YYMMDD}-{HHMM}-{debug-slug}/` with:
 - `findings.md` — all confirmed bugs with evidence
 - `eliminated.md` — disproven hypotheses (equally valuable)
-- `debug-results.tsv` — iteration log
-- `summary.md` — executive summary with recommendations
+- `debug-results.tsv` — iteration log（含 `esc_level` 和 `methodology` 列）
+- `escalation-log.tsv` — 压力升级事件记录
+- `summary.md` — executive summary with recommendations + **Escalation Stats** section
+
+**escalation-log.tsv 格式**（与 `escalation/SKILL.md` 标准格式对齐）**:**
+```tsv
+iteration	level	target	trigger	checklist_completed	methodology_from	methodology_to	details	outcome
+3	L1	auth area	2x disproven (same area)	-	RCA根因分析	RCA根因分析	switched to trace execution	switched_direction
+6	L2	db.ts:88	3x discard	-	RCA根因分析	搜索优先	hypotheses: [H1,H2,H3]	methodology_switch
+10	L3	db.ts:88	4x no finding	7/7	搜索优先	搜索优先	1.✅ error.log;2.✅ grep;3.✅ src:30-80;4.✅ verified;5.✅ opposite;6.✅ repro;7.✅ switched	checklist_completed
+```
 
 ## Chaining with /autoresearch:fix
 
@@ -463,6 +476,26 @@ Iterations: 20
 ```
 
 When `--fix` is specified, after the debug loop completes, automatically switches to `/autoresearch:fix` targeting the discovered issues.
+
+### Handoff 协议（Debug → Fix 状态传递）
+
+从 debug 链接到 fix 时，必须传递以下状态（避免 fix 从零开始）：
+
+```
+handoff_state = {
+  current_escalation_level: L{N},        # debug 结束时的压力等级
+  consecutive_failures: N,               # 连续失败计数
+  methodologies_exhausted: [...],        # 已用完的方法论（fix 不重复）
+  hypotheses_eliminated: [...],          # 已排除的假设（fix 不重复试）
+  debug_session_path: "debug/{slug}/",   # debug 产出目录
+  findings: [...],                       # 确认的 bug 列表
+}
+```
+
+**重置规则**：
+- `current_escalation_level`：如果 debug 结束时有确认的 findings，重置为 L0（因为 fix 是新任务）
+- `current_escalation_level`：如果 debug 结束时未解决（仍在调查），保持当前等级传递
+- `methodologies_exhausted` 和 `hypotheses_eliminated` 始终传递，避免重复工作
 
 ## Escalation & Methodology Router Integration
 

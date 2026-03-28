@@ -81,6 +81,7 @@ bash .agent/scripts/session-end.sh
    - 更新连续失败计数（成功执行重置为 0）
    - 根据计数对照 `escalation/SKILL.md` 的压力等级表
    - 按对应等级执行强制动作
+   - **写入持久化状态文件**（见下方）
 
 **行为要求**：
 
@@ -88,6 +89,40 @@ bash .agent/scripts/session-end.sh
 - 连续 2 次失败 → 在内部标记 `[L1 ⚡]` 并切换方案
 - 连续 3 次失败 → 标记 `[L2 🔍]` 并深度调查
 - 不需要向用户显式汇报等级（内部行为约束）
+- **每次等级变化必须更新持久化文件**
+
+### 压力状态持久化（Escalation State Persistence）
+
+> ⚠️ 压力等级（L0-L4）和连续失败计数是关键运行时状态。必须持久化到文件，否则上下文压缩后丢失。
+
+**状态文件路径**：项目根目录 `.escalation-state.json`
+
+```json
+{
+  "level": "L2",
+  "consecutive_failures": 3,
+  "methodology": "搜索优先",
+  "methodologies_exhausted": ["RCA根因分析"],
+  "hypotheses_eliminated": ["JWT alg check", "rate limit missing"],
+  "last_updated": "2026-03-28T11:00:00+08:00",
+  "session_id": "abc-123"
+}
+```
+
+**写入时机**：
+- 每次连续失败计数变化时
+- 每次压力等级变化时
+- 每次方法论切换时
+- 每次 keep（重置 L0）时
+
+**读取时机**：
+- session-start 时读取（恢复状态）
+- PreCompact 时读取（确保状态保存）
+- `/resume` 时读取
+
+**清理时机**：
+- 任务完全完成（`/finish`）时删除
+- 手动 `/context-reset` 时保留（以防丢失）
 
 ---
 
@@ -95,7 +130,15 @@ bash .agent/scripts/session-end.sh
 
 > 灵感来源：[tanweai/pua](https://github.com/tanweai/pua) 的 PreCompact hook + builder-journal 格式。
 
-上下文压缩前，Agent 必须将运行时状态保存到检查点文件中，使用以下格式：
+上下文压缩前，Agent **必须执行两步**：
+
+### 步骤 1：更新持久化文件
+
+将当前运行时状态写入 `.escalation-state.json`（格式见 PostToolUse 章节）。
+
+### 步骤 2：在检查点中记录状态快照
+
+使用以下格式将状态写入检查点文件：
 
 ```markdown
 # 压缩前状态快照
@@ -108,6 +151,8 @@ bash .agent/scripts/session-end.sh
 - 连续失败计数: {N}
 - 当前方法论: {方法论名称}
 - 方法论切换次数: {N}
+- 已排除假设: [{列表}]
+- 持久化文件路径: .escalation-state.json ← 恢复时必读
 
 ## 活跃任务
 {当前正在做什么 — 1-2 句话}
@@ -125,5 +170,5 @@ bash .agent/scripts/session-end.sh
 {会因压缩丢失的关键信息 — 文件路径、错误消息、架构决策}
 ```
 
-> ⚠️ 压缩不重置状态。失败计数和压力等级必须在压缩后恢复。
+> ⚠️ 压缩不重置状态。失败计数和压力等级必须在压缩后通过 `.escalation-state.json` 恢复。
 

@@ -375,9 +375,50 @@ Adapt the loop to your domain. The PRINCIPLES are universal; the METRICS are dom
 | `/autoresearch:debug` | Phase 3 受阻时 | 自主 bug 猎手，配合 /debug 手动根因分析。参见 `references/methodology-router.md` 获取方法论切换链 |
 | `/autoresearch:ship` | Phase 4 完成后 | 发布流程，复杂场景替代 `/finish` |
 
-> 💡 **连续失败时**：debug/fix 循环在连续失败时自动触发 `escalation` 压力升级（参见 `../escalation/SKILL.md`），并通过 `references/methodology-router.md` 的方法论路由切换解决思路。
+## Escalation 深度集成协议
 
-**检查点整合**: autoresearch 产出的 `security/`, `debug/`, `fix/`, `ship/` 目录内容应在 `/checkpoint` 状态文件中引用，确保跨会话可追踪。
+### 压力升级闭环（所有 autoresearch 子命令通用）
+
+```
+监控 → 检测 → 升级 → 验证 → 记录 → 反馈
+  ↑                                      ↓
+  ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←
+```
+
+| 环节 | 执行者 | 产出 |
+|------|--------|------|
+| **监控** | PostToolUse 钩子（`hooks-lifecycle`） | 检测命令失败，更新连续失败计数 |
+| **检测** | Loop Protocol Phase 6 (Decide) | 根据失败计数判定压力等级 L0-L4 |
+| **升级** | `escalation/SKILL.md` L1-L4 规则 | 执行等级对应的强制动作 |
+| **验证** | 可验证输出要求（`escalation/SKILL.md`） | TSV 记录 `esc_level` + escalation-log.tsv |
+| **记录** | Loop Protocol Phase 7 (Log) | results TSV、escalation-log.tsv、summary.md 三处同步 |
+| **反馈** | Phase 7.5 Review Gate | 高频 keep 或 CRITICAL bug 后触发 `/review` 快速审查 |
+
+### 必须产出的 Escalation 文件
+
+| 文件 | 写入时机 | 格式 |
+|------|---------|------|
+| `.escalation-state.json` | 每次压力等级变化时 | JSON（level, failures, methodology, exhausted） |
+| `escalation-log.tsv` | 每次 L1+ 事件发生时 | TSV（iteration, level, trigger, checklist, methodology, outcome） |
+| results TSV `esc_level` 列 | 每次迭代 | L0-L4 值 |
+| results TSV `methodology` 列 | 每次迭代 | 当前方法论名称 |
+| summary.md Escalation Stats | 循环结束时 | peak level, switches, checklists, review gates |
+
+### Review Gate 触发条件
+
+| 条件 | 审查类型 | 记录 |
+|------|---------|------|
+| bug severity == CRITICAL/HIGH | `/review` 快速模式 | TSV status = "review" |
+| cumulative keeps ≥ 10（每 10 次一检） | `/review` 快速模式 | TSV status = "review_gate" |
+| escalation level ≥ L3 | 七项清单记录到 log | TSV status = "escalation_L3" |
+
+### Handoff 状态传递（跨子命令链接）
+
+当 `--fix` 链接 debug→fix 时，传递 `handoff_state`（见 `references/debug-workflow.md` Handoff 协议章节），避免 fix 从零重建压力上下文。
+
+> 💡 **连续失败时**：debug/fix 循环在连续失败时自动触发 `escalation` 压力升级（参见 `../escalation/SKILL.md`），按 L1-L4 递进响应，通过 `references/methodology-router.md` 的方法论路由切换解决思路。所有升级事件**必须**记录到 escalation-log.tsv。
+
+**检查点整合**: autoresearch 产出的 `security/`, `debug/`, `fix/`, `ship/` 目录内容（含 `escalation-log.tsv`）应在 `/checkpoint` 状态文件中引用，确保跨会话可追踪。
 
 **关键约束保留**: autoresearch 在 SOP 框架下运行时，以下全规范规则**始终生效**，autoresearch 不覆盖：
 - 修改测试前必须人类确认

@@ -233,14 +233,16 @@ guard_result = run(guard_command)  # e.g., "npm test"
 
 **Append to fix-results.tsv:**
 ```tsv
-iteration	category	target	delta	guard	status	description
-0	-	-	-	pass	baseline	47 test failures, 12 type errors, 3 lint errors
-1	type	auth.ts:42	-2	pass	fixed	add return type annotation
-2	type	db.ts:15	-1	pass	fixed	handle nullable column
-3	test	api.test.ts	-3	pass	fixed	fix expected status code (was 200, should be 201)
-4	test	auth.test.ts	0	-	discard	wrong approach — test expectation was correct
-5	test	auth.test.ts	-1	pass	fixed	missing await on async handler
+iteration	category	target	delta	guard	status	description	esc_level	methodology
+0	-	-	-	pass	baseline	47 test failures, 12 type errors, 3 lint errors	L0	闭环交付
+1	type	auth.ts:42	-2	pass	fixed	add return type annotation	L0	闭环交付
+2	type	db.ts:15	-1	pass	fixed	handle nullable column	L0	闭环交付
+3	test	api.test.ts	-3	pass	fixed	fix expected status code (was 200, should be 201)	L0	闭环交付
+4	test	auth.test.ts	0	-	discard	wrong approach — test expectation was correct	L1	闭环交付
+5	test	auth.test.ts	-1	pass	fixed	missing await on async handler	L0	闭环交付
 ```
+
+> `esc_level` 和 `methodology` 列为必填。规则详见 `../../escalation/SKILL.md`。fix 成功后重置为 L0。
 
 **Every 5 iterations, print progress:**
 ```
@@ -251,6 +253,9 @@ Category breakdown:
   Types:  8/12 fixed
   Lint:   0/3 fixed (not yet started — lower priority)
 Keeps: 11 | Discards: 3 | Reworks: 1
+
+Escalation: peak L2, 1 methodology switch, 0 L3 checklists
+Review gates: 1 triggered (iteration 10)
 ```
 
 **Completion detection:**
@@ -500,23 +505,31 @@ git log --grep="fix: type error" --oneline
 - Recent revert in same file → previous approach failed, avoid repeating it
 - Large diff for "simple" fix → complexity hidden in that file, be careful with changes
 
-## The Fix Didn't Work — Escalation Path
+## The Fix Didn't Work — Escalation Path (与 `escalation/SKILL.md` 对齐)
 
-When 3 attempts at the same error fail:
+同一个 error 连续修复失败时，按 `escalation/SKILL.md` 的 L1-L4 递进响应：
+
+| 连续失败 | 等级 | 强制动作 | 可验证输出 |
+|---------|------|---------|------------|
+| 2 | **L1 ⚡** | 切换**本质不同**的修复方案（换参数不算）| TSV 中 `esc_level=L1` |
+| 3 | **L2 🔍** | 搜索报错原文 + 读源码上下文 50 行 + 列 3 个新假设；建议切换方法论 | TSV 中 `esc_level=L2` + escalation-log 记录 3 个假设 |
+| 4 | **L3 📋** | 完成**七项检查清单**（`escalation/SKILL.md`），质疑架构层 | escalation-log 记录 7/7 清单完成情况 |
+| 5+ | **L4 🚨** | 强制切换方法论（`methodology-router.md`）；如统尽则输出结构化失败报告 | escalation-log 记录方法论切换 + 失败报告 |
+
+**L4 之后的体面退出**：
 
 ```
-Attempt 1: FAIL → Log approach, try different strategy
-Attempt 2: FAIL → Log approach, read git history for prior attempts
-Attempt 3: FAIL → Escalate:
-
-  1. DOCUMENT: What was tried (3 approaches), why each failed
-  2. ISOLATE: Create minimal reproduction case
-  3. SKIP: Move this error to "blocked" list, continue with others
-  4. FLAG: Note in summary.md — "Error X requires investigation"
-  5. SUGGEST: /autoresearch:debug on the specific error for root cause analysis
+IF L4 强制方法论切换后仍然失败:
+  1. DOCUMENT: 将所有尝试的方案和失败原因写入 blocked.md
+  2. ISOLATE: 构造最小可复现用例
+  3. SKIP: 移入 blocked 列表，继续其他项
+  4. FLAG: 在 summary.md 中标记 — "Error X requires /autoresearch:debug investigation"
+  5. SUGGEST: 推荐 /autoresearch:debug 进行根因分析
 ```
 
 **Never loop on the same failing approach.** Each attempt must use a materially different strategy.
+
+> ⚠️ 与 `/debug` workflow 的 escalation 保持一致：同一套 L1-L4 系统、同一套七项清单、同一个方法论路由器。
 
 ## Dependency Fix Patterns
 
@@ -610,10 +623,19 @@ Iterations: 20
 ## Output Directory
 
 Creates `fix/{YYMMDD}-{HHMM}-{fix-slug}/` with:
-- `fix-results.tsv` — iteration log
-- `summary.md` — what was fixed, what remains, stats
-- `blocked.md` — errors that needed 3+ attempts and were escalated
+- `fix-results.tsv` — iteration log（含 `esc_level` 和 `methodology` 列）
+- `escalation-log.tsv` — 压力升级事件记录（格式见下方）
+- `summary.md` — what was fixed, what remains, stats + **Escalation Stats** section
+- `blocked.md` — errors that needed L4 escalation and were skipped
 - `impact-assessment.md` — blast radius analysis for each fix applied
+
+**escalation-log.tsv 格式**（与 `escalation/SKILL.md` 标准格式对齐）**:**
+```tsv
+iteration	level	target	trigger	checklist_completed	methodology_from	methodology_to	details	outcome
+4	L1	auth.test.ts:88	2x discard	-	闭环交付	闭环交付	switched from param tweak to async rewrite	switched_approach
+7	L2	db.ts:15	3x discard	-	闭环交付	搜索优先	hypotheses: [H1,H2,H3]	methodology_switch
+10	L3	db.ts:15	4x discard	7/7	搜索优先	搜索优先	1.✅ error.log;2.✅ grep;3.✅ src:10-60;4.✅ verified;5.✅ opposite;6.✅ repro;7.✅ switched	checklist_completed
+```
 
 ## Extended Chaining Patterns
 

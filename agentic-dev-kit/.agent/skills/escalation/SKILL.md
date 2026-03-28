@@ -111,12 +111,68 @@ version: 1.0.0
 3. **标记和行为脱节**：嘴上说"闭环"但没跑 build，输出了报告但验证列是空的
 4. **Sub-agent 裸奔**：spawn 子 agent 时忘了在 prompt 里注入压力升级规则 — 子 agent 是空白上下文
 
+## 可验证输出要求（Verifiable Output）
+
+> ⚠️ 每个压力等级必须产出**可验证的文件输出**，杜绝"嘴上说做了但没有证据"。
+
+| 等级 | 必须产出的可验证输出 |
+|------|---------------------|
+| **L1** | 在 results TSV 中 `esc_level=L1` + 新方案描述（与前一方案**本质不同**，描述中可对比） |
+| **L2** | 在 `escalation-log.tsv` 中记录：搜索关键词、源码上下文位置（file:line）、3 个新假设列表 |
+| **L3** | 在 `escalation-log.tsv` 中记录 7 项清单，每项标注 ✅/❌ + 具体动作和输出证据 |
+| **L4** | 在 `escalation-log.tsv` 中记录方法论切换事件（from→to + 原因）；如退出则产出结构化失败报告文件 |
+
+**escalation-log.tsv 标准格式**（由 `/autoresearch:debug`、`/autoresearch:fix` 共用）：
+```tsv
+iteration	level	target	trigger	checklist_completed	methodology_from	methodology_to	details	outcome
+```
+
+**L3 清单记录格式**（details 字段）：
+```
+1.逐字读完失败信号:✅ error.log:42;2.搜索核心问题:✅ grep "XXX" 3 results;3.读原始上下文:✅ auth.ts:30-80;4.假设用工具确认:✅ node -e verified;5.反转假设:✅ tested opposite;6.最小复现:✅ test_repro.ts;7.换工具/方法:✅ switched to data-driven
+```
+
+## 反馈闭环协议（Feedback Loop）
+
+> 压力升级系统必须形成**完整的监控 → 检测 → 升级 → 验证 → 记录**闭环。
+
+### 闭环五步
+
+```
+① 监控 — PostToolUse 钩子检测命令失败，更新连续失败计数
+② 检测 — 失败计数达到阈值时，自动判定压力等级
+③ 升级 — 按 L1-L4 执行对应强制动作
+④ 验证 — 强制动作的输出必须写入 escalation-log.tsv
+⑤ 记录 — results TSV、escalation-log.tsv、summary.md 三处同步
+```
+
+### 反馈信号
+
+| 信号 | 含义 | 后续动作 |
+|------|------|---------|
+| keep 后 esc_level 重置 L0 | 升级策略有效 | 在 escalation-log 记录 `outcome=resolved` |
+| L3 清单完成后仍失败 | 问题超出当前能力 | 强制 L4 方法论切换 |
+| L4 方法论切换后 keep | 方法论路由有效 | 记录成功的方法论供学习 |
+| 全循环 peak ≤ L1 | 任务难度低 | 无需特殊处理 |
+| 全循环多次 L3+ | 任务难度高 | summary 建议架构审查 |
+
+### Post-session 经验提取
+
+循环结束后，从 escalation-log.tsv 中提取：
+1. **有效 pattern**：哪些方法论切换成功解决了问题？
+2. **无效 pattern**：哪些假设反复被排除？
+3. **改进建议**：如果同类问题频繁触发 L3+，建议新增 captured skill
+
+> 此提取与 `/learn` 工作流联动 — escalation 经验自动成为持续学习的输入。
+
 ## 与现有流程的整合
 
 | 现有流程 | Escalation 的增强 |
-|---------|-----------------|
-| `/debug` 工作流 | 失败累计后自动进入更深层的调查步骤 |
-| `/autoresearch:debug` | 自主 debug 循环中集成压力升级，连续 stuck 时切换方法论 |
-| `/autoresearch:fix` | 修复循环中如果同一错误连续失败 3 次，强制执行七项检查清单 |
+|---------|--------------------|
+| `/debug` 工作流 | 失败累计后自动进入更深层的调查步骤；L1-L4 全部对齐 |
+| `/autoresearch:debug` | 自主 debug 循环中集成压力升级，escalation-log.tsv 记录全过程 |
+| `/autoresearch:fix` | 修复循环中按 L1-L4 递进响应，与 debug 使用同一套系统 |
+| `/review` | 审查代码时检查 escalation-log，评估修复过程的韧性 |
 | Red-Lines 规则 | 压力升级是 Red-Lines 的执行引擎 — 红线定义底线，escalation 强制执行 |
 | `hooks-lifecycle` | PostToolUse 钩子自动检测命令失败并更新压力等级 |
+| `/learn` | 循环结束后从 escalation-log 提取经验沉淀 |
