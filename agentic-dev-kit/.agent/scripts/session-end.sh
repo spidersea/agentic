@@ -57,7 +57,33 @@ AUTO_CP_FILE="$AUTO_CP_DIR/auto-checkpoint-$TIMESTAMP.md"
 
 echo "✅ auto-checkpoint 已保存: $AUTO_CP_FILE"
 
-# 2. 保留最近 10 个 auto-checkpoint，清理旧的
+# 2. Skill 使用日志（为 /evolve 数据驱动清理提供依据）
+SKILL_LOG=".agent/logs/skill-usage.tsv"
+mkdir -p "$(dirname "$SKILL_LOG")"
+
+# 如果日志文件不存在，写入表头
+if [ ! -f "$SKILL_LOG" ]; then
+    echo -e "timestamp\tsession_id\tskill_name\tevent\tresult\tnotes" > "$SKILL_LOG"
+    echo "📊 skill 使用日志已创建: $SKILL_LOG"
+fi
+
+# 从 auto-checkpoint 中提取本次会话修改的 skill 文件（自动检测）
+if git rev-parse --is-inside-work-tree &>/dev/null; then
+    SKILL_CHANGES=$(git diff --name-only HEAD~5 HEAD 2>/dev/null | grep -E '\.agent/skills/.*SKILL\.md' | sed 's|.agent/skills/||;s|/SKILL.md||' || true)
+    if [ -n "$SKILL_CHANGES" ]; then
+        SESSION_ID="session-$TIMESTAMP"
+        while IFS= read -r skill_name; do
+            echo -e "$TIMESTAMP\t$SESSION_ID\t$skill_name\tmodified\t-\tauto-detected from git diff" >> "$SKILL_LOG"
+        done <<< "$SKILL_CHANGES"
+        echo "📊 检测到 skill 变更并已记录到使用日志"
+    fi
+fi
+
+echo ""
+echo "💡 提示: Agent 应在会话中主动记录 skill 使用情况到 $SKILL_LOG"
+echo "   格式: TIMESTAMP | SESSION_ID | SKILL_NAME | EVENT(selected|applied|completed|fallback|failed) | RESULT(ok|fail) | NOTES"
+
+# 3. 保留最近 10 个 auto-checkpoint，清理旧的
 TOTAL_CPS=$(ls -1 "$AUTO_CP_DIR"/auto-checkpoint-*.md 2>/dev/null | wc -l | tr -d ' ')
 if [ "$TOTAL_CPS" -gt 10 ]; then
     ls -1t "$AUTO_CP_DIR"/auto-checkpoint-*.md | tail -n +11 | xargs rm -f

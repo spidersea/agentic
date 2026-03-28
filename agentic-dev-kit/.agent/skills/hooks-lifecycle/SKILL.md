@@ -121,7 +121,7 @@ bash .agent/scripts/session-end.sh
 - `/resume` 时读取
 
 **清理时机**：
-- 任务完全完成（`/finish`）时删除
+- 任务完全完成（`/finish`）时**归档**到 `.agent/instincts/escalation-history/`（不直接删除，保留排障经验）
 - 手动 `/context-reset` 时保留（以防丢失）
 
 ---

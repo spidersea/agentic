@@ -102,9 +102,41 @@ version: 1.0.0
 当 `/evolve` 执行时：
 
 1. **读取 `.agent/instincts/pending.yml`**
-2. **自动升级**：confidence=5 的本能 → 追加到对应的 `.agent/rules/{category}.md`
-3. **聚类建议**：3+ 条同 category 的本能 → 建议合并为一个新 Skill 草稿
+
+2. **自动升级**（confidence=5）— 按本能本质分流：
+
+   | 本能 category | 升级目标 | 原因 |
+   |---|---|---|
+   | `workflow` / `architecture` | → 自动生成 `.agent/skills/captured/{pattern-slug}.md` 技能文件 | 这些是**操作配方**（怎样做某件事），本质上是 Skill |
+   | `code-quality` / `testing` / `security` | → 追加到 `.agent/rules/{category}.md` 正式规则 | 这些是**编码禁令/偏好**（不要做什么），本质上是 Rule |
+
+   **自动生成 captured skill 的模板**：
+   ```markdown
+   ---
+   name: captured-{pattern-slug}
+   description: {从 instinct.pattern 生成的一句话描述}
+   ---
+
+   # 捕获技能: {Pattern Name}
+
+   > 本技能从 {source_sessions 数量} 次真实会话中自动捕获沉淀（置信度 5/5）。
+
+   ## 1. 适用场景
+   - {从 instinct.context 提取的场景描述}
+
+   ## 2. 标准操作规程
+   - [ ] {从 instinct.pattern 结构化展开的操作步骤}
+
+   ## 3. 验证方法
+   - {如何确认操作正确完成}
+   ```
+
+   升级后将原本能移动到 `.agent/instincts/promoted.yml` 归档，记录升级目标路径。
+
+3. **聚类建议**：3+ 条同 category 的本能（confidence≥3） → 建议合并为一个新 Skill 草稿
+
 4. **过期清理**：超过 60 天且 confidence≤2 的本能 → 标记 `expired`，等待 `/instinct prune` 清理
+
 
 ## 导入/导出
 

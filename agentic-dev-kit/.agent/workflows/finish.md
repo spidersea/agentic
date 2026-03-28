@@ -17,6 +17,18 @@ description: 完成开发分支 — 标准化的分支收尾与清理流程
 
 ## 步骤
 
+0. **归档 Escalation 状态（如存在）**
+   ```bash
+   # 如果存在 escalation 状态文件，归档到历史目录（保留排障经验避免重复排查）
+   if [ -f .escalation-state.json ]; then
+     mkdir -p .agent/instincts/escalation-history
+     cp .escalation-state.json ".agent/instincts/escalation-history/escalation-$(date +%Y%m%d-%H%M).json"
+     rm .escalation-state.json
+     echo "📦 Escalation 状态已归档"
+   fi
+   ```
+   > 归档而非删除——下次 escalation 达到 L2+ 时，可自动扫描历史归档中的 `hypotheses_eliminated`，避免重复验证已排除的假设。
+
 1. **验证测试状态**
    运行项目测试套件，确认全部通过：
    ```bash
