@@ -50,10 +50,13 @@ tests/                                ← 🧪 自动化测试（4 套件，20+ 
 │   ├── testing.md                    ← 测试规范规则
 │   ├── security.md                   ← 安全基线规则
 │   └── red-lines.md                  ← 三条红线（绝对底线）
-├── scripts/                          ← ⚙️ 自动化脚本（7 个）
+├── scripts/                          ← ⚙️ 自动化脚本（10 个）
 │   ├── validate-structure.sh         ← 框架结构验证器（7 类 17 项检查）
 │   ├── escalation-tracker.sh         ← 压力升级状态机（程序化 L0-L4）
 │   ├── stress-test-engine.sh         ← 量化评分引擎（5 维度 100 分制）
+│   ├── score-rules.sh                ← 规范库量化检测引擎 (基于系统、落地自动维度)
+│   ├── score-workflows.sh            ← 工作流量化检测引擎 (100分制)
+│   ├── score-skills.sh               ← 核心能力评分体系 (包含软词排查与终端沙箱要求)
 │   ├── health-check.sh               ← 指令膨胀检测（Token 估算）
 │   ├── session-start.sh              ← 会话启动检查
 │   ├── session-end.sh                ← 会话结束自动保存
@@ -101,6 +104,7 @@ cp -r .agent /path/to/your-project/
 | 暂停，下次继续 | `/handoff` → 关会话 → 新会话 `/resume` | 安全交接并恢复 |
 | 清理规则膨胀 | `/evolve` | 盘点、去重、合并、清理 |
 | 清理上下文 | `/context-reset` | 清理无关上下文，按协议恢复必要信息 |
+| 量化指标升级 | `/autoresearch` | 核心引擎特性！对当前能力库执行自循环无损改造与 100 分机械护城河重塑 |
 
 > **你不需要记住 SKILL.md 的全部内容。** AI 会自动加载。你只需要记住这几个 `/命令`。
 
