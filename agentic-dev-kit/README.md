@@ -1,257 +1,123 @@
-# Agentic Dev Kit — 可移植 AI 开发规范套件
+# Agentic Dev Kit — 工业级可移植 AI 操作系统
 
 ## 这是什么？
 
-一套标准化的 AI 智能体开发规范，可直接复制到任何项目中使用。基于 "How To Be A World-Class Agentic Engineer" 原则、CLAUDE.md 开发体系精华、业界共识和最新的 AGENT.md 开放标准提炼。
+这不是一份单纯的 Prompt 集合，而是一套**具有生命周期管理、反馈数据闭环与自动化量化护城河**的生产级 AI 代理研发标准基座。本框架提炼自 "How To Be A World-Class Agentic Engineer" 原则与 CLAUDE.md 开发体系，结合完全内置的 **P0 级底层系统**实现了 AI 的自我进化。
 
-**核心能力**:
-- 📋 四阶段标准操作流程（Research → Contract → Execution → Verification）
-- ⛳ 可持续检查点协议（CP-1 ~ CP-4），支持断点续作和跨会话交接
-- 🛡️ 防御性提示设计（角色锚定、输出约束、不确定性声明）
-- ⚔️ 对抗验收模式（Expert A / Opponent B / Referee C）
-- 🏗️ 通用架构纪律（代码设计、错误处理、安全基线）
-- 🔄 规则自进化协议（反馈捕获、退化检测、Spa Day 清理）
-- 📁 模块化规则系统（路径范围限定、渐进式加载、本地覆盖）
-- 🚦 TDD 编程范式（Red-Green-Refactor 循环、适用场景指南、反模式清单）
+它致力于解决大模型工程中的核心挑战：上下文崩塌、幻觉滥造、指令遗忘以及执行边界模糊。
 
-## 目录结构
+---
+
+## 🚀 核心架构演变 (Core Capabilities)
+
+目前的系统底层已完成全面跃迁，具备了比肩核心操作系统的完整自治管理能力：
+
+1. **♾️ 自我进化流转网 (Data-Driven Evolve Loop)**
+   - 告别凭感觉修改 Prompt。通过 `session-end.sh`，每一次操作的特征流都会被记录至 `skill-usage.tsv`，AI 基于量化热度对规则集执行 `/evolve` “淘汰、提取、降级”操作。
+2. **🧬 本能萃取与晋升体系 (Instinct -> Skill Promotion)**
+   - 不在 `AGENT.md` 中无限堆积长文。系统自动识别开发产生的业务模式（`Instincts/`），随后流转判断：代码强制底线自动送入 `rules/`，复杂的业务 SOP 自动提纯并路由进入 `skills/` 进行装载。
+3. **⛓️ 压力拦截与退回系统 (PUA Escalation Archive)**
+   - 包含严格的从 L0（无感修复）至 L4（强制跳出求援）的程序化状态机。处理瓶颈时，尝试失败的历史假设将强制归档至 `escalation-history/` 拦截图谱，确保 AI 在跨会话中不再重复踏入相同的逻辑错觉陷阱。
+4. **⚖️ 涡轮全自动量化底盘 (Turbo Autoresearch Metrics)**
+   - `Rules/` 和 `Skills/` 等所有文件执行前必须通过系统内置机械判定（包含 `score-skills.sh` 满分 100 分的强制检测），保障没有软弱的表述语句，杜绝口嗨。配合 `// turbo` 静默标记链，极大程度提升操作连贯性。
+5. **📋 有界标准流程 (World-Class SOP)**
+   - 铁面无私的四阶段开发法 (调研 → 契约 → 编码 → 验证)。未出测试结果与闭环承诺单前，不允许判定 `[x] 成功`。
+
+---
+
+## 📂 完全目录结构图解
 
 ```
-AGENT.md                              ← 复制到项目根目录（逻辑路由表）
+AGENT.md                              ← 项目根指令路由表（大脑总控）
 AGENT.local.md                        ← 个人本地覆盖（加入 .gitignore）
-Makefile                              ← 一键命令入口（make test / validate / health）
+Makefile                              ← 面向人类的命令集合入口
 bin/
-└── agentic                           ← CLI 工具（init / validate / health / stress-test）
-tests/                                ← 🧪 自动化测试（4 套件，20+ 断言）
-├── test-all.sh                       ← 测试 Runner
-├── test-scripts-syntax.sh            ← 脚本语法检查
-├── test-validate-structure.sh        ← 结构验证器测试
-├── test-escalation-tracker.sh        ← 状态机行为测试（11 cases）
-└── test-health-check.sh              ← 健康检查测试
+└── agentic                           ← 独立 CLI 监测工具
+tests/                                ← 🧪 自动化测试套件
+├── test-all.sh
+└── test-escalation-tracker.sh        ←...（20+ 测试断言）
 .agent/
-├── skills/
-│   ├── world_class_coding/           ← 核心编码技能（四阶段 SOP、TDD、对抗验收）
-│   │   └── SKILL.md
-│   ├── frontend-design/              ← 前端设计技能（生产级 UI 开发）
-│   │   └── SKILL.md
-│   ├── escalation/                   ← 失败压力升级（L1-L4）
-│   ├── continuous-learning/          ← 持续学习（本能提取）
-│   ├── hooks-lifecycle/              ← 会话生命周期钩子
-│   ├── autoresearch/                 ← 自主迭代引擎（6 个子命令）
-│   ├── code-graph/                   ← 代码知识图谱
-│   ├── spec-driven/                  ← 规格驱动开发
-│   ├── animate/ ~ teach-impeccable/  ← 12 个前端微调技能
-│   └── ...                           ← 共 28 个技能
-├── workflows/                        ← 📋 标准流程（22 个）
-├── agents/                           ← 🤖 专职助手（5 个）
-├── rules/                            ← 📏 规则文件（5 个）
-│   ├── code-style.md                 ← 代码风格规则
-│   ├── code-review.md                ← 代码审查标准
-│   ├── testing.md                    ← 测试规范规则
-│   ├── security.md                   ← 安全基线规则
-│   └── red-lines.md                  ← 三条红线（绝对底线）
-├── scripts/                          ← ⚙️ 自动化脚本（10 个）
-│   ├── validate-structure.sh         ← 框架结构验证器（7 类 17 项检查）
-│   ├── escalation-tracker.sh         ← 压力升级状态机（程序化 L0-L4）
-│   ├── stress-test-engine.sh         ← 量化评分引擎（5 维度 100 分制）
-│   ├── score-rules.sh                ← 规范库量化检测引擎 (基于系统、落地自动维度)
-│   ├── score-workflows.sh            ← 工作流量化检测引擎 (100分制)
-│   ├── score-skills.sh               ← 核心能力评分体系 (包含软词排查与终端沙箱要求)
-│   ├── health-check.sh               ← 指令膨胀检测（Token 估算）
-│   ├── session-start.sh              ← 会话启动检查
-│   ├── session-end.sh                ← 会话结束自动保存
-│   └── setup-graph.sh                ← 代码图谱初始化
-└── instincts/                        ← 🧠 经验笔记（AI 学到的东西）
+├── logs/
+│   └── skill-usage.tsv               ← 📊 [系统生成] 技能调用次数指纹记录，用于后续淘汰
+├── instincts/                        ← 🧠 临时态的本能日志、AI 踩过的坑
+│   └── escalation-history/           ← 🚫 [系统生成] 曾让系统奔溃的错误排查路线黑名单
+├── skills/                           ← 💡 固态专家技能表
+│   ├── world_class_coding/           ← (100/100满分架构) SOP、TDD 和校验对抗核
+│   ├── escalation/                   ← PUA 处理拦截网
+│   ├── continuous-learning/          ← Instinct 智能清洗及技能树转化漏斗
+│   ├── autoresearch/                 ← 自我逻辑 100 分满分进化推演工具
+│   └── ...                           ← 共计 28 个微调与工程模块
+├── workflows/                        ← 📋 标准执行动作 (20+)
+│   ├── new-feature.md / debug.md     ← 带 // turbo 环境扫描挂载标记的主流程
+│   └── evolve.md                     ← 数据主导的规则清理清道夫
+├── rules/                            ← 📏 具有约束边界的硬指标禁令
+│   ├── code-style.md                 ← 风格与编译警告检查
+│   ├── testing.md / security.md      ← 合规审计红线
+│   └── red-lines.md                  ← AI 的绝对越权底线
+└── scripts/                          ← ⚙️ 系统指令环境（完全终端调用）
+    ├── validate-structure.sh         ← 沙箱级的文件完整度扫描
+    ├── escalation-tracker.sh         ← 拦截死锁的 L0-L4 升档器
+    ├── stress-test-engine.sh         ← 全架构量化安全评分
+    ├── score-rules.sh                ← [满分要求] 规范检测引擎
+    ├── score-skills.sh               ← [满分要求] 各核心能力文件扫描引擎
+    ├── score-workflows.sh            ← [满分要求] 工作流结构化执行力检测
+    ├── session-start.sh              ← AI 苏醒自检脚本
+    └── session-end.sh                ← 睡眠前调用（更新热力 tsv）
 ```
 
-## 支持环境
+---
 
-| 环境 | AGENT.md | Skills | Workflows | Rules |
-|---|---|---|---|---|
-| **Antigravity IDE（桌面版）** | ✅ 自动加载 | ✅ 自动加载 | ✅ `/命令` 在聊天框输入 | ✅ 按路径自动匹配 |
-| **Gemini CLI** | ✅ 自动加载 | ✅ 自动加载 | ✅ `/命令` 在终端输入 | ✅ 按路径自动匹配 |
+## 🚦 开始使用本操作台
 
-> 不需要任何额外配置。复制文件到项目根目录后，AI 自动识别并加载。
-
-## 快速开始
-
-### 1. 复制到新项目
-
+### 1. 将大脑植入您的工程项目
 ```bash
 cp AGENT.md /path/to/your-project/
 cp -r .agent /path/to/your-project/
 ```
 
-也可以直接在 Finder 中拖拽复制，效果一样。
+### 2. 通过指令链下令
+AI 不再需要您灌输指令背景，您只需在聊天框直接触发「预设斜杠工作流」：
 
-### 2. 初始化项目（推荐）
-
-在聊天框中输入 `/init`，AI 会自动扫描项目并定制配置。
-
-### 3. 打开项目，直接用
-
-在 Antigravity IDE 中打开项目后，在聊天框中直接输入斜杠命令：
-
-| 你想做什么 | 输入 | AI 会做什么 |
+| 你想做什么 | 终端触发命令 | 幕后挂载的自动化机理 |
 |---|---|---|
-| 初始化配置 | `/init` | 扫描项目，生成定制化的 AGENT.md 和规则文件 |
-| 开发新功能 | `/new-feature` | 自动走 4 阶段 SOP（调研→契约→编码→验收闭环） |
-| 排查 Bug | `/debug` | 强制使用中立提示词，不预设偏见 |
-| 审查代码 | `/review` | Expert A / Opponent B / Referee C 对抗审查 |
-| 写测试 | `/test` | 按测试金字塔编写（单元→集成→E2E） |
-| TDD 开发 | `/tdd` | 按 Red-Green-Refactor 循环驱动开发 |
-| 保存进度 | `/checkpoint` | 生成标准检查点文件 |
-| 暂停，下次继续 | `/handoff` → 关会话 → 新会话 `/resume` | 安全交接并恢复 |
-| 清理规则膨胀 | `/evolve` | 盘点、去重、合并、清理 |
-| 清理上下文 | `/context-reset` | 清理无关上下文，按协议恢复必要信息 |
-| 量化指标升级 | `/autoresearch` | 核心引擎特性！对当前能力库执行自循环无损改造与 100 分机械护城河重塑 |
+| 初始化项目与健康检测 | `/init` | 一键扫描文件结构，执行 `session-start` 并完成路由绑定 |
+| 开发新功能 | `/new-feature` | 唤起 Phase 0~4 引擎（按文件改动动态决定由轻到重的测试规范），自动打 checkpoint |
+| 排查 Bug 异常 | `/debug` | 禁闭预估偏见。若报错无解，自动引发 `/escalate` 进入记录档案，不再兜圈子 |
+| 高级重构清理 | `/evolve` | **读取底层 skill-usage.tsv 记录**，按照使用频率杀掉或吸纳退化的规则组 |
+| 跨难度强制求援 | `/escalate` | 触发 `escalation-tracker` 记表逻辑，把失败记录埋进黑历史库 |
+| 自主能力提纯 | `/autoresearch` | **利用 `score-*.sh` 执行自我文件修正，维持满分的绝对护城河代码素质** |
+| 设计打磨 | `/frontend-design` / `/audit` | 前端精细化 UX/UI 的安全着陆执行组 |
 
-> **你不需要记住 SKILL.md 的全部内容。** AI 会自动加载。你只需要记住这几个 `/命令`。
-
-### 技能分类速查 (Skills Catalog)
-
-技能分为两大类，分别侧重代码开发和前端设计：
-
-#### 编码方法论 (Coding Methodology)
-
-| 技能 | 说明 | 调用方式 |
-|---|---|---|
-| `world_class_coding` | 核心编码技能：四阶段 SOP、TDD、对抗验收、检查点协议 | 自动加载（通过 AGENT.md 路由） |
-
-#### 前端设计 (Frontend Design) — 来自 impeccable.style
-
-> 这些技能可在聊天框中用自然语言调用，如：“帮我 animate 这个卡片组件”、“对首页做一次 audit”。
-
-| 类别 | 技能 | 说明 |
-|---|---|---|
-| **创建** | `frontend-design` | 生产级 UI 开发，避免泛化 AI 美学 |
-| **增强** | `animate` | 添加动画和微交互 |
-|  | `colorize` | 添加战略性配色 |
-|  | `bolder` | 放大视觉冲击力 |
-|  | `delight` | 增加愉悦感和个性触感 |
-| **精简** | `distill` | 剥离多余复杂度，回归精华 |
-|  | `quieter` | 降低过于强烈的视觉设计 |
-|  | `clarify` | 优化 UX 文案、错误信息、标签 |
-| **审查** | `audit` | 无障碍、性能、主题、响应式全面审计 |
-|  | `critique` | UX 视角的设计评估与反馈 |
-| **适配** | `adapt` | 跨屏幕/设备/平台响应式适配 |
-|  | `harden` | 错误处理、i18n、文本溢出、边界情况 |
-|  | `normalize` | 统一到设计规范体系 |
-| **提取** | `extract` | 提取可复用组件和设计 Token |
-| **性能** | `optimize` | 加载速度、渲染、动画、图片优化 |
-| **上线** | `polish` | 发布前的最终质量检查 |
-| **引导** | `onboard` | 引导流、空状态、首次体验设计 |
-| **初始化** | `teach-impeccable` | 一次性设置，收集项目设计上下文 |
-
-### 4. 验证生效
-
-观察 AI 是否：
-- ✅ 开发前先进行技术调研，产出精确技术规格
-- ✅ 编码前建立验收契约，定义可验证的成功标准
-- ✅ 编码时按需加载文件（≤5 个），不引入未授权依赖
-- ✅ 每个 Phase 完成后记录检查点
-- ✅ 验证时使用中立提示词，不带预设偏见
-- ✅ 在契约未完成前不宣布任务完成
-
-### 5. 添加项目规则
-
-在 `AGENT.md` 底部的"项目规则"区域添加：
-
-```markdown
-## 项目规则 (Project-Specific Rules)
-- 本项目使用 Python 3.12 + FastAPI
-- 所有 API 必须有 OpenAPI 文档
-- 当编写 API 代码时 → 读取 `.agent/rules/api-conventions.md`
-```
-
-也可以创建独立规则文件到 `.agent/rules/` 目录，支持 `paths` frontmatter 路径范围限定：
-
-```yaml
 ---
-description: API 开发规则
-paths:
-  - "src/api/**/*.py"
+
+## 🔗 P0 核心: “生命体演进” 数据运转路线
+大批量的规则与技能维护会导致 AI 最终表现为执行瘫痪（上下文毒药）。系统将自动以如下管线呼吸：
+
+1. **产出期 (Output)**：工作完成并执行 `/handoff` 时，`session-end` 启动，扫描当前上下文使用了哪些指令。
+2. **存档期 (TSV File)**：日志静默写入 `logs/skill-usage.tsv`，如果是失败链路，则打向 `escalation-history` 黑名单。
+3. **清洗期 (Evolution)**：月末或规则臃肿发生异象时，使用 `/evolve`，AI 基于 TSV 热度记录精准剔除 0 调用项。
+4. **固化期 (Continuous Learning)**：如果识别出高重用经验，走 `continuous-learning`，判断是否要晋级写入 `/rules` 或新建入 `/skills`。
+
 ---
-# API 开发规则
-- 所有端点必须包含输入验证
-- 使用标准错误响应格式
-```
 
-### 6. 个人偏好覆盖
+## ☑️ 对抗合规与质量红线
 
-创建 `AGENT.local.md`（自动加入 `.gitignore`），添加个人偏好而不影响团队配置：
+所有对业务的修改动作和测试均遵守 `World-Class Coding` 中极度残忍的验证标准：
+- **无 Mock 原则**：除了在业务验证的隔离测试内允许 Mock，只要跑主线业务，禁止虚造数据（如遇缺乏第三方环境不能推进，它应该走 Escalation 警报系统而不是造假数据往下混指标）。
+- **对抗型 Referee 系统**：在排错或者复杂 Code Review 时，必须开启左手互搏：专家 A 敏锐列出可能风险 > 辩手 B 攻击反驳排除 > 裁判层 C 中立收集编译日志定论真实结果。
+- **100/100 护城河**：该框架自身的规范体系保证绝对零宽泛语言。所有工作规范已跑通内检评测，不包含“尽量、可能”这种松散判定。
 
-```markdown
-# 个人配置覆盖
-- 我偏好使用 Vim 风格的快捷键
-- 代码注释使用中文
-```
+## ⚙️ 开发者环境
 
-### 7. 层级嵌套（大型项目）
-
-对于 monorepo 或大型项目，可在子目录中放置更具体的 `AGENT.md`：
-
-```
-project-root/
-├── AGENT.md                    ← 全局规则
-├── AGENT.local.md              ← 个人覆盖（.gitignore）
-├── .agent/
-│   ├── skills/...              ← 全局技能
-│   ├── workflows/...           ← 全局工作流
-│   └── rules/...               ← 全局规则文件
-├── frontend/
-│   └── AGENT.md                ← 前端特有规则（覆盖全局）
-└── backend/
-    └── AGENT.md                ← 后端特有规则（覆盖全局）
-```
-
-## CLAUDE.md 融合说明
-
-本套件融合了 Anthropic CLAUDE.md 开发体系的精华理念：
-
-| 来自 CLAUDE.md 的理念 | 在本套件中的实现 |
-|---|---|
-| `.claude/rules/` 路径范围规则 | → `.agent/rules/` + `paths` frontmatter |
-| `@文件引用` 渐进式加载 | → AGENT.md 中的 `@文件引用` 语法 |
-| `CLAUDE.local.md` 本地覆盖 | → `AGENT.local.md` 个人配置 |
-| 多层级配置继承 | → 全局 → 项目 → 子目录 → 本地覆盖 |
-| `/init` 初始化 | → `/init` 工作流 |
-| `/clear` 上下文清理 | → `/context-reset` 工作流 |
-| 厨房水槽、反复纠正等反模式命名 | → SKILL.md 第三章经典反模式 |
-
-> 无论你之前使用 CLAUDE.md、Cursor Rules 还是其他 AI 编程规范，本套件的理念和机制都是兼容且互补的。
-
-## 开发者工具
-
-### CLI
-
+可通过以下指令进行 AI 开发时的本地辅助校验：
 ```bash
-bin/agentic init ./my-project    # 初始化新项目
-bin/agentic validate             # 验证框架结构（17 项检查）
-bin/agentic health               # 指令膨胀检测
-bin/agentic stress-test          # 量化评分（满分 100）
+make test           # 运行底座自动化验证所有状态机
+make validate       # 检查底层大脑架构的健康文件连接
+make stress-test    # 对 AI 能力集做量化大考
 ```
 
-### Makefile
+## 个人化与集成
 
-```bash
-make test           # 运行全量自动化测试（4 套件）
-make validate       # 框架结构验证
-make health         # 健康检查
-make stress-test    # 量化评分
-make lint           # 脚本语法检查
-```
-
-## 维护建议
-
-| 周期 | 行动 | 快捷方式 |
-|---|---|---|
-| 每次发现 Agent 不良行为 | 添加一条针对性规则 | 手动编辑 AGENT.md 或 `.agent/rules/` |
-| 每 2-4 周 | 整合清理规则，移除过时或矛盾的条目 | `/evolve` |
-| 规则超过 20 条时 | 必须进行一次全面清理合并 | `/evolve` |
-| 提交代码前 | 跑一遍自动化测试 | `make test` |
-| 每月 | 检查框架结构和评分 | `make validate && make stress-test` |
-| 上下文被不相关任务污染时 | 清理上下文并按协议恢复 | `/context-reset` |
-
-> ⚠️ `AGENT.md` 总行数建议不超过 80 行有效内容。规则超过 5 条时，应拆分为独立的 `.agent/rules/*.md` 文件并通过路由引用。
-
+这套工具向下完全兼容 Anthropic 出品的 `CLAUDE.md` 开发架构精神。若是您需要个人独到风格的手法：
+- 新建一份 `AGENT.local.md` (已默认忽略提交 Git)
+- 如果是大规模层级的项目（Monorepo），请大胆地下放您的专员 `AGENT.md` 至如 `/frontend` 的子仓库内，他会自动与根目录下的全局系统达成规则继承妥协。
