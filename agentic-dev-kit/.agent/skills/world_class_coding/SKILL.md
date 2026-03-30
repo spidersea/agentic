@@ -606,3 +606,12 @@ TDD 范式可以无缝嵌入现有四阶段 SOP：
 - [ ] 人类审批: 闭环报告提交用户确认
 - [ ] CP-4: 闭环完成，记录最终状态
 ```
+
+
+## 自动化合规与护城河兜底验证
+> 为了支撑 Autoresearch 闭环结构，当前技能库被强制挂载以下底层扫描探针。
+可以使用如下命令验证当前技能在环境中的被干扰盲区：
+```bash
+bash .agent/scripts/health-check.sh .
+bash .agent/scripts/validate-structure.sh .
+```

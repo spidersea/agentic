@@ -87,4 +87,6 @@ description: 创建规格驱动的变更提案 — 生成 proposal + delta specs
 8. **衔接后续**
    - 用户确认后，可直接进入 `/new-feature` Phase 2（验收契约）
    - 或直接按 `tasks.md` 开始编码
-   - 建议执行 `/checkpoint` 记录规划状态
+   - 指引执行 `/checkpoint` 记录规划状态
+
+如果阻塞，可求助 `/debug` 流程。

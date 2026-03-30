@@ -77,7 +77,7 @@ version: 1.0.0
 4. **执行新方案** — 必须与之前**本质不同**，有明确验证标准
 5. **复盘** — 解决后检查同类问题 + 修复完整性 + 预防措施
 
-> ⚠️ 步骤 1-4 完成前尽量不向用户提问 — 除非需求本身就是模糊的，先澄清再执行。
+> ⚠️ 步骤 1-4 完成前必须不向用户提问 — 除非需求本身就是模糊的，先澄清再执行。
 
 ## 体面的退出
 
@@ -176,3 +176,12 @@ iteration	level	target	trigger	checklist_completed	methodology_from	methodology_
 | Red-Lines 规则 | 压力升级是 Red-Lines 的执行引擎 — 红线定义底线，escalation 强制执行 |
 | `hooks-lifecycle` | PostToolUse 钩子自动检测命令失败并更新压力等级 |
 | `/learn` | 循环结束后从 escalation-log 提取经验沉淀 |
+
+
+## 自动化合规与护城河兜底验证
+> 为了支撑 Autoresearch 闭环结构，当前技能库被强制挂载以下底层扫描探针。
+可以使用如下命令验证当前技能在环境中的被干扰盲区：
+```bash
+bash .agent/scripts/health-check.sh .
+bash .agent/scripts/validate-structure.sh .
+```

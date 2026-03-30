@@ -73,3 +73,5 @@ description: 从 Git 历史生成项目编码规范技能 — 新项目冷启动
    - 将草稿保存到 `.agent/skills/[项目名]-conventions/SKILL.md`
    - 提示用户审核并修改
    - 确认后更新 AGENT.md 路由表
+
+如果阻塞，可求助 `/debug` 流程。

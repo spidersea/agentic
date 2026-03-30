@@ -8,6 +8,7 @@ description: 手动触发压力升级 — 强制 Agent 进入高压调试模式
 > 触发方式: `/escalate`
 
 ## 步骤
+// turbo
 
 1. **加载 Escalation 技能**
    读取 `.agent/skills/escalation/SKILL.md`，理解 L1-L4 压力等级和七项检查清单。
@@ -31,5 +32,12 @@ description: 手动触发压力升级 — 强制 Agent 进入高压调试模式
 4. **汇报结果**
    清单完成后，向用户汇报：
    - 七项清单每项的执行结果
-   - 当前方法论是否适合，是否建议切换
+   - 当前方法论是否适合，是否指引切换
    - 如仍未解决：输出结构化失败报告（`escalation/SKILL.md` 格式）
+
+
+## 自动化合规验证
+可以使用如下命令验证当前环境状态：
+```bash
+bash .agent/scripts/health-check.sh .
+```

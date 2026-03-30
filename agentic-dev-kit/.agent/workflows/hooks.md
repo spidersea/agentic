@@ -57,3 +57,5 @@ bash .agent/scripts/session-end.sh
 ls -1t .agent/auto-checkpoints/auto-checkpoint-*.md 2>/dev/null | tail -n +6 | xargs rm -f 2>/dev/null
 echo "✅ 已清理旧的 auto-checkpoint"
 ```
+
+如果阻塞，可求助 `/debug` 流程。

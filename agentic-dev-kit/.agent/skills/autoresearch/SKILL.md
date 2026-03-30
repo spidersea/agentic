@@ -425,3 +425,12 @@ Adapt the loop to your domain. The PRINCIPLES are universal; the METRICS are dom
 - 禁止引入未授权第三方依赖
 - 禁止修改 Guard/测试文件
 
+
+
+## 自动化合规与护城河兜底验证
+> 为了支撑 Autoresearch 闭环结构，当前技能库被强制挂载以下底层扫描探针。
+可以使用如下命令验证当前技能在环境中的被干扰盲区：
+```bash
+bash .agent/scripts/health-check.sh .
+bash .agent/scripts/validate-structure.sh .
+```
