@@ -1,0 +1,49 @@
+# Agentic 本能提取 — 从会话 912b2d17 中提取
+# 提取时间: 2026-03-31T18:57:00+08:00
+# 提取范围: 1 个 git commit + 当前会话全部操作（跨 5 轮重大修改）
+
+instincts:
+  - id: inst-001
+    pattern: "Markdown 文本规范中的'指引/建议/推荐'语气词对大模型没有强制执行力，必须替换为'必须/禁止/强制'才能产生真实约束"
+    context: "本会话中对 51 个 workflow/skill 文件进行全量评分扫描，发现硬约束率 <40% 的文件在实际执行中步骤被大模型频繁跳过。用户反复提出截图证据证实此现象。加固后评分从 D 级提升至 A 级。"
+    category: workflow
+    confidence: 5
+    source_sessions:
+      - "912b2d17-feec-4f33-83b0-a978c98d8f85"
+    created: "2026-03-31"
+
+  - id: inst-002
+    pattern: "工作流之间联动时（如 /review → /debug），大模型会凭记忆残影直接写代码跳过目标工作流的 Step 0，必须强制要求'重新物理读取目标 .md 文件'作为状态重置"
+    context: "用户截图显示：/review 检出问题后大模型提出联动 /debug，用户口头说'批准'后大模型直接改代码，完全跳过了 debug.md 的终点契约流程。根因是 Soft-rule Collapse — 写代码的奖励信号压过了遵循流程的微弱信号。修复方案：注入 Rule 5.5 Hard Workflow Transition。"
+    category: workflow
+    confidence: 5
+    source_sessions:
+      - "912b2d17-feec-4f33-83b0-a978c98d8f85"
+    created: "2026-03-31"
+
+  - id: inst-003
+    pattern: "用户口头说的'批准/行/同意'不应触发大模型立即执行，必须要求用户在物理文件（task.md）中将 [ ] 改为 [x] 才算真正授权"
+    context: "用户截图中大模型自我诊断指出'Soft-rule Collapse'——自然语言中的批准被当作立即执行的许可证。修复方案：在 review.md 步骤 7 中引入 Artifact-Driven Chaining，禁止接受口头授权。"
+    category: workflow
+    confidence: 4
+    source_sessions:
+      - "912b2d17-feec-4f33-83b0-a978c98d8f85"
+    created: "2026-03-31"
+
+  - id: inst-004
+    pattern: "implementation_plan.md（系统级执行追踪产物）不等于 openspec/（规范设计产物），禁止以前者替代后者"
+    context: "用户在 /new-feature 开发中发现大模型跳过了 /spec:propose 步骤，仅生成了 implementation_plan.md 就自认完成了 Phase 1。根因是大模型将两类不同性质的产物混淆。修复方案：在 SKILL.md 中新增 Rule 5.6 Artifact Chain Integrity。"
+    category: architecture
+    confidence: 5
+    source_sessions:
+      - "912b2d17-feec-4f33-83b0-a978c98d8f85"
+    created: "2026-03-31"
+
+  - id: inst-005
+    pattern: "对 Skill 的防御性加固必须区分'主动方法论引擎'和'被动知识库'——只有前者需要终点契约，后者不需要"
+    context: "本会话中用户要求对 skills 加固。经分析，28 个 skill 中只有 3 个（world_class_coding, autoresearch, escalation）具有状态机特征需要加固，其余 25 个是纯参考型知识库。对后者强加契约会引发'契约地狱'——大模型不知道何时该完结检查。"
+    category: architecture
+    confidence: 4
+    source_sessions:
+      - "912b2d17-feec-4f33-83b0-a978c98d8f85"
+    created: "2026-03-31"

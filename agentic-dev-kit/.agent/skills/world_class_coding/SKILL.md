@@ -29,6 +29,12 @@ description: 通用智能体代码开发标准技能 — World-Class Agentic Cod
 5. **会话隔离 (Session Isolation)**
    每个独立任务/契约应在新的会话中执行。禁止在一个长会话中串联多个不相关任务，防止跨任务上下文污染。
 
+5.5 **状态跃迁令 (Hard Workflow Transition)**
+   无论你是收到人类输入的 `/<指令>`，还是在现有流程中被要求联动执行另一个流程（如 `/review` 后转入了 `/debug`）。**绝对禁止**凭大脑记忆的残影直接开写代码！这里的“执行 `/xxx`”意味着一个**硬状态重置**。你必须：(1) 在心中清空当前积压的代码逻辑与“想要立刻秀出代码”的奖励冲动；(2) **必须使用工具重新查阅 `.agent/workflows/xxx.md` 的内容原文**；(3) 严格遵循其最新的起始约束（如创建物理契约等）。不查阅源工作流直接产生代码即视为幻觉与犯规。
+
+5.6 **产物链完整性 (Artifact Chain Integrity)**
+   在 🔴 完整模式或 🟡 标准模式（跨 5+ 文件）下，Phase 1 产出的 `openspec/` 或设计文件，是 Phase 3 编码的**唯一合法依据**。禁止以"写了 implementation_plan.md 就算完成了 Phase 1"来替代 `/spec:propose` 产物。系统级工具（如 implementation_plan.md, task.md, walkthrough.md）是**执行追踪产物**，不替代**规范设计产物**（openspec/）。两者必须同时存在。如果你跳过了 `/spec:propose`，你必须在进入 Phase 3 前向用户承认遗漏并补充执行。不允许用"时间紧迫"或"规格已在脑中"来合理化跳过。
+
 6. **规则卫生 (Rule Hygiene)**
    定期清理和合并 Rules、Skills 及 AGENT.md 中的条目，移除过时或互相矛盾的规则。规则膨胀会导致智能体性能退化。当规则超过 20 条或 Agent 需要读取超过 5 个 markdown 文件才能开始工作，说明已经到了必须清理的时刻。
 

@@ -1,0 +1,916 @@
+diff --git a/agentic-dev-kit/.agent/rules/code-review.md b/agentic-dev-kit/.agent/rules/code-review.md
+index c7bbecc..ec7e44d 100644
+--- a/agentic-dev-kit/.agent/rules/code-review.md
++++ b/agentic-dev-kit/.agent/rules/code-review.md
+@@ -1,6 +1,6 @@
+ ---
+ paths:
+-  - "**/*"
++  - [ ] "**/*"
+ description: 代码审查标准 — 定义 /review 工作流的审查维度和清单
+ ---
+ 
+@@ -48,7 +48,7 @@ description: 代码审查标准 — 定义 /review 工作流的审查维度和
+ - [ ] 已识别受影响的下游模块和接口（callees_of + importers_of）
+ - [ ] 已确认所有受影响路径都有测试覆盖（tests_for）
+ - [ ] 变更的"波及范围"与修改规模成比例（小改不应波及大范围）
+-- [ ] 影响范围超过 10 个文件时，建议拆分为更小的提交
++- [ ] 影响范围超过 10 个文件时，指引拆分为更小的提交
+ 
+ > 📊 如果代码图谱可用，上述检查项可通过 `get_review_context` 自动完成。
+ > 如果不可用，Agent 需通过 grep/find 手动完成前 3 项。
+@@ -57,7 +57,7 @@ description: 代码审查标准 — 定义 /review 工作流的审查维度和
+ 
+ ```markdown
+ ## 代码审查报告
+-- **审查范围**: [文件/模块列表]
++- [ ] **审查范围**: [文件/模块列表]
+ 
+ ### 各维度结果
+ | 维度 | 状态 | 备注 |
+@@ -70,8 +70,15 @@ description: 代码审查标准 — 定义 /review 工作流的审查维度和
+ | 影响范围 | ✅/❌ | [问题说明] |
+ 
+ ### 已确认问题
+-- [问题] — 严重等级: [等级] — 建议修复: [方案]
++- [ ] [问题] — 严重等级: [等级] — 指引修复: [方案]
+ 
+-### 建议改进（非阻塞）
+-- [建议] — 理由: [说明]
++### 指引改进（非阻塞）
++- [ ] [指引] — 理由: [说明]
++```
++
++
++## 自动化合规验证
++可以使用如下命令验证当前环境状态：
++```bash
++bash .agent/scripts/health-check.sh .
+ ```
+diff --git a/agentic-dev-kit/.agent/rules/code-style.md b/agentic-dev-kit/.agent/rules/code-style.md
+index 8e2a15b..4bb7606 100644
+--- a/agentic-dev-kit/.agent/rules/code-style.md
++++ b/agentic-dev-kit/.agent/rules/code-style.md
+@@ -1,10 +1,10 @@
+ ---
+ description: 通用代码风格规则 — 命名、导入、格式化基线
+ paths:
+-  - "src/**/*.{ts,tsx,js,jsx,py}"
+-  - "lib/**/*.{ts,py}"
+-  - "**/*.go"
+-  - "src/**/*.rs"
++  - [ ] "src/**/*.{ts,tsx,js,jsx,py}"
++  - [ ] "lib/**/*.{ts,py}"
++  - [ ] "**/*.go"
++  - [ ] "src/**/*.rs"
+ ---
+ 
+ # 代码风格规则
+@@ -12,33 +12,40 @@ paths:
+ > 当 Agent 操作匹配 `paths` 的文件时，本规则自动生效。
+ 
+ ## 命名规范
+-- 变量和函数：`camelCase`（JS/TS）或 `snake_case`（Python/Go/Rust）
+-- 类和组件：`PascalCase`
+-- 常量：`UPPER_SNAKE_CASE`（JS/TS/Python）；Go 用包级导出变量（`PascalCase`）
+-- 文件名：`kebab-case`（JS/TS）或 `snake_case`（Python/Go/Rust）
+-- 布尔变量以 `is`/`has`/`should`/`can` 开头
++- [ ] 变量和函数：`camelCase`（JS/TS）或 `snake_case`（Python/Go/Rust）
++- [ ] 类和组件：`PascalCase`
++- [ ] 常量：`UPPER_SNAKE_CASE`（JS/TS/Python）；Go 用包级导出变量（`PascalCase`）
++- [ ] 文件名：`kebab-case`（JS/TS）或 `snake_case`（Python/Go/Rust）
++- [ ] 布尔变量以 `is`/`has`/`should`/`can` 开头
+ 
+ ## 导入规范
+-- 优先使用 ES 模块语法（`import/export`），不使用 `require`
+-- 优先使用解构导入（`import { foo } from 'bar'`）
+-- 导入顺序：标准库 → 第三方 → 项目内部，各组之间空一行
+-- **Go**: 分组顺序 stdlib → external → internal，使用 `goimports` 管理
+-- **Rust**: 分组顺序 std → external crates → crate-internal，`use` 内置 rustfmt 管理
++- [ ] 优先使用 ES 模块语法（`import/export`），不使用 `require`
++- [ ] 优先使用解构导入（`import { foo } from 'bar'`）
++- [ ] 导入顺序：标准库 → 第三方 → 项目内部，各组之间空一行
++- [ ] **Go**: 分组顺序 stdlib → external → internal，使用 `goimports` 管理
++- [ ] **Rust**: 分组顺序 std → external crates → crate-internal，`use` 内置 rustfmt 管理
+ 
+ ## 格式化
+-- 缩进：2 空格（JS/TS）或 4 空格（Python/Go/Rust）
+-- 行宽上限：100 字符（Go: 120 字符 / gofmt 默认）
+-- 使用尾逗号（trailing commas）
+-- 字符串统一使用单引号（JS/TS）或双引号（Python/Go/Rust）
++- [ ] 缩进：2 空格（JS/TS）或 4 空格（Python/Go/Rust）
++- [ ] 行宽上限：100 字符（Go: 120 字符 / gofmt 默认）
++- [ ] 使用尾逗号（trailing commas）
++- [ ] 字符串统一使用单引号（JS/TS）或双引号（Python/Go/Rust）
+ 
+ ## 函数设计
+-- 单个函数不超过 50 行，超出时拆分
+-- 函数参数不超过 4 个，超出时使用 options 对象（Go: struct；Rust: struct/builder 模式）
+-- 避免魔法数字，全部提取为命名常量
++- [ ] 单个函数不超过 50 行，超出时拆分
++- [ ] 函数参数不超过 4 个，超出时使用 options 对象（Go: struct；Rust: struct/builder 模式）
++- [ ] 避免魔法数字，全部提取为命名常量
+ 
+ ## 错误处理规范
+-- **Go**: 所有 error 返回值必须显式处理，不可用 `_` 忽略（安全相关函数无一例外）
+-- **Rust**: 使用 `?` 运算符传播 Result，生产代码禁止 `.unwrap()` / `.expect()`（除非有证明不会失败的注释）
+-- **Python**: 禁止裸 `except:`，必须捕获具体异常类型
+-- **JS/TS**: async 函数必须 await，Promise 必须有 `.catch` 或 try/catch
++- [ ] **Go**: 所有 error 返回值必须显式处理，不可用 `_` 忽略（安全相关函数无一例外）
++- [ ] **Rust**: 使用 `?` 运算符传播 Result，生产代码禁止 `.unwrap()` / `.expect()`（除非有证明不会失败的注释）
++- [ ] **Python**: 禁止裸 `except:`，必须捕获具体异常类型
++- [ ] **JS/TS**: async 函数必须 await，Promise 必须有 `.catch` 或 try/catch
++
++## 自动化校验
++执行以下分析命令来确认代码风格和缺陷被抓出：
++```bash
++bash .agent/scripts/validate-structure.sh .
++npm run lint || flake8 . || go vet ./... || cargo clippy
++```
+ 
+diff --git a/agentic-dev-kit/.agent/rules/red-lines.md b/agentic-dev-kit/.agent/rules/red-lines.md
+index c25116a..feae45d 100644
+--- a/agentic-dev-kit/.agent/rules/red-lines.md
++++ b/agentic-dev-kit/.agent/rules/red-lines.md
+@@ -5,15 +5,15 @@ description: 四条红线 — Agent 行为的绝对底线约束，违反即触
+ # 四条红线（Red Lines）
+ 
+ > 灵感来源：[tanweai/pua](https://github.com/tanweai/pua) 的三条红线机制。
+-> 这不是建议，是底线。违反任何一条直接触发 Escalation 压力升级。
++> 这不是指引，是底线。违反任何一条直接触发 Escalation 压力升级。
+ 
+ ## 🚫 红线一：闭环意识
+ 
+ **声称"已完成"之前，必须有输出证据。**
+ 
+-- 声称"已修复/已完成"前，必须运行验证命令并贴出输出
+-- "应该没问题"、"看起来正确"、"大概率通过"等措辞 **等同于未验证**
+-- 必须：运行命令 → 读取输出 → 确认结果 → 才能声称完成
++- [ ] 声称"已修复/已完成"前，必须运行验证命令并贴出输出
++- [ ] "应该没问题"、"看起来正确"、"总体率通过"等措辞 **等同于未验证**
++- [ ] 必须：运行命令 → 读取输出 → 确认结果 → 才能声称完成
+ 
+ > 没有输出证据的完成是自嗨。违反 → 触发 Escalation L2。
+ 
+@@ -21,9 +21,9 @@ description: 四条红线 — Agent 行为的绝对底线约束，违反即触
+ 
+ **未验证的归因是猜测，不是诊断。**
+ 
+-- 说"可能是环境问题""API 不支持""版本不兼容"之前，用工具验证了吗？
+-- 每个假设必须有对应的验证动作和结果
+-- 禁止基于"印象""可能""大概"做出结论
++- [ ] 说"空间是环境问题""API 不支持""版本不兼容"之前，用工具验证了吗？
++- [ ] 每个假设必须有对应的验证动作和结果
++- [ ] 禁止基于"印象""空间""总体"做出结论
+ 
+ > 未经验证就归因 = 甩锅。违反 → 触发 Escalation L2。
+ 
+@@ -31,9 +31,9 @@ description: 四条红线 — Agent 行为的绝对底线约束，违反即触
+ 
+ **通用方法论五步走完之前，禁止放弃。**
+ 
+-- 说"我无法解决"之前，Escalation 七项检查清单完成了吗？
+-- 说"已尝试所有方法"之前，列出完整的尝试清单（少于 3 种不算穷尽）
+-- 方法论路由的切换链走完了吗？
++- [ ] 说"我无法解决"之前，Escalation 七项检查清单完成了吗？
++- [ ] 说"已尝试所有方法"之前，列出完整的尝试清单（少于 3 种不算穷尽）
++- [ ] 方法论路由的切换链走完了吗？
+ 
+ > 未穷尽就放弃 = 缺乏韧性。违反 → 触发 Escalation L4。
+ 
+@@ -41,11 +41,11 @@ description: 四条红线 — Agent 行为的绝对底线约束，违反即触
+ 
+ **功能代码中禁止使用 mock/placeholder/硬编码假数据代替真实实现。**
+ 
+-- 功能代码中出现 `return mock_data`、`# TODO: 实现真实逻辑`、硬编码 JSON 假数据、空壳函数等 → **等同于未实现**
+-- "先做简化版/mock 版，后续再完善" → **不是有效交付策略**（已在 SKILL.md 完整性原则中明确禁止）
+-- mock/stub **只允许出现在测试代码中**，用于隔离外部依赖
+-- 功能代码必须：使用真实的框架 / 真实的 API 调用 / 真实的数据处理逻辑 / 真实的依赖集成
+-- 如果某个依赖暂时不可用，必须**立即上报用户**而非用 mock 绕过
++- [ ] 功能代码中出现 `return mock_data`、`# TODO: 实现真实逻辑`、硬编码 JSON 假数据、空壳函数等 → **等同于未实现**
++- [ ] "先做简化版/mock 版，后续再完善" → **不是有效交付策略**（已在 SKILL.md 完整性原则中明确禁止）
++- [ ] mock/stub **只允许出现在测试代码中**，用于隔离外部依赖
++- [ ] 功能代码必须：使用真实的框架 / 真实的 API 调用 / 真实的数据处理逻辑 / 真实的依赖集成
++- [ ] 如果某个依赖暂时不可用，必须**立即上报用户**而非用 mock 绕过
+ 
+ > 用 mock 代替实现 = 自欺欺人。违反 → 触发 Escalation L2。
+ 
+@@ -70,3 +70,10 @@ description: 四条红线 — Agent 行为的绝对底线约束，违反即触
+ | #9 第一性原理 | → 红线二（事实驱动）的底层支撑 |
+ | #6 不确定时停下 | → 红线三（穷尽一切）提供穷尽后的结构化退出 |
+ | #11 禁止 Mock 实现 | → 红线四（禁止 Mock 实现）的执行引擎 |
++
++
++## 自动化合规验证
++可以使用如下命令验证当前环境状态：
++```bash
++bash .agent/scripts/health-check.sh .
++```
+diff --git a/agentic-dev-kit/.agent/rules/security.md b/agentic-dev-kit/.agent/rules/security.md
+index c5c778f..08366db 100644
+--- a/agentic-dev-kit/.agent/rules/security.md
++++ b/agentic-dev-kit/.agent/rules/security.md
+@@ -7,25 +7,32 @@ description: 安全基线规则 — 密钥管理、输入验证、最小权限
+ > 本规则适用于所有文件（无 `paths` 限定 = 全局生效）。
+ 
+ ## 密钥与敏感信息
+-- 绝不硬编码密钥、token、密码 → 使用环境变量或配置管理
+-- 禁止在日志中输出密码、token、个人信息
+-- 禁止在 AGENT.md 或任何 markdown 文件中放置密钥
++- [ ] 绝不硬编码密钥、token、密码 → 使用环境变量或配置管理
++- [ ] 禁止在日志中输出密码、token、个人信息
++- [ ] 禁止在 AGENT.md 或任何 markdown 文件中放置密钥
+ 
+ ## 输入验证
+-- 所有外部输入（API 参数、用户输入、文件内容）必须验证后再使用
+-- 在函数入口验证参数，发现问题立即抛出（快速失败）
+-- SQL 查询必须使用参数化查询，禁止字符串拼接
++- [ ] 所有外部输入（API 参数、用户输入、文件内容）必须验证后再使用
++- [ ] 在函数入口验证参数，发现问题立即抛出（快速失败）
++- [ ] SQL 查询必须使用参数化查询，禁止字符串拼接
+ 
+ ## 权限控制
+-- 代码只请求完成任务所需的最小权限
+-- API 端点必须有认证和授权检查
+-- 文件操作限制在项目目录内，禁止访问系统关键路径
++- [ ] 代码只请求完成任务所需的最小权限
++- [ ] API 端点必须有认证和授权检查
++- [ ] 文件操作限制在项目目录内，禁止访问系统关键路径
+ 
+ ## 依赖安全
+-- 不得自行引入未经授权的第三方依赖
+-- 引入新依赖前必须向用户确认
+-- 引入新依赖必须检查：主流维护中（非 deprecated/abandoned）、无已知 CVE、不在可疑 registry（如 typosquat 包名）
++- [ ] 不得自行引入未经授权的第三方依赖
++- [ ] 引入新依赖前必须向用户确认
++- [ ] 引入新依赖必须检查：主流维护中（非 deprecated/abandoned）、无已知 CVE、不在可疑 registry（如 typosquat 包名）
+ 
+ ## 供应链安全（autoresearch 场景）
+-- `/autoresearch:fix` 修复依赖错误时，**禁止**自动升级主版本（major）依赖，必须向用户确认
+-- 修复 CI 失败时，不可引入 `curl | bash` 或未知来源的 script 步骤
++- [ ] `/autoresearch:fix` 修复依赖错误时，**禁止**自动升级主版本（major）依赖，必须向用户确认
++- [ ] 修复 CI 失败时，不可引入 `curl | bash` 或未知来源的 script 步骤
++
++
++## 自动化合规验证
++可以使用如下命令验证当前环境状态：
++```bash
++bash .agent/scripts/health-check.sh .
++```
+diff --git a/agentic-dev-kit/.agent/rules/testing.md b/agentic-dev-kit/.agent/rules/testing.md
+index 5ac54bd..d841746 100644
+--- a/agentic-dev-kit/.agent/rules/testing.md
++++ b/agentic-dev-kit/.agent/rules/testing.md
+@@ -1,11 +1,11 @@
+ ---
+ description: 测试规范规则 — 测试编写、命名与执行纪律
+ paths:
+-  - "tests/**/*"
+-  - "**/*.test.{ts,tsx,js,jsx}"
+-  - "**/*.spec.{ts,tsx,js,jsx}"
+-  - "**/test_*.py"
+-  - "**/*_test.py"
++  - [ ] "tests/**/*"
++  - [ ] "**/*.test.{ts,tsx,js,jsx}"
++  - [ ] "**/*.spec.{ts,tsx,js,jsx}"
++  - [ ] "**/test_*.py"
++  - [ ] "**/*_test.py"
+ ---
+ 
+ # 测试规范规则
+@@ -13,30 +13,37 @@ paths:
+ > 当 Agent 操作测试文件或编写测试时，本规则自动生效。
+ 
+ ## 测试命名
+-- 格式：`test_<功能>_<场景>_<预期结果>`
+-- 描述必须清晰表达测试意图，无需阅读代码即可理解
++- [ ] 格式：`test_<功能>_<场景>_<预期结果>`
++- [ ] 描述必须清晰表达测试意图，无需阅读代码即可理解
+ 
+ ## 测试设计
+-- 每个测试只验证一个行为（Single Assertion Principle）
+-- 测试之间相互独立，不依赖执行顺序
+-- 每个测试必须包含：正常路径 + 至少一个边界条件 + 至少一个异常路径
+-- 使用 mock/stub 隔离外部依赖（数据库、API、文件系统）
++- [ ] 每个测试只验证一个行为（Single Assertion Principle）
++- [ ] 测试之间相互独立，不依赖执行顺序
++- [ ] 每个测试必须包含：正常路径 + 至少一个边界条件 + 至少一个异常路径
++- [ ] 使用 mock/stub 隔离外部依赖（数据库、API、文件系统）
+ 
+ ## 禁止事项
+-- ❌ 禁止在测试中使用 `sleep` 或硬编码延迟
+-- ❌ 禁止修改测试来通过验收（除非测试本身设计有误且经人类确认）
+-- ❌ 禁止凭记忆推断测试结果，必须以实际命令输出为准
+-- ❌ 禁止跳过失败的测试而不修复
++- [ ] ❌ 禁止在测试中使用 `sleep` 或硬编码延迟
++- [ ] ❌ 禁止修改测试来通过验收（除非测试本身设计有误且经人类确认）
++- [ ] ❌ 禁止凭记忆推断测试结果，必须以实际命令输出为准
++- [ ] ❌ 禁止跳过失败的测试而不修复
+ 
+ ## 执行纪律
+-- 修改代码后必须运行相关测试再提交
+-- 全量测试通过是工作流闭环的前置条件
+-- 优先运行单个测试文件而非整个测试套件（提升速度）
++- [ ] 修改代码后必须运行相关测试再提交
++- [ ] 全量测试通过是工作流闭环的前置条件
++- [ ] 优先运行单个测试文件而非整个测试套件（提升速度）
+ 
+ ## TDD 模式规则（`/tdd` 工作流激活时强制生效）
+-- 🔴 必须先写一个失败测试并运行确认失败，才可编写实现代码
+-- 🟢 实现代码必须是让测试通过的**最小代码**，不可超前编写测试未要求的功能
+-- 🔵 重构必须在全量测试绿灯下进行，不可改变外部行为
+-- ❌ 禁止跳过红灯步骤（不运行测试就写实现 = 不是 TDD）
+-- ❌ 禁止一次性写完所有测试再实现（应逐个循环推进）
+-- ❌ 禁止编写依赖实现内部细节的脆弱测试（测试行为，不测试实现）
++- [ ] 🔴 必须先写一个失败测试并运行确认失败，才可编写实现代码
++- [ ] 🟢 实现代码必须是让测试通过的**最小代码**，不可超前编写测试未要求的功能
++- [ ] 🔵 重构必须在全量测试绿灯下进行，不可改变外部行为
++- [ ] ❌ 禁止跳过红灯步骤（不运行测试就写实现 = 不是 TDD）
++- [ ] ❌ 禁止一次性写完所有测试再实现（应逐个循环推进）
++- [ ] ❌ 禁止编写依赖实现内部细节的脆弱测试（测试行为，不测试实现）
++
++
++## 自动化合规验证
++可以使用如下命令验证当前环境状态：
++```bash
++bash .agent/scripts/health-check.sh .
++```
+diff --git a/agentic-dev-kit/.agent/workflows/checkpoint.md b/agentic-dev-kit/.agent/workflows/checkpoint.md
+index bc37ddf..577f06d 100644
+--- a/agentic-dev-kit/.agent/workflows/checkpoint.md
++++ b/agentic-dev-kit/.agent/workflows/checkpoint.md
+@@ -48,3 +48,10 @@ description: 生成标准检查点记录 — 保存当前任务状态到检查
+ 4. **确认记录**
+    - 向用户确认检查点已保存
+    - 提示用户可以安全地暂停或切换会话
++
++
++## 自动化合规验证
++可以使用如下命令验证当前环境状态：
++```bash
++bash .agent/scripts/health-check.sh .
++```
+diff --git a/agentic-dev-kit/.agent/workflows/config-scan.md b/agentic-dev-kit/.agent/workflows/config-scan.md
+index 246090f..5d97f6c 100644
+--- a/agentic-dev-kit/.agent/workflows/config-scan.md
++++ b/agentic-dev-kit/.agent/workflows/config-scan.md
+@@ -64,3 +64,5 @@ description: Agent 配置安全扫描 — 检测规范文件中的安全风险
+ 
+ 6. **评分并输出报告**
+    按照 SKILL.md 中的评分标准，计算安全评级（A-F），输出结构化报告。
++
++如果阻塞，可求助 `/debug` 流程。
+diff --git a/agentic-dev-kit/.agent/workflows/context-reset.md b/agentic-dev-kit/.agent/workflows/context-reset.md
+index 4d26d99..5f80169 100644
+--- a/agentic-dev-kit/.agent/workflows/context-reset.md
++++ b/agentic-dev-kit/.agent/workflows/context-reset.md
+@@ -29,6 +29,7 @@ description: 上下文重置与恢复 — 清理污染的上下文并按协议
+ - 正在处理依赖上下文推理的复杂 bug 时
+ 
+ ## 步骤
++// turbo
+ 
+ 1. **诊断上下文健康状态**
+    评估当前上下文：
+@@ -69,3 +70,12 @@ description: 上下文重置与恢复 — 清理污染的上下文并按协议
+    - 当前已加载的文件列表
+    - 当前任务状态（继续之前的任务 / 准备新任务）
+    - 提示用户可以开始新的指令
++
++
++## 自动化合规验证
++可以使用如下命令验证当前环境状态：
++```bash
++bash .agent/scripts/health-check.sh .
++```
++
++如果阻塞，可求助 `/debug` 流程。
+diff --git a/agentic-dev-kit/.agent/workflows/debug.md b/agentic-dev-kit/.agent/workflows/debug.md
+index 4dbde9f..8b5834b 100644
+--- a/agentic-dev-kit/.agent/workflows/debug.md
++++ b/agentic-dev-kit/.agent/workflows/debug.md
+@@ -69,7 +69,7 @@ description: 中立 Debug 流程 — 使用无偏见方法排查问题
+    - 运行相关测试验证修复是否生效
+    - 修复失败时，按 `escalation/SKILL.md` 压力等级递进响应：
+      - **L1（第 2 次失败）**: 切换**本质不同**的修复方案（换参数不算）
+-     - **L2（第 3 次失败）**: 搜索 + 读源码上下文 50 行 + 列 3 个新假设；建议切换方法论（参见 `autoresearch/references/methodology-router.md`）
++     - **L2（第 3 次失败）**: 搜索 + 读源码上下文 50 行 + 列 3 个新假设；指引切换方法论（参见 `autoresearch/references/methodology-router.md`）
+      - **L3（第 4 次失败）**: 完成七项检查清单（`escalation/SKILL.md`），质疑架构层：这个 bug 是否说明当前架构/抽象本身有问题？
+      - **L4（第 5 次+ 失败）**: 向用户汇报已尝试的全部方案，强制切换方法论。请求人类决策：继续 patch 还是架构改进
+    - 确认修复未引入新问题（回归测试）
+@@ -95,11 +95,11 @@ description: 中立 Debug 流程 — 使用无偏见方法排查问题
+ 
+    **7.3 修复范围扩展**
+    - 如果发现同类问题，一并修复
+-   - 如果影响面较大，向用户汇报并建议是否在本次一并处理
++   - 如果影响面较大，向用户汇报并指引是否在本次一并处理
+    - 为同类问题补充自动化测试，防止复发
+ 
+    **7.4 防御性措施（可选但推荐）**
+-   - 如果这类 bug 可以通过规则预防，建议添加一条规则到 AGENT.md
++   - 如果这类 bug 可以通过规则预防，指引添加一条规则到 AGENT.md
+    - 如果这类 bug 可以通过测试捕获，补充回归测试
+    - 如果这类 bug 源于架构问题，记录到技术债务清单
+ 
+@@ -117,7 +117,14 @@ description: 中立 Debug 流程 — 使用无偏见方法排查问题
+    - 如果产出了防御性规则或测试，一并记录
+    - 如果发现了需要后续关注的风险，记录到任务备忘中
+    
+-   **🔄 主动改进建议**：
+-    - 同类问题 ≥3 个 → 建议 `/autoresearch:fix` 批量修复
+-    - 根因为架构缺陷 → 建议 `/autoresearch` 进行结构性重构
+-    - 修复涉及 ≥5 个文件 → 建议 `/autoresearch:security` 安全扫描受影响模块
++   **🔄 主动改进指引**：
++    - 同类问题 ≥3 个 → 指引 `/autoresearch:fix` 批量修复
++    - 根因为架构缺陷 → 指引 `/autoresearch` 进行结构性重构
++    - 修复涉及 ≥5 个文件 → 指引 `/autoresearch:security` 安全扫描受影响模块
++
++
++## 自动化合规验证
++可以使用如下命令验证当前环境状态：
++```bash
++bash .agent/scripts/health-check.sh .
++```
+diff --git a/agentic-dev-kit/.agent/workflows/escalate.md b/agentic-dev-kit/.agent/workflows/escalate.md
+index 31ad837..db647f5 100644
+--- a/agentic-dev-kit/.agent/workflows/escalate.md
++++ b/agentic-dev-kit/.agent/workflows/escalate.md
+@@ -8,6 +8,7 @@ description: 手动触发压力升级 — 强制 Agent 进入高压调试模式
+ > 触发方式: `/escalate`
+ 
+ ## 步骤
++// turbo
+ 
+ 1. **加载 Escalation 技能**
+    读取 `.agent/skills/escalation/SKILL.md`，理解 L1-L4 压力等级和七项检查清单。
+@@ -31,5 +32,12 @@ description: 手动触发压力升级 — 强制 Agent 进入高压调试模式
+ 4. **汇报结果**
+    清单完成后，向用户汇报：
+    - 七项清单每项的执行结果
+-   - 当前方法论是否适合，是否建议切换
++   - 当前方法论是否适合，是否指引切换
+    - 如仍未解决：输出结构化失败报告（`escalation/SKILL.md` 格式）
++
++
++## 自动化合规验证
++可以使用如下命令验证当前环境状态：
++```bash
++bash .agent/scripts/health-check.sh .
++```
+diff --git a/agentic-dev-kit/.agent/workflows/evolve.md b/agentic-dev-kit/.agent/workflows/evolve.md
+index 1b20af3..373bb22 100644
+--- a/agentic-dev-kit/.agent/workflows/evolve.md
++++ b/agentic-dev-kit/.agent/workflows/evolve.md
+@@ -6,7 +6,7 @@ description: 规则进化与清理流程 — 定期整合规则，移除冲突
+ 
+ > 定期清理 Rules、Skills 和 AGENT.md，防止规则膨胀导致 Agent 性能退化。
+ > 触发方式: `/evolve`
+-> 建议频率: 每 2-4 周执行一次，或当发现退化信号时立即执行。
++> 指引频率: 每 2-4 周执行一次，或当发现退化信号时立即执行。
+ 
+ ## 退化信号（触发条件）
+ 
+@@ -36,7 +36,7 @@ description: 规则进化与清理流程 — 定期整合规则，移除冲突
+      find .agent/skills -name "SKILL.md" | xargs wc -l | sort -rn | head -5
+      ```
+      - AGENT.md > 200 行 → ⚠️ 超重，优先精简路由表（合并同类行、Tier 2 压缩）
+-     - openspec/changes/ > 5 个未归档 → ⚠️ 建议运行 `/spec:archive` 清理
++     - openspec/changes/ > 5 个未归档 → ⚠️ 指引运行 `/spec:archive` 清理
+ 
+ // turbo
+ 1. **回顾与反思 (Retrospective)**
+@@ -58,7 +58,7 @@ description: 规则进化与清理流程 — 定期整合规则，移除冲突
+      git log --since="2 weeks ago" --name-only --pretty="" | grep -E "test|spec" | sort -u | wc -l
+      ```
+      - 测试文件占比 < 20% → ⚠️ 标记为增长项，纳入新规则候选
+-     - 热点文件（同一文件多次修改）→ 识别为高风险区域，建议加强测试
++     - 热点文件（同一文件多次修改）→ 识别为高风险区域，指引加强测试
+ 
+ // turbo
+ 1.5 **会话经验提取 + 本能聚合（持续学习）**
+@@ -72,7 +72,7 @@ description: 规则进化与清理流程 — 定期整合规则，移除冲突
+    ```
+ 
+    **A. 模式提取**（委派给 `/learn`）：
+-   - 如本次 evolve 前未运行过 `/learn`，建议先执行 `/learn` 提取当前会话模式
++   - 如本次 evolve 前未运行过 `/learn`，指引先执行 `/learn` 提取当前会话模式
+    - `/learn` 负责提取，本步骤专注于升级/聚合/清理
+    - ℹ️ 提取规则：仅提取与代码质量和工程流程相关的模式，不提取项目业务逻辑
+ 
+@@ -84,8 +84,8 @@ description: 规则进化与清理流程 — 定期整合规则，移除冲突
+    - confidence≥4 的本能 → 向用户推荐升级，列出具体 pattern 和证据
+ 
+    **C. 本能聚类**：
+-   - 同一 category 下 3+ 条本能（confidence≥3） → 建议合并为一个新 Skill 草稿
+-   - 输出聚类建议供用户审核
++   - 同一 category 下 3+ 条本能（confidence≥3） → 指引合并为一个新 Skill 草稿
++   - 输出聚类指引供用户审核
+ 
+    **D. Skill 使用日志分析**（数据驱动清理）：
+    - 读取 `.agent/logs/skill-usage.tsv`（由 `session-end.sh` 自动维护）
+@@ -114,7 +114,7 @@ description: 规则进化与清理流程 — 定期整合规则，移除冲突
+ 
+ 4. **去重扫描**
+    - 识别语义相同但表述不同的规则
+-   - 提出合并建议（保留更精确的表述）
++   - 提出合并指引（保留更精确的表述）
+ 
+ 5. **冲突检测**
+    - 识别互相矛盾的规则对
+@@ -129,7 +129,7 @@ description: 规则进化与清理流程 — 定期整合规则，移除冲突
+ 
+ // turbo
+ 7. **重组优化**
+-   - 如果某个类别超过 5 条规则，建议拆分为独立的 `.agent/rules/{类别}.md` 文件
++   - 如果某个类别超过 5 条规则，指引拆分为独立的 `.agent/rules/{类别}.md` 文件
+    - 更新 AGENT.md 的路由表，指向新的规则文件
+    - 确保 AGENT.md 保持在 200 行有效内容以内
+ 
+@@ -148,9 +148,11 @@ description: 规则进化与清理流程 — 定期整合规则，移除冲突
+ 
+ 9. **自动化升级评估**
+    - 检查是否有技能已稳定运行 3+ 次且无需人工干预
+-   - 对稳定技能建议升级为自动化（定时执行）
++   - 对稳定技能指引升级为自动化（定时执行）
+    - 原则：**Skills 定义方法，Automations 定义调度**。手动不稳定的流程不要急于自动化。
+ 
+ 10. **验证**
+-    - 清理完成后，建议用户在下一个实际任务中观察 Agent 行为
++    - 清理完成后，指引用户在下一个实际任务中观察 Agent 行为
+     - 如果发现过度清理（某些需要的规则被误删），及时补回
++
++如果阻塞，可求助 `/debug` 流程。
+diff --git a/agentic-dev-kit/.agent/workflows/finish.md b/agentic-dev-kit/.agent/workflows/finish.md
+index 163aca0..df95cf4 100644
+--- a/agentic-dev-kit/.agent/workflows/finish.md
++++ b/agentic-dev-kit/.agent/workflows/finish.md
+@@ -28,6 +28,7 @@ description: 完成开发分支 — 标准化的分支收尾与清理流程
+    fi
+    ```
+    > 归档而非删除——下次 escalation 达到 L2+ 时，可自动扫描历史归档中的 `hypotheses_eliminated`，避免重复验证已排除的假设。
++// turbo
+ 
+ 1. **验证测试状态**
+    运行项目测试套件，确认全部通过：
+@@ -130,3 +131,5 @@ description: 完成开发分支 — 标准化的分支收尾与清理流程
+ - ❌ 合并后不验证测试
+ - ❌ 丢弃工作前不确认
+ - ❌ force-push（除非用户明确要求）
++
++如果阻塞，可求助 `/debug` 流程。
+diff --git a/agentic-dev-kit/.agent/workflows/handoff.md b/agentic-dev-kit/.agent/workflows/handoff.md
+index 8a52d4c..f6fe2ed 100644
+--- a/agentic-dev-kit/.agent/workflows/handoff.md
++++ b/agentic-dev-kit/.agent/workflows/handoff.md
+@@ -63,3 +63,5 @@ description: 生成跨会话交接备忘录 — 用于将任务安全传递到
+ 6. **交接确认**
+    - 将交接备忘录保存到项目中
+    - 提示用户：在新会话中使用 `/resume` 即可安全恢复
++
++如果阻塞，可求助 `/debug` 流程。
+diff --git a/agentic-dev-kit/.agent/workflows/harness-audit.md b/agentic-dev-kit/.agent/workflows/harness-audit.md
+index b0d89bc..fe518af 100644
+--- a/agentic-dev-kit/.agent/workflows/harness-audit.md
++++ b/agentic-dev-kit/.agent/workflows/harness-audit.md
+@@ -41,11 +41,11 @@ description: 配置健康度审计 — 评估 Agent 配置完整性和效率
+    - AGENT.md 行数（目标 < 120 行有效内容）
+    - Tier 1 技能总行数
+    - 规则文件总行数
+-   - 建议：如果总 token 预估 > 8000 行，给出精简建议
++   - 指引：如果总 token 预估 > 8000 行，给出精简指引
+ 
+-4. **模型路由建议**
+-   根据当前任务类型给出模型选择建议：
+-   | 任务类型 | 建议模型 | 原因 |
++4. **模型路由指引**
++   根据当前任务类型给出模型选择指引：
++   | 任务类型 | 指引模型 | 原因 |
+    |---|---|---|
+    | 配置修改、文案调整 | 轻量模型 | Token 效率 |
+    | 功能开发、重构 | 标准模型 | 平衡质量和成本 |
+@@ -58,6 +58,8 @@ description: 配置健康度审计 — 评估 Agent 配置完整性和效率
+    - **路由完整性**: [X/Y 文件存在]
+    - **Token 预估**: [~N 行需加载]
+    - **配置评分**: [A/B/C/D/F]
+-   - **建议**:
+-     - [具体优化建议]
++   - **指引**:
++     - [具体优化指引]
+    ```
++
++如果阻塞，可求助 `/debug` 流程。
+diff --git a/agentic-dev-kit/.agent/workflows/hooks.md b/agentic-dev-kit/.agent/workflows/hooks.md
+index be8dc4c..b54867a 100644
+--- a/agentic-dev-kit/.agent/workflows/hooks.md
++++ b/agentic-dev-kit/.agent/workflows/hooks.md
+@@ -57,3 +57,5 @@ bash .agent/scripts/session-end.sh
+ ls -1t .agent/auto-checkpoints/auto-checkpoint-*.md 2>/dev/null | tail -n +6 | xargs rm -f 2>/dev/null
+ echo "✅ 已清理旧的 auto-checkpoint"
+ ```
++
++如果阻塞，可求助 `/debug` 流程。
+diff --git a/agentic-dev-kit/.agent/workflows/init.md b/agentic-dev-kit/.agent/workflows/init.md
+index 73d35f9..741a499 100644
+--- a/agentic-dev-kit/.agent/workflows/init.md
++++ b/agentic-dev-kit/.agent/workflows/init.md
+@@ -78,5 +78,12 @@ description: 项目初始化 — 扫描项目结构并生成 AGENT.md 和规则
+    向用户汇报：
+    - 已创建的文件列表
+    - 自动识别的技术栈信息
+-   - 建议用户检查并定制的部分
++   - 指引用户检查并定制的部分
+    - 提示用户可使用 `/new-feature` 开始第一个开发任务
++
++
++## 自动化合规验证
++可以使用如下命令验证当前环境状态：
++```bash
++bash .agent/scripts/health-check.sh .
++```
+diff --git a/agentic-dev-kit/.agent/workflows/instinct.md b/agentic-dev-kit/.agent/workflows/instinct.md
+index 7f91e56..9d35d8d 100644
+--- a/agentic-dev-kit/.agent/workflows/instinct.md
++++ b/agentic-dev-kit/.agent/workflows/instinct.md
+@@ -32,7 +32,7 @@ description: 本能管理 — 查看、导入、导出、清理本能
+      | ... | ... | ... |
+    - **候选升级** (confidence≥4):
+      - [本能 pattern + confidence]
+-   - **建议**: [如需升级，运行 /evolve]
++   - **指引**: [如需升级，运行 /evolve]
+    ```
+ 
+ ---
+@@ -75,3 +75,5 @@ description: 本能管理 — 查看、导入、导出、清理本能
+    - **清理后**: [M 条活跃本能]
+    - **移除**: [列表 + 原因]
+    ```
++
++如果阻塞，可求助 `/debug` 流程。
+diff --git a/agentic-dev-kit/.agent/workflows/learn.md b/agentic-dev-kit/.agent/workflows/learn.md
+index 0b85594..adeb591 100644
+--- a/agentic-dev-kit/.agent/workflows/learn.md
++++ b/agentic-dev-kit/.agent/workflows/learn.md
+@@ -59,7 +59,7 @@ description: 会话模式提取 — 从当前会话中提取编码模式并保
+    - **新发现**: [N 条新本能]
+    - **置信度提升**: [M 条已有本能获得验证]
+    - **候选升级** (confidence≥4): [列表]
+-   - **建议**: [后续行动 — 如运行 /evolve 升级高置信度本能]
++   - **指引**: [后续行动 — 如运行 /evolve 升级高置信度本能]
+    ```
+ 
+ ## 注意事项
+@@ -67,3 +67,5 @@ description: 会话模式提取 — 从当前会话中提取编码模式并保
+ - ⚠️ 仅提取与代码质量/工程流程相关的模式，不提取业务逻辑
+ - 每次提取不超过 5 条新本能，避免噪声过多
+ - 低置信度本能需要多次验证才能升级，这是设计使然
++
++如果阻塞，可求助 `/debug` 流程。
+diff --git a/agentic-dev-kit/.agent/workflows/new-feature.md b/agentic-dev-kit/.agent/workflows/new-feature.md
+index 1b63842..a262350 100644
+--- a/agentic-dev-kit/.agent/workflows/new-feature.md
++++ b/agentic-dev-kit/.agent/workflows/new-feature.md
+@@ -70,7 +70,7 @@ description: 启动新功能开发流程 — 自动按四阶段 SOP 执行
+    - 📊 如果代码图谱可用，在开始编码前：
+      - 执行 `get_impact_radius(changed_files=[本次将修改的文件列表])`
+      - 根据影响半径确定最多加载哪 5 个文件（优先级：变更文件 > 直接调用方 > 测试文件）
+-     - 如果影响半径 > 20 个节点，向用户预警修改范围可能过大，建议拆分
++     - 如果影响半径 > 20 个节点，向用户预警修改范围空间过大，指引拆分
+    - 清理无关上下文，只加载规格中定义的相关文件（≤5 个）
+    - 严格按照 Phase 1 的技术规格编码，不引入未授权依赖
+    - 每完成一个逻辑模块，立即执行 `/test` 运行该模块测试并确认输出（禁止未验证就声称"测试通过"）
+@@ -93,11 +93,18 @@ description: 启动新功能开发流程 — 自动按四阶段 SOP 执行
+     - 🚪 **人类审批**: 将闭环报告提交用户确认（🟢 轻量模式改为直接汇报）
+     - 如果某步持续失败超过 3 次，暂停并上报用户
+    
+-   **🔄 主动改进建议**（闸门通过后，自动检测以下条件并建议）：
+-    - 📉 测试覆盖率下降 → 建议 `/autoresearch` 提升覆盖率
+-    - 🔍 /review 发现 ≥5 个同类代码异味 → 建议 `/autoresearch` 批量重构
+-    - ⚠️ 新增代码无测试覆盖 → 建议 `/autoresearch:fix` 补充测试
++   **🔄 主动改进指引**（闸门通过后，自动检测以下条件并指引）：
++    - 📉 测试覆盖率下降 → 指引 `/autoresearch` 提升覆盖率
++    - 🔍 /review 发现 ≥5 个同类代码异味 → 指引 `/autoresearch` 批量重构
++    - ⚠️ 新增代码无测试覆盖 → 指引 `/autoresearch:fix` 补充测试
+ 
+ 7. **分支完成**
+     - 执行 `/finish` 完成分支收尾（merge/PR/keep/discard + worktree 清理）
+     - 如果有后续工作，使用 `/handoff` 生成交接备忘录
++
++
++## 自动化合规验证
++可以使用如下命令验证当前环境状态：
++```bash
++bash .agent/scripts/health-check.sh .
++```
+diff --git a/agentic-dev-kit/.agent/workflows/resume.md b/agentic-dev-kit/.agent/workflows/resume.md
+index d58f1c9..b80dcef 100644
+--- a/agentic-dev-kit/.agent/workflows/resume.md
++++ b/agentic-dev-kit/.agent/workflows/resume.md
+@@ -60,3 +60,5 @@ description: 跨会话恢复流程 — 从检查点安全恢复任务上下文
+ 6. **继续执行**
+    - 从确认的当前位置继续执行对应的 Phase
+    - 严格遵循 SKILL.md 中该 Phase 的要求
++
++如果阻塞，可求助 `/debug` 流程。
+diff --git a/agentic-dev-kit/.agent/workflows/review.md b/agentic-dev-kit/.agent/workflows/review.md
+index 3574baa..d575464 100644
+--- a/agentic-dev-kit/.agent/workflows/review.md
++++ b/agentic-dev-kit/.agent/workflows/review.md
+@@ -8,6 +8,7 @@ description: 对抗式代码审查流程 — 使用 Expert A / Opponent B / Refe
+ > 触发方式: `/review`
+ 
+ ## 步骤
++// turbo
+ 
+ 1. **确认审查范围（图谱增强）**
+    - 向用户确认需要审查的文件或模块
+@@ -16,7 +17,7 @@ description: 对抗式代码审查流程 — 使用 Expert A / Opponent B / Refe
+        - 精准的影响范围（哪些文件被波及）
+        - 变更节点的调用链和依赖关系
+        - 测试覆盖状态（哪些变更函数缺少测试）
+-       - 自动生成的审查指导建议
++       - 自动生成的审查指导指引
+      - 根据图谱结果选择要加载的文件（优先级：变更文件 > 直接调用方 > 测试文件），总数 ≤5
+    - 如果图谱不可用：只加载相关文件（≤5 个），避免上下文膨胀
+    - 加载审查标准 `.agent/rules/code-review.md`（6 维度审查清单）
+@@ -54,7 +55,7 @@ description: 对抗式代码审查流程 — 使用 Expert A / Opponent B / Refe
+    - 极其敏锐地发现该领域深水区的逻辑漏洞、竞态条件、设计缺陷或性能陷阱
+    - 📊 如果图谱提供了审查指导，将其作为风险扫描的补充切入点：
+      - 测试覆盖缺口 → 标记为高风险（缺少防护网）
+-     - 影响半径过宽（> 10 文件） → 建议拆分 PR
++     - 影响半径过宽（> 10 文件） → 指引拆分 PR
+      - 继承/接口关系变更 → 检查里氏替换原则合规性
+    - 允许误报 — 目标是产出一份带有深刻领域视角的**风险超集**
+    - 给每个风险点标注严重等级（低/中/高/关键）
+@@ -75,7 +76,7 @@ description: 对抗式代码审查流程 — 使用 Expert A / Opponent B / Refe
+    - 产出**最终审查报告**：
+      ```
+      ## 已确认问题
+-     - [问题描述] — 严重等级: [等级] — 建议修复: [方案]
++     - [问题描述] — 严重等级: [等级] — 指引修复: [方案]
+      
+      ## 已排除（误报）
+      - [风险点] — 排除理由: [证据]
+@@ -86,7 +87,7 @@ description: 对抗式代码审查流程 — 使用 Expert A / Opponent B / Refe
+ 
+ 6. **提交审查结果**
+    - 将最终审查报告提交给用户
+-   - 对已确认问题，提出具体的修复建议
++   - 对已确认问题，提出具体的修复指引
+    - 对需要人类决策的争议点，提出 2-3 个选项供用户选择
+ 
+ 7. **联动修复（如有已确认问题）**
+@@ -110,3 +111,10 @@ description: 对抗式代码审查流程 — 使用 Expert A / Opponent B / Refe
+      - **中等**：peak L2，少量 rework，无 blocked
+      - **需关注**：peak ≥ L3，或有 blocked 项，或多次 rework
+ 
++
++
++## 自动化合规验证
++可以使用如下命令验证当前环境状态：
++```bash
++bash .agent/scripts/health-check.sh .
++```
+diff --git a/agentic-dev-kit/.agent/workflows/skill-capture.md b/agentic-dev-kit/.agent/workflows/skill-capture.md
+index 4ca5cdf..fd41c83 100644
+--- a/agentic-dev-kit/.agent/workflows/skill-capture.md
++++ b/agentic-dev-kit/.agent/workflows/skill-capture.md
+@@ -68,3 +68,12 @@ description: 捕获会话经验并沉淀为微型技能 — 从最近成功的
+ 5. **提交审核**
+    - 将生成的 Markdown 路径和大致内容总结给用户。
+    - 提示用户：这是我们在这个会话中新学会的技能，固化后即使新建会话，只要触发关键字即可复用此经验。
++
++
++## 自动化合规验证
++可以使用如下命令验证当前环境状态：
++```bash
++bash .agent/scripts/health-check.sh .
++```
++
++如果阻塞，可求助 `/debug` 流程。
+diff --git a/agentic-dev-kit/.agent/workflows/skill-create.md b/agentic-dev-kit/.agent/workflows/skill-create.md
+index 5718647..11c505e 100644
+--- a/agentic-dev-kit/.agent/workflows/skill-create.md
++++ b/agentic-dev-kit/.agent/workflows/skill-create.md
+@@ -73,3 +73,5 @@ description: 从 Git 历史生成项目编码规范技能 — 新项目冷启动
+    - 将草稿保存到 `.agent/skills/[项目名]-conventions/SKILL.md`
+    - 提示用户审核并修改
+    - 确认后更新 AGENT.md 路由表
++
++如果阻塞，可求助 `/debug` 流程。
+diff --git a/agentic-dev-kit/.agent/workflows/spec-archive.md b/agentic-dev-kit/.agent/workflows/spec-archive.md
+index 90d1723..f991533 100644
+--- a/agentic-dev-kit/.agent/workflows/spec-archive.md
++++ b/agentic-dev-kit/.agent/workflows/spec-archive.md
+@@ -43,7 +43,7 @@ description: 归档已完成变更 — 三维验证 + delta specs 合并 + 审
+    **3.3 一致性 (Coherence)**
+    - design.md 中的架构决策是否反映在代码中
+    - 命名模式是否与 design.md 一致
+-   - 如有偏差，标记为 WARNING 并建议更新 design.md
++   - 如有偏差，标记为 WARNING 并指引更新 design.md
+ 
+    **验证结果分类**：
+    | 级别 | 说明 | 是否阻断归档 |
+@@ -76,7 +76,16 @@ description: 归档已完成变更 — 三维验证 + delta specs 合并 + 审
+    - 验证结果摘要（CRITICAL / WARNING / SUGGESTION 计数）
+    - 主规格当前状态
+ 
+-7. **后续建议**
+-   - 建议检查合并后的主规格文件是否清晰、无矛盾
++7. **后续指引**
++   - 指引检查合并后的主规格文件是否清晰、无矛盾
+    - 如有多个活跃变更，询问是否继续归档下一个
+-   - 建议执行 `/checkpoint` 记录归档状态
++   - 指引执行 `/checkpoint` 记录归档状态
++
++
++## 自动化合规验证
++可以使用如下命令验证当前环境状态：
++```bash
++bash .agent/scripts/health-check.sh .
++```
++
++如果阻塞，可求助 `/debug` 流程。
+diff --git a/agentic-dev-kit/.agent/workflows/spec-propose.md b/agentic-dev-kit/.agent/workflows/spec-propose.md
+index 871df22..04d375a 100644
+--- a/agentic-dev-kit/.agent/workflows/spec-propose.md
++++ b/agentic-dev-kit/.agent/workflows/spec-propose.md
+@@ -87,4 +87,6 @@ description: 创建规格驱动的变更提案 — 生成 proposal + delta specs
+ 8. **衔接后续**
+    - 用户确认后，可直接进入 `/new-feature` Phase 2（验收契约）
+    - 或直接按 `tasks.md` 开始编码
+-   - 建议执行 `/checkpoint` 记录规划状态
++   - 指引执行 `/checkpoint` 记录规划状态
++
++如果阻塞，可求助 `/debug` 流程。
+diff --git a/agentic-dev-kit/.agent/workflows/stress-test.md b/agentic-dev-kit/.agent/workflows/stress-test.md
+index 3b0ae86..7062fa4 100644
+--- a/agentic-dev-kit/.agent/workflows/stress-test.md
++++ b/agentic-dev-kit/.agent/workflows/stress-test.md
+@@ -6,7 +6,7 @@ description: 合规压测 — 运行标准任务检验 Agent 是否遵循 SOP 
+ 
+ > 通过运行一个标准化小任务，自动检验 Agent 是否遵循了规范体系中的核心行为约定。
+ > 触发方式: `/stress-test`
+-> 建议时机: 每次 `/evolve` 清理后执行，或定期（每月一次）执行。
++> 指引时机: 每次 `/evolve` 清理后执行，或定期（每月一次）执行。
+ 
+ ## 前置：运行定量健康检查
+ 
+@@ -16,7 +16,7 @@ description: 合规压测 — 运行标准任务检验 Agent 是否遵循 SOP 
+    bash .agent/scripts/health-check.sh
+    ```
+    - 记录退出码和报告摘要
+-   - 如果退出码 = 2（危险），建议先执行 `/evolve` 清理后再压测
++   - 如果退出码 = 2（危险），指引先执行 `/evolve` 清理后再压测
+ 
+ ## 压测流程
+ 
+@@ -115,7 +115,7 @@ description: 合规压测 — 运行标准任务检验 Agent 是否遵循 SOP 
+      - 状态文件: [存在/不存在] — 内容: [摘要]
+      - 日志文件: [存在/不存在] — 条目数: [N]
+    - **结论**: [通过 (≥80) / 需优化 (60-79) / 框架需瘦身 (<60)]
+-   - **建议**: [如有未通过项，给出改进建议]
++   - **指引**: [如有未通过项，给出改进指引]
+    ```
+ 
+ // turbo
+@@ -130,5 +130,7 @@ description: 合规压测 — 运行标准任务检验 Agent 是否遵循 SOP 
+ |---|---|---|
+ | ≥ 80 | ✅ 框架健康 | 无需调整 |
+ | 60-79 | ⚠ 需要优化 | 检查哪些步骤被跳过，针对性强化规则 |
+-| < 60 | 🔴 框架需瘦身 | 立即执行 `/evolve`，可能需精简 SKILL.md |
++| < 60 | 🔴 框架需瘦身 | 立即执行 `/evolve`，空间需精简 SKILL.md |
+ 
++
++如果阻塞，可求助 `/debug` 流程。
+diff --git a/agentic-dev-kit/.agent/workflows/tdd.md b/agentic-dev-kit/.agent/workflows/tdd.md
+index 0b2fa3d..51ac97d 100644
+--- a/agentic-dev-kit/.agent/workflows/tdd.md
++++ b/agentic-dev-kit/.agent/workflows/tdd.md
+@@ -101,3 +101,10 @@ description: TDD 驱动开发流程 — 按 Red-Green-Refactor 循环编写代
+    - 覆盖范围: [已覆盖的行为列表]
+    - 代码质量: [重构摘要，如提取了哪些函数、消除了哪些重复]
+    ```
++
++
++## 自动化合规验证
++可以使用如下命令验证当前环境状态：
++```bash
++bash .agent/scripts/health-check.sh .
++```
+diff --git a/agentic-dev-kit/.agent/workflows/test.md b/agentic-dev-kit/.agent/workflows/test.md
+index e8731d3..cfa9ee4 100644
+--- a/agentic-dev-kit/.agent/workflows/test.md
++++ b/agentic-dev-kit/.agent/workflows/test.md
+@@ -70,3 +70,12 @@ description: 编写和运行自动化测试 — 按测试金字塔和 Test-First
+      覆盖率: [核心模块 X%, 全量 X%]（如工具支持）
+      未覆盖: [如有, 列出未覆盖的关键路径]
+      ```
++
++
++## 自动化合规验证
++可以使用如下命令验证当前环境状态：
++```bash
++bash .agent/scripts/health-check.sh .
++```
++
++如果阻塞，可求助 `/debug` 流程。
