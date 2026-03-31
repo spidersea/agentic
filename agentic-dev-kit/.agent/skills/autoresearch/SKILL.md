@@ -289,6 +289,10 @@ Use a SINGLE `AskUserQuestion` call with these 4 questions:
 
 ### Setup Steps (after config is complete)
 
+> ⛔ **防衰减迭代记录 (Loop Contract)**
+> 决定开启 Autoresearch 循环后，必须在第一秒钟于磁盘创建 `autoresearch-tracker.md` 追踪器文件（或整合入 `task.md`）。
+> 无论执行了多少次 Modify-Verify，每次决定退出循环前，必须扫描该文件确认“所有前置验证任务”是否打满 `[x]`，强行唤醒你的循环终点意识。
+
 1. **Read all in-scope files** for full context before any modification
 2. **Define the goal** — extracted from user input or inline config
 3. **Define scope constraints** — validated file globs

@@ -9,6 +9,10 @@ version: 1.0.0
 > 灵感来源：[tanweai/pua](https://github.com/tanweai/pua) 的 L1-L4 压力升级机制。
 > 核心理念：根据连续失败次数自动升级行为约束，迫使 Agent 穷尽一切方案后才允许放弃。
 
+> ⛔ **压力状态锁存 (Escalation Locking)**
+> 在进入任何一层 Escalation（尤其是 L3/L4）之前，必须物理锁定当前尝试解决的具体 Checklist 到当前工作区文件（如 `task.md`）。
+> 在该 Checklist 中的所有项全部物理打满 `[x]` 前，不允许自行放弃，更不允许静默回退到正常模式。
+
 ## 设计原则
 
 1. **渐进式压力**：失败越多，约束越严，行动要求越具体
