@@ -22,6 +22,10 @@
    - `Rules/` 和 `Skills/` 等所有文件执行前必须通过系统内置机械判定（包含 `score-skills.sh` 满分 100 分的强制检测），保障没有软弱的表述语句，杜绝口嗨。配合 `// turbo` 静默标记链，极大程度提升操作连贯性。
 5. **📋 有界标准流程 (World-Class SOP)**
    - 铁面无私的四阶段开发法 (调研 → 契约 → 编码 → 验证)。未出测试结果与闭环承诺单前，不允许判定 `[x] 成功`。
+6. **🧩 零损耗物理切片与按需加载 (Lazy-Loaded Sub-skills)**
+   - 彻底解决大模型长上下文带来的 Token 溢出与降智危机。通过对巨型指令簇执行“剥离降维”，结合 `AGENT.md` 动态路由实现极致轻量的「按需挂载」。
+7. **⚔️ 左右互搏对抗审计 (Adversarial Verification Protocol)**
+   - 内置结构化的独立判定审查（正方专家扫雷 -> 反方模型驳斥 -> 中立裁判靠编译证据定案），强绑基于物理磁盘的 Task Contract (任务契约单)，终结 AI 伪造进程的“口头执行”乱象。
 
 ---
 
@@ -42,10 +46,14 @@ tests/                                ← 🧪 自动化测试套件
 ├── instincts/                        ← 🧠 临时态的本能日志、AI 踩过的坑
 │   └── escalation-history/           ← 🚫 [系统生成] 曾让系统奔溃的错误排查路线黑名单
 ├── skills/                           ← 💡 固态专家技能表
-│   ├── world_class_coding/           ← (100/100满分架构) SOP、TDD 和校验对抗核
+│   ├── world_class_coding/           ← (100/100满分架构) SOP 核心驱动器
+│   │   ├── coding-architecture/      ← ┗ 子技能：微观架构与权限防备
+│   │   ├── testing-discipline/       ← ┗ 子技能：TDD 红绿循环与纪律
+│   │   ├── version-control/          ← ┗ 子技能：版本控制与防盲写限制
+│   │   └── rule-evolution/           ← ┗ 子技能：自我大扫除清洗协议
 │   ├── escalation/                   ← PUA 处理拦截网
 │   ├── continuous-learning/          ← Instinct 智能清洗及技能树转化漏斗
-│   ├── autoresearch/                 ← 自我逻辑 100 分满分进化推演工具
+│   ├── autoresearch/                 ← 自主运转进化与防爆破死链工具
 │   └── ...                           ← 共计 28 个微调与工程模块
 ├── workflows/                        ← 📋 标准执行动作 (20+)
 │   ├── new-feature.md / debug.md     ← 带 // turbo 环境扫描挂载标记的主流程

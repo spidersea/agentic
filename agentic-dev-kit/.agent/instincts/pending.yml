@@ -1,6 +1,9 @@
 # Agentic 本能提取 — 从会话 912b2d17 中提取
 # 提取时间: 2026-03-31T18:57:00+08:00
 # 提取范围: 1 个 git commit + 当前会话全部操作（跨 5 轮重大修改）
+# 
+# 附加: 从会话 5fc45154-1b0c-4a90-a61d-27379ab06899 增量提取
+# 提取时间: 2026-04-01T13:58:00+08:00
 
 instincts:
   - id: inst-001
@@ -47,3 +50,30 @@ instincts:
     source_sessions:
       - "912b2d17-feec-4f33-83b0-a978c98d8f85"
     created: "2026-03-31"
+
+  - id: inst-006
+    pattern: "无人数干预的长时自主循环任务（如自动迭代），必须设定强制上下文重置点，否则必定造成大模型 OOM 或响应瘫痪"
+    context: "本会话对比 Claude Code 源码后发现，缺乏 Context Compression 会导致 /autoresearch 等循环崩溃。随后我们强制设定了每一定轮次必须主动触发 /context-reset 归档的硬约束。"
+    category: architecture
+    confidence: 5
+    source_sessions:
+      - "5fc45154-1b0c-4a90-a61d-27379ab06899"
+    created: "2026-04-01"
+
+  - id: inst-007
+    pattern: "无人值守下由智能体自动触发的验证与编译指令，必须强制包装 shell 级别的超时熔断机制"
+    context: "在加固自主研究模式的闭环时，排查出 Agent 存在因遇到死循环测试而永久挂起（Hanging）的极高风险。最后在验证步骤中加入了类似 `timeout 120` 的安全探针规范。"
+    category: workflow
+    confidence: 4
+    source_sessions:
+      - "5fc45154-1b0c-4a90-a61d-27379ab06899"
+    created: "2026-04-01"
+
+  - id: inst-008
+    pattern: "当底层指令文件膨胀而触发红灯告警时，严禁粗暴执行词义压缩（可能破坏现有防线），必须执行'零损耗的按需解耦与动态路由分流'"
+    context: "系统健康探针报警提示 `world_class_coding` 膨胀至 650 行产生载入负担。专家组经推演驳回了盲目的 /evolve 删除操作，转而通过在文件系统物理拆分子技能并在主 AGENT.md 注入懒加载，在实现降负的同时完整保住了所有的开发防御战线。"
+    category: architecture
+    confidence: 5
+    source_sessions:
+      - "5fc45154-1b0c-4a90-a61d-27379ab06899"
+    created: "2026-04-01"
