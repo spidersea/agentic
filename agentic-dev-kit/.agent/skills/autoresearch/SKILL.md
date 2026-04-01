@@ -189,7 +189,7 @@ Load: `references/plan-workflow.md` for full protocol.
 3. **Define Scope** — suggest file globs, validate they resolve to real files
 4. **Define Metric** — suggest mechanical metrics, validate they output a number
 5. **Define Direction** — higher or lower is better
-6. **Define Verify** — construct the shell command, **dry-run it**, confirm it works
+6. **Define Verify** — construct the shell command. 🛡️ **Safety Check FIRST**: Scan against `.agent/workflows/hooks.md` Layer 1 dangerous patterns (e.g. `rm -rf`). Only if safe, **dry-run it** to confirm it works.
 7. **Confirm & Launch** — present the complete config, offer to launch immediately
 
 **Critical gates:**
@@ -311,7 +311,7 @@ LOOP (FOREVER or N times):
   2. Ideate: Pick next change based on goal, past results, what hasn't been tried
   3. Modify: Make ONE focused change to in-scope files
   4. Commit: Git commit the change (before verification)
-  5. Verify: Run the mechanical metric (tests, build, benchmark, etc.)
+  5. Verify: Run the mechanical metric. 🛡️ **Timeout Protection**: MUST use a timeout wrapper (e.g. `timeout 120 <cmd>`) to prevent process hanging.
   6. Guard: If guard is set, run the guard command
   7. Decide:
      - IMPROVED + guard passed (or no guard) → Keep commit, log "keep", advance
@@ -325,6 +325,7 @@ LOOP (FOREVER or N times):
   9. Repeat: Go to step 1.
      - If unbounded: NEVER STOP. NEVER ASK "should I continue?"
      - If bounded (N): Stop after N iterations, print final summary
+     - 🛡️ **OOM Protection**: Every 10 iterations, or if context usage is very high, automatically invoke `/context-reset` and persist tracker before continuing.
 
 POST-LOOP (loop 结束或被中断后执行):
   10. Learning: 从 results log 提取经验并沉淀

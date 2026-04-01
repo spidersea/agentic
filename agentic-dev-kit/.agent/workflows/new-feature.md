@@ -95,7 +95,7 @@ description: 启动新功能开发流程 — 自动按四阶段 SOP 执行
    - ⛳ CP-3: 执行 `/checkpoint` 记录各模块编码和测试状态
 
 // turbo
-5. **Phase 4: 中立验证与验收**
+5. **Phase 4: 对抗式验证与验收**
 
    > ⛔ **验证闸门前置检查 (Phase 4 Entry Gate)**
    > 在宣布编码完成之前，你必须确认：
@@ -103,9 +103,39 @@ description: 启动新功能开发流程 — 自动按四阶段 SOP 执行
    > - CP-3 检查点已物理记录到打卡文件？
    > 如果任何一项为否，**退回 Phase 3**。
 
-   - **强制**执行 `/test` 运行全量自动化测试（不可跳过）
-   - **强制**执行 `/review` 对抗式代码审查（不可以"逻辑简单"为由跳过，所有新功能必须经过至少一次 `/review`）
-   - 如发现缺陷，执行 `/debug` 修复（含举一反三 + 回测）
+   > 🛡️ **验证者心态（Verification Agent Protocol）**
+   > 借鉴 Claude Code 的 Verification Agent 设计：你的工作不是「确认看起来没问题」，而是 **try to break it**。
+   > 必须警惕两种失败模式：
+   > 1. **验证逃避**（verification avoidance）：只看代码不跑检查、写 PASS 就走
+   > 2. **前 80% 迷惑**：UI 看起来正常、主测试通过，就忽略最后 20% 的边界问题
+
+   **强制验证清单（按顺序执行，每项必须有命令输出证据）：**
+   - 🔨 **构建验证**: 运行 build 命令，确认 0 errors（如适用）
+   - 🧪 **测试套件**: 执行 `/test` 运行全量自动化测试，确认 0 failures
+   - 🔍 **静态检查**: 运行 linter / type-check / format check（如项目有配置）
+   - 🎯 **领域专项验证**（根据变更类型选择）：
+     - 前端变更 → 浏览器验证 / 页面资源完整性检查
+     - API 变更 → curl/fetch 实测请求和响应
+     - CLI 变更 → 验证 stdout/stderr/exit code
+     - 数据库变更 → 测试 migration up/down + 已有数据兼容
+     - 重构变更 → 验证公共 API surface 无破坏
+   - 🗡️ **对抗性探测**（adversarial probes）：主动构造至少 2 个边界/异常场景，尝试打破实现
+   - 📋 **对抗式代码审查**: **强制**执行 `/review`（不可以"逻辑简单"为由跳过）
+
+   **验证结论必须使用结构化裁定：**
+   ```
+   ## VERDICT: PASS | FAIL | PARTIAL
+   - build: ✅/❌ [命令 + 输出摘要]
+   - tests: ✅/❌ [命令 + 输出摘要]
+   - lint:  ✅/❌ [命令 + 输出摘要]
+   - domain: ✅/❌ [验证内容 + 结果]
+   - adversarial: ✅/❌ [探测场景 + 结果]
+   - review: ✅/❌ [已确认问题数]
+   ```
+
+   - VERDICT 为 FAIL → 执行 `/debug` 修复（含举一反三 + 回测），修复后**重新执行完整验证清单**
+   - VERDICT 为 PARTIAL → 列出未通过项，向用户上报并请求决策
+   - VERDICT 为 PASS → 继续到闭环验收
    - ⛳ CP-4: 执行 `/checkpoint` 记录最终验证状态
 
 6. **工作流闭环验收**

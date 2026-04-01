@@ -19,9 +19,11 @@
 
 ⚠️ **禁止凭"记忆残影"继续工作。** 如果无法找到检查点文件，必须向用户确认当前状态后再继续。
 
+> **自动压缩感知**: 当对话轮次 > 15 轮 或 累计加载文件行数 > 5000 行时，Agent 应主动建议执行 `/context-reset`。每个 Phase 完成后应主动清理该 Phase 独有的文件缓存。详见 `.agent/workflows/context-reset.md`「自动压缩触发条件」。
+
 ### 工作模式上下文（Work Mode Contexts）
 
-> 来自 everything-claude-code 的 contexts/ 理念：明确当前工作模式，减少 AI 猜测。
+> 来自 everything-claude-code 的 contexts/ 理念 + Claude Code 的 `getSessionSpecificGuidanceSection()` 动态注入设计。
 > 用户可在会话开始时显式声明，无需 AI 推测：
 
 | 模式 | 声明方式 | AI 应加载 | AI 应避免 |
@@ -29,6 +31,17 @@
 | **开发模式** | 「我们现在开始编码」/ `/new-feature` | world_class_coding（全文）+ 测试规则 | 大范围分析、设计讨论 |
 | **审查模式** | 「帮我 review 这段代码」/ `/review` | code-review.md + code-graph | 主动修改代码 |
 | **调研模式** | 「我想了解这个问题」/ 探索性对话 | 轻量加载（≤3 文件） | 执行 SOP 四阶段、写测试 |
+
+**动态会话指引注入（Session-Specific Guidance）：**
+
+> 进入工作模式后，Agent 应根据**当前可用能力和任务状态**自动注入对应指引，而不是仅靠静态表：
+
+- 📊 **代码图谱可用时** → 自动注入：优先使用 `get_impact_radius` / `get_review_context` 辅助决策
+- 🔀 **存在未完成的 fork/子任务时** → 自动注入：不要偷看子任务输出文件、不要预言子任务结果
+- 🧪 **项目有测试配置时** → 自动注入：修改 `src/` 代码后必须执行 `/test`
+- 🛡️ **存在 `.agent/hooks/pre-tool/` 脚本时** → 自动注入：写操作前将触发 Pre-Tool Hook 检查
+- 📋 **存在未完成的任务契约时** → 自动注入：所有操作必须在契约范围内
+- 🔒 **非交互模式时** → 自动注入：禁止所有需要用户确认的操作，遇到不可逆操作直接跳过并记录
 
 
 
@@ -39,9 +52,11 @@
 | 场景 | 加载技能 | 重点章节 |
 |---|---|---|
 | 新功能开发、核心代码修改、重构 | `.agent/skills/world_class_coding/SKILL.md` | 全文 |
-| TDD 驱动开发 | `.agent/skills/world_class_coding/SKILL.md` | §10.5 TDD + §10 测试纪律 |
+| 代码架构审查、质量检测、微观设计 | `.agent/skills/world_class_coding/coding-architecture/SKILL.md` | 全文 |
+| Git代码提交、版本控制合并控制 | `.agent/skills/world_class_coding/version-control/SKILL.md` | 全文 |
+| 编写测试用例、开发测试驱动设计开发 (TDD) | `.agent/skills/world_class_coding/testing-discipline/SKILL.md` | 全文 |
+| 动态进化与 Spa Day (规则清理重建) | `.agent/skills/world_class_coding/rule-evolution/SKILL.md` | 全文 |
 | Debug、排查问题 | `.agent/skills/world_class_coding/SKILL.md` | Phase 4 + 中立提示词 |
-| 编写或修改测试 | `.agent/skills/world_class_coding/SKILL.md` | Phase 2（契约）+ Phase 4（验证） |
 | 跨会话任务续作 | `.agent/skills/world_class_coding/SKILL.md` | 第五章：可持续节点协议 |
 | 代码结构分析、影响评估、依赖查询 | `.agent/skills/code-graph/SKILL.md` | 全文 |
 | 疑难杂症经验结晶 (按需提取微型技能) | `.agent/skills/captured/{名称}.md` | 全文 |
@@ -107,7 +122,7 @@
 | `/autoresearch:debug` | 自主 Bug 猎手（科学方法 + 迭代追查） | `.agent/skills/autoresearch/SKILL.md` |
 | `/learn` | 从当前会话提取编码模式为本能 | `.agent/workflows/learn.md` |
 | `/instinct` | 本能管理（status/import/export/prune） | `.agent/workflows/instinct.md` |
-| `/hooks` | 会话生命周期钩子管理 | `.agent/workflows/hooks.md` |
+| `/hooks` | 三层钩子管理（Pre/Post Tool + Lifecycle） | `.agent/workflows/hooks.md` |
 | `/config-scan` | Agent 配置安全扫描（密钥/权限/注入） | `.agent/workflows/config-scan.md` |
 | `/harness-audit` | 配置健康度审计 + 模型路由建议 | `.agent/workflows/harness-audit.md` |
 | `/skill-create` | 从 Git 历史生成项目编码规范技能 | `.agent/workflows/skill-create.md` |
@@ -134,15 +149,38 @@
 
 ## Agent 委派路由 (Agent Delegation)
 
-> 专职 Sub-Agent 定义在 `.agent/agents/` 目录中。主 Agent 可委派特定任务给 Sub-Agent，每个 Sub-Agent 有限定的工具集和职责。
+> 专职 Sub-Agent 定义在 `.agent/agents/` 目录中。主 Agent 可委派特定任务给 Sub-Agent。
+> 借鉴 Claude Code 的 built-in agents（Explore/Plan/Verification）专职化设计：**每个 Agent 有明确的权限边界和角色约束**。
 
-| Agent | 职责 | 限定工具 | 定义文件 |
-|---|---|---|---|
-| planner | Phase 1 技术规格规划 | Read, Search, List | `.agent/agents/planner.md` |
-| reviewer | 代码审查（A/B/C 对抗） | Read, Grep, Search | `.agent/agents/reviewer.md` |
-| tester | 测试编写和运行 | Read, Write, Execute | `.agent/agents/tester.md` |
-| security-reviewer | 安全审查（OWASP/STRIDE） | Read, Grep, Search | `.agent/agents/security-reviewer.md` |
-| doc-updater | 代码变更后文档同步 | Read, Write, Search | `.agent/agents/doc-updater.md` |
+| Agent | 职责 | 权限模式 | 限定工具 | 定义文件 |
+|---|---|---|---|---|
+| explorer | 代码探索与调研（**纯只读**） | ReadOnly | Read, Grep, Search, List | `.agent/agents/explorer.md` |
+| planner | Phase 1 技术规格规划 | ReadOnly | Read, Search, List | `.agent/agents/planner.md` |
+| reviewer | 代码审查（A/B/C 对抗） | ReadOnly | Read, Grep, Search | `.agent/agents/reviewer.md` |
+| verifier | 对抗式验证（try to break it） | WorkspaceWrite | Read, Execute, Search | `.agent/agents/verifier.md` |
+| tester | 测试编写和运行 | WorkspaceWrite | Read, Write, Execute | `.agent/agents/tester.md` |
+| security-reviewer | 安全审查（OWASP/STRIDE） | ReadOnly | Read, Grep, Search | `.agent/agents/security-reviewer.md` |
+| doc-updater | 代码变更后文档同步 | WorkspaceWrite | Read, Write, Search | `.agent/agents/doc-updater.md` |
+
+**Agent 能力声明协议：**
+> 借鉴 Claude Code 的 agent-specific MCP servers：每个 Agent 定义文件中可声明所需的外部能力。
+
+```markdown
+# Agent 定义文件格式（.agent/agents/*.md）
+---
+name: explorer
+permission_mode: ReadOnly          # ReadOnly | WorkspaceWrite | DangerFullAccess
+tools: [Read, Grep, Search, List]  # 允许使用的工具白名单
+skills: [code-graph]               # 可选：该 Agent 额外加载的技能
+capabilities: []                   # 可选：所需的外部能力（MCP server 名称等）
+---
+[Agent 的 system prompt 内容]
+```
+
+> **关键约束**（来自 Claude Code Explore Agent 设计）：
+> - **ReadOnly Agent 绝对禁止**：创建/修改/删除文件、运行改变状态的命令、使用重定向写文件
+> - **Explorer / Planner 的 Bash 只允许**：`ls`, `git status`, `git log`, `git diff`, `find`, `grep`, `cat`, `head`, `tail`
+> - **Verifier 必须主动构造对抗场景**，而非仅确认"看起来没问题"
 
 > **使用原则**: 并行任务（如同时 review + 写文档）时委派更高效。简单顺序任务使用主 Agent 加载不同 Skill 即可。
 
@@ -173,6 +211,19 @@ Git 工作流 → @docs/git-workflow.md
 
 > `AGENT.local.md` 用于个人偏好（如 IDE 配置、个人编码习惯），不影响团队共享配置。
 
+### 配置合并规则
+
+> 借鉴 Claude Code `deep_merge_objects()` 的合并策略，为多级配置定义明确的冲突解决规则。
+
+| 冲突类型 | 合并策略 | 示例 |
+|---|---|---|
+| 同名**对象** | 子级**递归合并**父级 | 父: `{rules: {security: true}}` + 子: `{rules: {testing: true}}` → `{rules: {security: true, testing: true}}` |
+| 同名**标量/列表** | 子级**直接覆盖**父级 | 父: `max_files: 5` + 子: `max_files: 3` → `max_files: 3` |
+| 子级**新增**字段 | 直接追加到合并结果 | 父无 `hooks` + 子有 `hooks` → 合并结果包含 `hooks` |
+| `AGENT.local.md` | **最终覆盖层**，优先级最高 | 任何字段均覆盖项目级和全局级 |
+
+> **注意**: 列表类型（如路由表条目）是**整体替换**而非追加。如果子级定义了同名列表，父级该列表被完全覆盖。
+
 ---
 
 ## 强制规则 (Hard Rules)
@@ -188,6 +239,22 @@ Git 工作流 → @docs/git-workflow.md
 9. **第一性原理**: 从原始需求出发，拒绝路径盲从，评估 XY 问题。详见 `.agent/rules/red-lines.md` 红线二（事实驱动）
 10. **自主决策**: 能自己决定的不问用户。任务开始前先内部评估复杂度（Phase 0），轻量任务直接做完汇报；只有置信度 < 80% 或涉及不可逆变更时才确认。详见 `world_class_coding/SKILL.md` Phase 0。
 11. **禁止 Mock 实现**: 功能代码（非测试代码）中禁止使用 mock 数据、placeholder 函数或硬编码假数据代替真实实现。所有功能必须使用真实的框架、真实的 API、真实的数据处理逻辑。mock/stub 仅限测试文件中使用。详见 `.agent/rules/red-lines.md` 红线四。
+
+---
+
+## 输出效率与产品质感 (Output Efficiency & Tone)
+
+> 借鉴 Claude Code 的 `getOutputEfficiencySection()` + `getToneAndStyleSection()`。
+> 核心理念：Agent 不只要「完成任务」，还要让输出「像正式产品」。
+
+**输出规范：**
+- **结论先行**：先说动作或结论，不要铺垫。用户看的是结果，不是你的思考过程
+- **不要过度解释**：代码改动无需逐行解释「为什么」，除非改动非显而易见
+- **不要塞无谓表格**：只有 ≥3 行 × ≥2 列的结构化数据才值得用表格
+- **短句直给**：能用一句话说清的不要用三句
+- **引用格式统一**：代码位置一律用 `文件路径:行号` 格式；Git issue 用 `owner/repo#123`
+- **不要乱用 emoji**：emoji 仅用于状态标识（✅❌⚠️），不可用于装饰或语气
+- **工具调用前不加冒号**：调用工具时直接调用，不要写「让我来：」「接下来我会：」等铺垫
 
 ---
 
