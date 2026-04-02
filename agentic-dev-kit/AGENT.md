@@ -119,6 +119,7 @@
 | `/autoresearch:security` | 自主安全审计（STRIDE + OWASP + 红队） | `.agent/skills/autoresearch/SKILL.md` |
 | `/autoresearch:ship` | 通用发布流程（8 阶段） | `.agent/skills/autoresearch/SKILL.md` |
 | `/autoresearch:fix` | 自主修复循环（测试/类型/lint/构建错误归零） | `.agent/skills/autoresearch/SKILL.md` |
+| `/autoresearch:review` | 自助持续代码审查循环（审查→修复收敛） | `.agent/skills/autoresearch/SKILL.md` |
 | `/autoresearch:debug` | 自主 Bug 猎手（科学方法 + 迭代追查） | `.agent/skills/autoresearch/SKILL.md` |
 | `/learn` | 从当前会话提取编码模式为本能 | `.agent/workflows/learn.md` |
 | `/instinct` | 本能管理（status/import/export/prune） | `.agent/workflows/instinct.md` |

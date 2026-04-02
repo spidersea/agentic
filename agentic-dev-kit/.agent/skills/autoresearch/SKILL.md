@@ -20,6 +20,36 @@ Inspired by [Karpathy's autoresearch](https://github.com/karpathy/autoresearch).
 | `/autoresearch:ship` | Universal shipping workflow: ship code, content, marketing, sales, research, or anything |
 | `/autoresearch:debug` | Autonomous bug-hunting loop: scientific method + iterative investigation until codebase is clean |
 | `/autoresearch:fix` | Autonomous fix loop: iteratively repair errors (tests, types, lint, build) until zero remain |
+| `/autoresearch:review` | Autonomous continuous code review loop: adversarial finding + automatic fix until convergence |
+
+
+### /autoresearch:review — Autonomous Code Review Loop (v1.0.0)
+
+Autonomous loop that eliminates manual code review-fix cycles. It runs an adversarial review (Expert A / Opponent B / Referee C), automatically extracts confirmed issues across all severity levels, auto-fixes them, and then re-reviews until it reaches zero issues convergence or hits bounded limits.
+
+Load: `references/review-workflow.md` for full protocol.
+
+**What it does:**
+1. **Scope Selection** — Targets specified files, recent diffs, or hands off from `fix`.
+2. **Adversarial Review** — Scans 6 dimensions (`.agent/rules/code-review.md`).
+3. **Classify & Log** — Extracts issues and logs them (filters false positives to prevent oscillation).
+4. **Convergence Check** — If VERDICT=PASS 2 times continuously → done.
+5. **Auto-Fix** — Automatically prioritizes and fixes ALL issues (no human gating by default).
+6. **Verify** — Re-runs adversarial loop automatically.
+
+**Usage:**
+```
+# Continually review and fix until clean
+/autoresearch:review
+
+# Review specific scope and only verify (equivalent to standard /review)
+/autoresearch:review --report-only
+Scope: src/components/**
+
+# Chain from fix
+/autoresearch:fix
+/autoresearch:review --from-fix
+```
 
 ### /autoresearch:security — Autonomous Security Audit (v1.0.3)
 
@@ -222,6 +252,8 @@ After the wizard completes, the user gets a ready-to-paste `/autoresearch` invoc
 - User says "find all bugs", "hunt bugs", "debug this", "why is this failing", "investigate" → run the debug loop
 - User invokes `/autoresearch:fix` → run the fix loop
 - User says "fix all errors", "make tests pass", "fix the build", "clean up errors" → run the fix loop
+- User invokes `/autoresearch:review` → run the review loop
+- User says "continually review and fix this", "run an autoresearch review loop", "review and fix all issues" → run the review loop
 - User says "work autonomously", "iterate until done", "keep improving", "run overnight" → run the loop
 - Any task requiring repeated iteration cycles with measurable outcomes → run the loop
 
@@ -365,6 +397,7 @@ See `references/core-principles.md` for the 7 generalizable principles from auto
 | Shipping | Checklist pass rate (%) | Any artifact | `/autoresearch:ship` | Domain-specific |
 | Debugging | Bugs found + coverage | Target files | `/autoresearch:debug` | — |
 | Fixing | Error count (lower) | Target files | `/autoresearch:fix` | `npm test` |
+| Review | Issues resolved -> 0 | Target files | `/autoresearch:review` | `npm test` |
 
 Adapt the loop to your domain. The PRINCIPLES are universal; the METRICS are domain-specific.
 
@@ -378,6 +411,7 @@ Adapt the loop to your domain. The PRINCIPLES are universal; the METRICS are dom
 | `/autoresearch:security` | Phase 4 之后（或独立） | 安全审计补充 Phase 4 对抗验证 |
 | `/autoresearch:fix` | Phase 3 内部 | 自动修复编码阶段产生的测试/类型/lint 错误 |
 | `/autoresearch:debug` | Phase 3 受阻时 | 自主 bug 猎手，配合 /debug 手动根因分析。参见 `references/methodology-router.md` 获取方法论切换链 |
+| `/autoresearch:review` | Phase 4 | 自动化闭环审查，替代单次的 `/review`，自动修复审查发现的问题直至收敛 |
 | `/autoresearch:ship` | Phase 4 完成后 | 发布流程，复杂场景替代 `/finish` |
 
 ## Escalation 深度集成协议
@@ -423,7 +457,7 @@ Adapt the loop to your domain. The PRINCIPLES are universal; the METRICS are dom
 
 > 💡 **连续失败时**：debug/fix 循环在连续失败时自动触发 `escalation` 压力升级（参见 `../escalation/SKILL.md`），按 L1-L4 递进响应，通过 `references/methodology-router.md` 的方法论路由切换解决思路。所有升级事件**必须**记录到 escalation-log.tsv。
 
-**检查点整合**: autoresearch 产出的 `security/`, `debug/`, `fix/`, `ship/` 目录内容（含 `escalation-log.tsv`）应在 `/checkpoint` 状态文件中引用，确保跨会话可追踪。
+**检查点整合**: autoresearch 产出的 `security/`, `debug/`, `fix/`, `review/`, `ship/` 目录内容（含 `escalation-log.tsv`）应在 `/checkpoint` 状态文件中引用，确保跨会话可追踪。
 
 **关键约束保留**: autoresearch 在 SOP 框架下运行时，以下全规范规则**始终生效**，autoresearch 不覆盖：
 - 修改测试前必须人类确认
