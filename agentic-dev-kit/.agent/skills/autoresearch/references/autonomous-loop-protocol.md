@@ -16,11 +16,12 @@ When bounded, track `current_iteration` against `max_iterations`. After the fina
 Before each iteration, build situational awareness:
 
 ```
-1. Read current state of in-scope files (full context)
-2. Read last 10-20 entries from results log
-3. Read git log --oneline -20 to see recent changes
-4. Identify: what worked, what failed, what's untried
-5. If bounded: check current_iteration vs max_iterations
+1. Read `.agent/state/tacit-tradition-map.md` (See `polanyi-protocol.md`)
+2. Read current state of in-scope files (Focal Context)
+3. Read last 10-20 entries from results log
+4. Read git log --oneline -20 to see recent changes
+5. Identify: what worked, what failed, what's untried
+6. If bounded: check current_iteration vs max_iterations
 ```
 
 **Why read every time?** After rollbacks, state may differ from what you expect. Never assume — always verify.
@@ -106,6 +107,16 @@ IF metric_improved AND (no guard OR guard_passed):
     STATUS = "keep"
     # Do nothing — commit stays
 ELIF metric_improved AND guard_failed:
+    IF optimization_is_revolutionary (massive metric gain but breaks existing guard):
+        # Polanyi: Rebellion Against the Guard (See references/polanyi-protocol.md)
+        STATUS = "meta-investigating guard"
+        IF guard_is_obsolete:
+            Rewrite the Guard / tests to align with the new, superior architecture.
+            git add + commit reworked code AND new Guard.
+            STATUS = "keep (guard rebelled and rewritten)"
+            BREAK
+    
+    # Standard flow:
     git reset --hard HEAD~1
     # Rework the optimization (max 2 attempts)
     FOR attempt IN 1..2:
@@ -162,6 +173,10 @@ IF bug_severity == CRITICAL OR bug_severity == HIGH:
     触发 /review 快速模式（仅 Expert A 风险扫描）
     将审查结论记录到 results log（status = "review"）
     IF review 发现新问题 → 添加到修复队列
+
+IF metric_improved_significantly AND complexity_increased:
+    触发 Aesthetic Review Gate (审美审查层 - See references/polanyi-protocol.md)
+    # 呼叫独立第三方 Agent 评估。若破坏隐性代码传统，赋予一票否决权并触发 Revert。
 
 IF cumulative_keeps >= 10 AND last_review_iteration + 10 <= current_iteration:
     触发 /review 快速模式
@@ -234,7 +249,9 @@ Applies to both modes.**Escalation 自动生效** — 参见 `../../escalation/S
 ## Crash Recovery
 
 - Syntax error → fix immediately, don't count as separate iteration
-- Runtime error → attempt fix (max 3 tries), then move on
+- Runtime error / Crash / Timeout → attempt mechanical fix (max 3 tries). 
+  - IF STILL FAILING: Initiate **Epistemological Escalation (环境级断裂)** (See `references/polanyi-protocol.md`).
+  - Enter Tool Alignment mode to investigate deep environment drifts or broken conceptual premises.
 - Resource exhaustion (OOM) → revert, try smaller variant
 - Infinite loop/hang → kill after timeout, revert, avoid that approach
 - External dependency failure → skip, log, try different approach

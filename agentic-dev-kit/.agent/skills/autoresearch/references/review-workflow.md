@@ -69,7 +69,7 @@ Determine which files to review.
 ## Phase 2: Review — Adversarial Scanning
 
 Execute the standard review process.
-It leverages the 6 dimensions defined in `.agent/rules/code-review.md`.
+It leverages the 7 dimensions defined in `.agent/rules/code-review.md`.
 
 *   **1. Security**
 *   **2. Correctness**
@@ -77,8 +77,11 @@ It leverages the 6 dimensions defined in `.agent/rules/code-review.md`.
 *   **4. Backward Compatibility**
 *   **5. Test Coverage**
 *   **6. Impact Analysis**
+*   **7. Tacit Coherence (隐性一致性)** [Polanyi]
 
 > 📋 Uses the Expert A / Opponent B / Referee C adversarial synthesis model to ensure high-fidelity, evidence-backed findings.
+
+> 🧠 **Indwelling Requirement [Polanyi]**: Before rendering judgment, all three personas (A/B/C) **must** load `.agent/state/tacit-tradition-map.md` (if it exists). Expert A attacks *relative to the project's own tradition*, not abstract best practices. Opponent B defends *citing the project's historical compromises*. Referee C adjudicates with awareness of both the explicit rules and the tacit grain of the codebase.
 
 **Output:** A structured `VERDICT` report.
 
@@ -109,7 +112,10 @@ ELSE:
 ```
 *Note: Requiring 2 continuous passes ensures no subtle regressions were introduced during the final fix verification.*
 
-**Anti-Oscillation check:** If an identical issue is found, fixed, and found again in the next loop, mark it as `blocked` and do not attempt to auto-fix it again to prevent an infinite loop.
+**Anti-Oscillation check:** If an identical issue is found, fixed, and found again in the next loop:
+
+1. **Epistemological Reconciliation [Polanyi]**: Before marking `blocked`, the system must articulate *why* the fix and the re-review disagree. Surface the hidden assumption clash — the Fixer saw the code through Lens A, the Reviewer through Lens B. Document both perspectives as a "Tacit Conflict" in `blocked.md`.
+2. Only after reconciliation, mark it as `blocked` and do not attempt to auto-fix again.
 
 ## Phase 5: Auto-Fix (All Severities)
 
@@ -143,7 +149,7 @@ For bounded loops, the review loop's effectiveness metric:
 
 ```
 review_score = (issues_resolved / max(issues_found, 1)) * 60 
-             + (dimensions_passed / 6) * 30 
+             + (dimensions_passed / 7) * 30 
              + (no_oscillations ? 10 : 0)
 ```
 Higher is better. 100 indicates all issues found were resolved and passed a final clean review.

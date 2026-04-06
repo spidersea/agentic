@@ -326,12 +326,13 @@ Use a SINGLE `AskUserQuestion` call with these 4 questions:
 > 无论执行了多少次 Modify-Verify，每次决定退出循环前，必须扫描该文件确认“所有前置验证任务”是否打满 `[x]`，强行唤醒你的循环终点意识。
 
 1. **Read all in-scope files** for full context before any modification
-2. **Define the goal** — extracted from user input or inline config
-3. **Define scope constraints** — validated file globs
-4. **Define guard (optional)** — regression prevention command
-5. **Create a results log** — Track every iteration (see `references/results-logging.md`)
-6. **Establish baseline** — Run verification on current state AND guard (if set). Record as iteration #0
-7. **Confirm and go** — Show user the setup, get confirmation, then BEGIN THE LOOP
+2. **Construct Tacit Tradition Map (Polanyi)** — 提取隐性知识并持久化至 `.agent/state/tacit-tradition-map.md` (详见 `references/polanyi-protocol.md`)
+3. **Define the goal** — extracted from user input or inline config
+4. **Define scope constraints** — validated file globs
+5. **Define guard (optional)** — regression prevention command
+6. **Create a results log** — Track every iteration (see `references/results-logging.md`)
+7. **Establish baseline** — Run verification on current state AND guard (if set). Record as iteration #0
+8. **Confirm and go** — Show user the setup, get confirmation, then BEGIN THE LOOP
 
 ## The Loop
 
