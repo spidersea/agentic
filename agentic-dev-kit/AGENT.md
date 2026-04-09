@@ -29,7 +29,7 @@
 | 模式 | 声明方式 | AI 应加载 | AI 应避免 |
 |---|---|---|---|
 | **开发模式** | 「我们现在开始编码」/ `/new-feature` | world_class_coding（全文）+ 测试规则 | 大范围分析、设计讨论 |
-| **审查模式** | 「帮我 review 这段代码」/ `/review` | code-review.md + code-graph | 主动修改代码 |
+| **审查模式** | 「帮我 review 这段代码」/ `/review` | code-review.md + graphify | 主动修改代码 |
 | **调研模式** | 「我想了解这个问题」/ 探索性对话 | 轻量加载（≤3 文件） | 执行 SOP 四阶段、写测试 |
 
 **动态会话指引注入（Session-Specific Guidance）：**
@@ -58,7 +58,7 @@
 | 动态进化与 Spa Day (规则清理重建) | `.agent/skills/world_class_coding/rule-evolution/SKILL.md` | 全文 |
 | Debug、排查问题 | `.agent/skills/world_class_coding/SKILL.md` | Phase 4 + 中立提示词 |
 | 跨会话任务续作 | `.agent/skills/world_class_coding/SKILL.md` | 第五章：可持续节点协议 |
-| 代码结构分析、影响评估、依赖查询 | `.agent/skills/code-graph/SKILL.md` | 全文 |
+| 代码结构分析、知识图谱、影响评估 | `.agent/skills/graphify/SKILL.md` | 全文 |
 | 疑难杂症经验结晶 (按需提取微型技能) | `.agent/skills/captured/{名称}.md` | 全文 |
 | 需求规格管理、行为契约定义、变更归档 | `.agent/skills/spec-driven/SKILL.md` | 全文 |
 | 持续优化、自主迭代、安全审计、发布流程 | `.agent/skills/autoresearch/SKILL.md` | 全文（仅手动触发） |
@@ -138,7 +138,7 @@
 
 | 操作场景 | 自动加载规则 |
 |---|---|
-| 编辑 `src/` 或 `lib/` 下的代码文件 | `.agent/rules/code-style.md` |
+| 编辑 `src/` 或 `lib/` 下的代码文件，或调用 `frontend-design` 时 | `.agent/rules/code-style.md` |
 | 编辑或创建测试文件 | `.agent/rules/testing.md` |
 | 代码审查 / `/review` 工作流 | `.agent/rules/code-review.md` |
 | 所有场景 | `.agent/rules/security.md` |
@@ -155,13 +155,13 @@
 
 | Agent | 职责 | 权限模式 | 限定工具 | 定义文件 |
 |---|---|---|---|---|
-| explorer | 代码探索与调研（**纯只读**） | ReadOnly | Read, Grep, Search, List | `.agent/agents/explorer.md` |
-| planner | Phase 1 技术规格规划 | ReadOnly | Read, Search, List | `.agent/agents/planner.md` |
-| reviewer | 代码审查（A/B/C 对抗） | ReadOnly | Read, Grep, Search | `.agent/agents/reviewer.md` |
-| verifier | 对抗式验证（try to break it） | WorkspaceWrite | Read, Execute, Search | `.agent/agents/verifier.md` |
-| tester | 测试编写和运行 | WorkspaceWrite | Read, Write, Execute | `.agent/agents/tester.md` |
-| security-reviewer | 安全审查（OWASP/STRIDE） | ReadOnly | Read, Grep, Search | `.agent/agents/security-reviewer.md` |
-| doc-updater | 代码变更后文档同步 | WorkspaceWrite | Read, Write, Search | `.agent/agents/doc-updater.md` |
+| explorer | 代码探索与调研（**纯只读**）。适用于 Phase 1 `new-feature`。 | ReadOnly | Read, Grep, Search, List | `.agent/agents/explorer.md` |
+| planner | Phase 1 技术规格规划。适用于 Phase 1 `new-feature`。 | ReadOnly | Read, Search, List | `.agent/agents/planner.md` |
+| reviewer | 代码审查（A/B/C 对抗）。适用于 `/review` A角。 | ReadOnly | Read, Grep, Search | `.agent/agents/reviewer.md` |
+| verifier | 对抗式验证（try to break it）。适用于 Phase 4 `new-feature`。 | WorkspaceWrite | Read, Execute, Search | `.agent/agents/verifier.md` |
+| tester | 测试编写和运行。适用于 `/test`, `/tdd`。 | WorkspaceWrite | Read, Write, Execute | `.agent/agents/tester.md` |
+| security-reviewer | 安全审查（OWASP/STRIDE）。适用于 `/review` / `autoresearch:security`。 | ReadOnly | Read, Grep, Search | `.agent/agents/security-reviewer.md` |
+| doc-updater | 代码变更后文档同步。适用于 Phase 6 `new-feature` 闭环。 | WorkspaceWrite | Read, Write, Search | `.agent/agents/doc-updater.md` |
 
 **Agent 能力声明协议：**
 > 借鉴 Claude Code 的 agent-specific MCP servers：每个 Agent 定义文件中可声明所需的外部能力。
@@ -172,7 +172,7 @@
 name: explorer
 permission_mode: ReadOnly          # ReadOnly | WorkspaceWrite | DangerFullAccess
 tools: [Read, Grep, Search, List]  # 允许使用的工具白名单
-skills: [code-graph]               # 可选：该 Agent 额外加载的技能
+skills: [graphify]                 # 可选：该 Agent 额外加载的技能
 capabilities: []                   # 可选：所需的外部能力（MCP server 名称等）
 ---
 [Agent 的 system prompt 内容]

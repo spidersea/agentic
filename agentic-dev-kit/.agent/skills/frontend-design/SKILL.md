@@ -121,6 +121,9 @@ Review the DON'T guidelines above—they are the fingerprints of AI-generated wo
 
 Match implementation complexity to the aesthetic vision. Maximalist designs need elaborate code with extensive animations and effects. Minimalist or refined designs need restraint, precision, and careful attention to spacing, typography, and subtle details.
 
+> 💡 **强制规约联动 (Polanyi Protocol)**:
+> 所有的前端实现代码**必须**符合项目级别的审美地基与结构要求。在输出任何最终产品级代码前，强制加载 `@.agent/skills/teach-impeccable/SKILL.md` 以及 `@.agent/rules/code-style.md` 作为您的底层结构规约准绳，以防代码的组织结构（如过于臃肿的单文件、随意的变量命名）发生败坏。
+
 Interpret creatively and make unexpected choices that feel genuinely designed for the context. No design should be the same. Vary between light and dark themes, different fonts, different aesthetics. NEVER converge on common choices across generations.
 
 Remember: the model is capable of extraordinary creative work. Don't hold back—show what can truly be created when thinking outside the box and committing fully to a distinctive vision.
