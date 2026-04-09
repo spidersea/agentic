@@ -242,6 +242,7 @@ Git 工作流 → @docs/git-workflow.md
 9. **第一性原理**: 从原始需求出发，拒绝路径盲从，评估 XY 问题。详见 `.agent/rules/red-lines.md` 红线二（事实驱动）
 10. **自主决策**: 能自己决定的不问用户。任务开始前先内部评估复杂度（Phase 0），轻量任务直接做完汇报；只有置信度 < 80% 或涉及不可逆变更时才确认。详见 `world_class_coding/SKILL.md` Phase 0。
 11. **禁止 Mock 实现**: 功能代码（非测试代码）中禁止使用 mock 数据、placeholder 函数或硬编码假数据代替真实实现。所有功能必须使用真实的框架、真实的 API、真实的数据处理逻辑。mock/stub 仅限测试文件中使用。详见 `.agent/rules/red-lines.md` 红线四。
+12. **规范链接完整性**: 修改 `.agent/` 目录下任何文件后，必须运行 `bash .agent/scripts/md-linker.sh .` 确认 0 CRITICAL。修改高依赖文件前，先运行 `bash .agent/scripts/md-linker.sh --impact <file>` 评估影响半径。
 
 ---
 

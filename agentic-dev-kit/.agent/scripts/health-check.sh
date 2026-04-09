@@ -217,6 +217,47 @@ fi
 echo ""
 
 # =============================================================================
+# 6. 规范链接完整性（MD Linker）
+# =============================================================================
+echo -e "${BOLD}━━━ 6. 规范链接完整性 ━━━${NC}"
+echo ""
+
+LINKER_SCRIPT="$AGENT_DIR/scripts/md-linker.sh"
+if [ -x "$LINKER_SCRIPT" ] || [ -f "$LINKER_SCRIPT" ]; then
+    # Run md-linker in full mode, capture CRITICAL count from exit code
+    LINKER_OUTPUT=$(bash "$LINKER_SCRIPT" "$PROJECT_ROOT" 2>&1) || true
+    LINKER_CRITICALS=$?
+    
+    # Extract key metrics from output
+    LINKER_REFS=$(echo "$LINKER_OUTPUT" | grep -o '扫描到 [0-9]* 条' | grep -o '[0-9]*' || echo "0")
+    LINKER_VALID=$(echo "$LINKER_OUTPUT" | grep -o '有效引用: [0-9]*' | grep -o '[0-9]*' || echo "0")
+    LINKER_ORPHANS=$(echo "$LINKER_OUTPUT" | grep -o '孤儿文件: [0-9]*' | grep -o '[0-9]*' || echo "0")
+    
+    printf "  %-35s %6s 条   " "跨文件引用总数" "$LINKER_REFS"
+    echo -e "${GREEN}🟢 已扫描${NC}"
+    
+    if [ "$LINKER_CRITICALS" -eq 0 ]; then
+        printf "  %-35s %6s 条   " "有效引用" "$LINKER_VALID"
+        echo -e "${GREEN}🟢 全部有效${NC}"
+    else
+        printf "  %-35s %6d 条   " "断链引用 (CRITICAL)" "$LINKER_CRITICALS"
+        echo -e "${RED}🔴 危险${NC}"
+        update_state "crit"
+        echo ""
+        echo -e "  ${RED}运行 bash .agent/scripts/md-linker.sh . 查看详情${NC}"
+    fi
+    
+    if [ "$LINKER_ORPHANS" -gt 30 ]; then
+        printf "  %-35s %6s 个   " "孤儿文件" "$LINKER_ORPHANS"
+        echo -e "${YELLOW}🟡 警告${NC}"
+        update_state "warn"
+    fi
+else
+    echo -e "  ${YELLOW}⚠ md-linker.sh 不存在，跳过链接校验${NC}"
+fi
+echo ""
+
+# =============================================================================
 # 总结
 # =============================================================================
 echo -e "${BOLD}━━━ 总结 ━━━${NC}"
