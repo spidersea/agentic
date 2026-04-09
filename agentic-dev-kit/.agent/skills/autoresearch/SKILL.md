@@ -326,7 +326,15 @@ Use a SINGLE `AskUserQuestion` call with these 4 questions:
 > 无论执行了多少次 Modify-Verify，每次决定退出循环前，必须扫描该文件确认“所有前置验证任务”是否打满 `[x]`，强行唤醒你的循环终点意识。
 
 1. **Read all in-scope files** for full context before any modification
-2. **Construct Tacit Tradition Map (Polanyi)** — 提取隐性知识并持久化至 `.agent/state/tacit-tradition-map.md` (详见 `references/polanyi-protocol.md`)
+2. **⚡ Polanyi Excavation (强制前置步骤，非可选修饰符)** — 在任何修改前必须完成：
+   - **2a. Tacit Tradition Map 构建/更新** — 扫描代码库的"不成文规则"：
+     - 命名约定（为什么这个变量叫 `_legacy_handler`？）
+     - 隐式依赖（这个文件假设 Redis 已初始化但从未检查）
+     - 历史决策痕迹（`git blame` 找到关键决策的 commit message）
+   - **2b. 意图-实现 Gap 分析** — 识别代码的**意图**与**实现**之间的裂缝（这是 Mythos 发现零日漏洞的核心能力）
+   - **2c. 持久化** — 写入 `.agent/state/tacit-tradition-map.md`（如已存在则增量更新）
+   - **退出条件**：tacit-tradition-map.md 至少包含 3 条隐性规则才可进入下一步
+   - 详见 `references/polanyi-protocol.md` + `../polanyi/SKILL.md`
 3. **Define the goal** — extracted from user input or inline config
 4. **Define scope constraints** — validated file globs
 5. **Define guard (optional)** — regression prevention command

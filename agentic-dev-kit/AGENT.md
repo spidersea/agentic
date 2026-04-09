@@ -13,9 +13,13 @@
 1. 读取本文件 `AGENT.md`
 2. 执行 `bash .agent/scripts/session-start.sh`（自动发现最新检查点和本能状态）
 3. 根据当前任务场景，加载对应的 Skill（见下方路由表）
-4. 读取最新的检查点或状态文件（如存在）
-5. 读取当前任务的实施计划和验收契约
-6. 读取当前正在修改的核心文件（≤5 个）
+4. 读取记忆宫殿 `.agent/state/memory-palace/`（邪修六式）：
+   - `assumptions.jsonl` — 全部（当前有效的假设不可丢失）
+   - `decisions.jsonl` — 最后 10 条（近期决策上下文）
+   - `failure-patterns.jsonl` — 最后 5 条（避免重蹈覆辙）
+5. 读取最新的检查点或状态文件（如存在）
+6. 读取当前任务的实施计划和验收契约
+7. 读取当前正在修改的核心文件（≤5 个）
 
 ⚠️ **禁止凭"记忆残影"继续工作。** 如果无法找到检查点文件，必须向用户确认当前状态后再继续。
 
@@ -31,6 +35,7 @@
 | **开发模式** | 「我们现在开始编码」/ `/new-feature` | world_class_coding（全文）+ 测试规则 | 大范围分析、设计讨论 |
 | **审查模式** | 「帮我 review 这段代码」/ `/review` | code-review.md + graphify | 主动修改代码 |
 | **调研模式** | 「我想了解这个问题」/ 探索性对话 | 轻量加载（≤3 文件） | 执行 SOP 四阶段、写测试 |
+| **安全审计模式** | `/autoresearch:security` / `/security-audit` | adversarial-persona(L3) + escalation + autoresearch:security + adversary Agent | 建设性思维、安慰性输出 |
 
 **动态会话指引注入（Session-Specific Guidance）：**
 
@@ -145,6 +150,7 @@
 | 代码审查 / `/review` 工作流 | `.agent/rules/code-review.md` |
 | 所有场景 | `.agent/rules/security.md` |
 | 所有场景 | `.agent/rules/red-lines.md` |
+| 修改 `src/` 或 `lib/` + 安全审计模式 + Escalation L3+ | `.agent/rules/adversarial-persona.md` |
 
 > **扩展**: 当项目规则超过 5 条时，应创建新的 `.agent/rules/{主题}.md` 文件并在此路由。
 
@@ -163,6 +169,7 @@
 | verifier | 对抗式验证（try to break it）。适用于 Phase 4 `new-feature`。 | WorkspaceWrite | Read, Execute, Search | `.agent/agents/verifier.md` |
 | tester | 测试编写和运行。适用于 `/test`, `/tdd`。 | WorkspaceWrite | Read, Write, Execute | `.agent/agents/tester.md` |
 | security-reviewer | 安全审查（OWASP/STRIDE）。适用于 `/review` / `autoresearch:security`。 | ReadOnly | Read, Grep, Search | `.agent/agents/security-reviewer.md` |
+| adversary | 红队攻击（纯破坏者视角）。适用于 Escalation L3+ / `--adversarial-mode`。 | ReadOnly | Read, Grep, Search | `.agent/agents/adversary.md` |
 | doc-updater | 代码变更后文档同步。适用于 Phase 6 `new-feature` 闭环。 | WorkspaceWrite | Read, Write, Search | `.agent/agents/doc-updater.md` |
 
 **Agent 能力声明协议：**
@@ -243,6 +250,8 @@ Git 工作流 → @docs/git-workflow.md
 10. **自主决策**: 能自己决定的不问用户。任务开始前先内部评估复杂度（Phase 0），轻量任务直接做完汇报；只有置信度 < 80% 或涉及不可逆变更时才确认。详见 `world_class_coding/SKILL.md` Phase 0。
 11. **禁止 Mock 实现**: 功能代码（非测试代码）中禁止使用 mock 数据、placeholder 函数或硬编码假数据代替真实实现。所有功能必须使用真实的框架、真实的 API、真实的数据处理逻辑。mock/stub 仅限测试文件中使用。详见 `.agent/rules/red-lines.md` 红线四。
 12. **规范链接完整性**: 修改 `.agent/` 目录下任何文件后，必须运行 `bash .agent/scripts/md-linker.sh .` 确认 0 CRITICAL。修改高依赖文件前，先运行 `bash .agent/scripts/md-linker.sh --impact <file>` 评估影响半径。
+13. **工具自造权**: 当现有工具无法满足分析需求时，允许在 `.agent/scratch/` 中创建一次性分析脚本（≤100行，纯读取，timeout 30s，执行后清理）。详见 `.agent/rules/tool-creation.md`。
+14. **对抗自检**: 在输出任何"看起来没问题"类结论前，必须至少生成 1 个可能使结论失败的反例场景。安全相关变更时升级为 3 个。详见 `.agent/rules/adversarial-persona.md`。
 
 ---
 

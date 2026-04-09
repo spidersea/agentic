@@ -29,11 +29,19 @@ version: 2.2.0
 - **[HOOK] 回调与验收**：每做完一次 Action，跟什么验收动作连结？（如 `{/review}`, `{npm run test}`, `{类型检查}`）。
 - **[EXIT] 机械退出条件**：何时才允许跳出循环？（禁止使用"看起来不错"；必须是如"0 缺陷", "通过率 100%", "连续 2 次无可用优化"等机械指标）。
 - **[PRESSURE] 压力修饰符**（默认注入，无需用户声明）：
-  - **默认值**：`escalation: L1-L4 自动递进` — 详细规则见 `../escalation/SKILL.md`
+  - **默认值**：`escalation: L1-L5 自动递进` — 详细规则见 `../escalation/SKILL.md`
   - **降级开关**：`--no-escalation` 关闭压力递进；`--no-loop` 降级为单次执行
 - **[POLANYI] 认识论深度修饰符**（默认注入，无需用户声明）：
   - 四机制：Tacit Tradition Map / Aesthetic Review Gate / Rebellion Against Guard / Epistemological Escalation — 详细定义见 `../autoresearch/references/polanyi-protocol.md`
   - **降级开关**：`--no-polanyi` 关闭认识论深度
+- **[DEEP-THINK] 推理深度爆破修饰符**（可选注入）：
+  - **触发**：`--deep-think` 显式声明
+  - **效果**：将推理链拆分为多轮接力（每轮 ≤8 步），中间结论持久化到 `reasoning-relay-{N}.md`（存放于 `.agent/state/`），避免单轮推理衰减
+  - **适用场景**：安全审计、架构分析、根因定位等需要极深推理的任务
+- **[ADVERSARIAL] 红队对抗修饰符**（可选注入）：
+  - **触发**：`--adversarial` 显式声明
+  - **效果**：在验收钩子中自动委派 `adversary` Agent 对输出进行纯攻击式审查，零建设性反馈
+  - **适用场景**：安全审计、高风险变更、核心模块重构
 
 ### 2. 语法树装配 (Assembly)
 
@@ -50,11 +58,14 @@ version: 2.2.0
         }
     }
 } until ( [EXIT] )
-  [PRESSURE: escalation L1-L4 自动递进]
+  [PRESSURE: escalation L1-L5 自动递进]
   [POLANYI: Tacit Tradition Map + Aesthetic Review Gate + Rebellion Against Guard + Epistemological Escalation]
+  [DEEP-THINK: 推理接力 ≤8步/轮 → reasoning-relay-N.md]  ← 仅 --deep-think 时注入
+  [ADVERSARIAL: adversary Agent 红队攻击]                  ← 仅 --adversarial 时注入
 ```
 *(注：`[COMMAND]` 必须是有效子命令，如 `fix`, `debug`, `review`，或留空表示通用 `/autoresearch`)*
 *(注：`[PRESSURE]` + `[POLANYI]` 行默认注入。`--no-escalation` 移除压力；`--no-polanyi` 移除认识论；`--no-loop` 降级为单次执行)*
+*(注：`[DEEP-THINK]` + `[ADVERSARIAL]` 仅在用户显式声明 `--deep-think` / `--adversarial` 时注入)*
 
 **[路线 B] 降级模式（无底层工具链时的紧箍咒骨架）：**
 仅当确认环境无法调用任何工具时使用。用最高压力的语言约束模拟三引擎行为：
@@ -146,7 +157,7 @@ version: 2.2.0
 
 3. **标准收尾范式 (Standard Termination)**：
    - 输出完整的 `Agent-DSL` 语法块后，必须在结尾附上且仅附上下列收尾提示（谢绝其他废话）：
-   > "*提示: 意志指令编译完成（已默认装配 autoresearch 持续循环 + escalation L1-L4 压力升级 + Polanyi 认识论深度）。请将上述指令派发给其他执行器，或直接回复【授权执行】，我将载入并挂起自身状态机，进入强物理死锁模式强制推进。*"
+   > "*提示: 意志指令编译完成（已默认装配 autoresearch 持续循环 + escalation L1-L5 压力升级 + Polanyi 认识论深度）。请将上述指令派发给其他执行器，或直接回复【授权执行】，我将载入并挂起自身状态机，进入强物理死锁模式强制推进。*"
 
 4. **默认三引擎原则 (Default Triple-Engine)**：
    - 编译任何用户输入时，输出的 DSL 语法块**必须**默认携带：
