@@ -62,6 +62,7 @@
 | 疑难杂症经验结晶 (按需提取微型技能) | `.agent/skills/captured/{名称}.md` | 全文 |
 | 需求规格管理、行为契约定义、变更归档 | `.agent/skills/spec-driven/SKILL.md` | 全文 |
 | 持续优化、自主迭代、安全审计、发布流程 | `.agent/skills/autoresearch/SKILL.md` | 全文（仅手动触发） |
+| 自然语言意图编译为三引擎强约束执行契约 | `.agent/skills/agent-dsl/SKILL.md` | 全文 |
 | 前端 UI 开发（生产级界面创建） | `.agent/skills/frontend-design/SKILL.md` | 全文 |
 | 上线前质量检查 | `.agent/skills/polish/SKILL.md` | 全文 |
 | 审计（无障碍/性能/响应式） | `.agent/skills/audit/SKILL.md` | 全文 |
@@ -128,6 +129,7 @@
 | `/harness-audit` | 配置健康度审计 + 模型路由建议 | `.agent/workflows/harness-audit.md` |
 | `/skill-create` | 从 Git 历史生成项目编码规范技能 | `.agent/workflows/skill-create.md` |
 | `/escalate` | 手动触发压力升级（强制进入 L3 高压模式） | `.agent/workflows/escalate.md` |
+| `/dsl` | 将口语化需求编译为三引擎 DSL 执行指令 | `.agent/skills/agent-dsl/SKILL.md` |
 
 ---
 
