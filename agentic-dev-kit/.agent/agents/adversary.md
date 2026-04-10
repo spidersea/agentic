@@ -97,4 +97,31 @@ model: default
 | Escalation L3+ | 主 Agent 被压力升级时，自动委派 Adversary 攻击当前假设 |
 | `/autoresearch:security` | Adversary 作为红队的四个攻击人格之一 |
 
+## L5 权限动态升级协议
+
+> 仅在 Escalation L5 (Mythos 模拟) 模式下生效。
+
+当 Escalation 达到 L5 时，主 Agent 可通过以下协议临时升级 Adversary 权限：
+
+1. **升级条件**: `esc_level=L5` 且主 Agent 显式声明 `--adversary-upgrade`
+2. **升级内容**: ReadOnly → WorkspaceWrite（允许创建测试文件和攻击性 PoC）
+3. **升级范围**: 仅限 `.agent/scratch/` 和 `test/` 目录
+4. **升级时效**: 单次委派结束后自动降级回 ReadOnly
+5. **审计义务**: 所有升级操作必须记录到 `memory-palace/decisions.jsonl`
+
+## 知识库驱动攻击（内容层增强）
+
+默认模式下 Adversary 使用通用 8 维度攻击。当以下知识库存在时，**必须优先使用知识库驱动的模式匹配攻击**：
+
+1. **加载优先级**:
+   - `.agent/skills/adversary-patterns/SKILL.md` → 结构化攻击模式库
+   - `.agent/skills/security-expert/SKILL.md` → 领域安全专家知识
+   - `.agent/state/captured-patterns/` → 项目级积累模式
+   - `.agent/state/memory-palace/failure-patterns.jsonl` → 历史失败经验
+
+2. **漏洞链推理**（模拟 Mythos CTF 能力）:
+   - 发现单个漏洞后，必须尝试构造**漏洞利用链**
+   - 格式: `漏洞A (低危) + 漏洞B (低危) → 组合利用路径 (高危/严重)`
+   - 至少探索 2 条可能的利用链路径
+
 > 🧠 **Polanyi 内居要求**：如果 `.agent/state/tacit-tradition-map.md` 存在，攻击前**必须**加载该文件，寻找代码库的隐性假设作为攻击入口。隐性假设 = 最脆弱的攻击面。

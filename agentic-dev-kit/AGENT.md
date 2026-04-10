@@ -16,10 +16,13 @@
 4. 读取记忆宫殿 `.agent/state/memory-palace/`（邪修六式）：
    - `assumptions.jsonl` — 全部（当前有效的假设不可丢失）
    - `decisions.jsonl` — 最后 10 条（近期决策上下文）
-   - `failure-patterns.jsonl` — 最后 5 条（避免重蹈覆辙）
-5. 读取最新的检查点或状态文件（如存在）
-6. 读取当前任务的实施计划和验收契约
-7. 读取当前正在修改的核心文件（≤5 个）
+   - `failure-patterns.jsonl` — 最后 5 条 + 与当前任务相关的历史模式
+5. 读取经验积累库 `.agent/state/captured-patterns/`（如存在）：
+   - 扫描所有 `CP-*.md` 文件的 front-matter（id, name, category, severity）
+   - 与当前任务领域匹配的 pattern 全量读取
+6. 读取最新的检查点或状态文件（如存在）
+7. 读取当前任务的实施计划和验收契约
+8. 读取当前正在修改的核心文件（≤5 个）
 
 ⚠️ **禁止凭"记忆残影"继续工作。** 如果无法找到检查点文件，必须向用户确认当前状态后再继续。
 

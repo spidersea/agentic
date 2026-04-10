@@ -42,6 +42,11 @@ version: 2.2.0
   - **触发**：`--adversarial` 显式声明
   - **效果**：在验收钩子中自动委派 `adversary` Agent 对输出进行纯攻击式审查，零建设性反馈
   - **适用场景**：安全审计、高风险变更、核心模块重构
+- **[SECURITY] 安全审计复合修饰符**（可选注入）：
+  - **触发**：`--security` 显式声明
+  - **效果**：自动加载 `security-expert/SKILL.md` + `adversary-patterns/SKILL.md`，强制 Adversary CTF 模式，漏洞链推理，攻击面枚举
+  - **等价于**：`--adversarial` + `--deep-think` + 安全审计工作模式
+  - **适用场景**：专项安全审计、上线前安全评审、渗透测试准备
 
 ### 2. 语法树装配 (Assembly)
 
