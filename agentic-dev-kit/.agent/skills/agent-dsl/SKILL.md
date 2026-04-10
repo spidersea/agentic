@@ -47,6 +47,11 @@ version: 2.2.0
   - **效果**：自动加载 `quality-patterns/SKILL.md` 安全族（QP-16~QP-20），强制 Adversary CTF 模式 + 安全审计思维模型，攻击面枚举
   - **等价于**：`--adversarial` + `--deep-think` + 安全审计工作模式
   - **适用场景**：专项安全审计、上线前安全评审、渗透测试准备
+- **[DARK] 邪修协议修饰符**（可选注入）：
+  - **触发**：`--dark` 显式声明 / 用户说"认真做"/"不能出错" / 高风险变更自动触发
+  - **效果**：加载 `dark-cultivation/SKILL.md`，一键激活全部七式逆天性协议，按任务风险自动分级（暗流/暗涌/暗潮/深渊）
+  - **等价于**：`--deep-think` + `--adversarial` + Polanyi 强制前置 + memory-palace 强制写入 + escalation eager 模式
+  - **适用场景**：高风险变更、架构重构、数据迁移、"这次不能出错"的任务
 
 ### 2. 语法树装配 (Assembly)
 
