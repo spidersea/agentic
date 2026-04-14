@@ -89,6 +89,7 @@
 | API 文档检索 | `.agent/skills/doc-lookup/SKILL.md` | 全文 |
 | 多 Agent 编排协议 | `.agent/skills/multi-agent/SKILL.md` | 全文（`--multi-agent` 时） |
 | 对抗推理质量模式库 | `.agent/skills/quality-patterns/SKILL.md` | 全文（审查/adversary 时） |
+| AI 优先思维重构、脚手架工程、自愈系统设计 | `.agent/skills/ai-first/SKILL.md` | 全文 |
 
 > **情境触发技能**（检测到条件时自动加载）：
 > `escalation`（连续失败 2+ 次）· `hooks-lifecycle`（会话开始/结束/压缩）· `continuous-learning`（`/learn`/`/evolve`/`/handoff`）· `dark-cultivation`（`--dark` 或高风险变更）· `polanyi`（认识论深度，三引擎默认引用）
@@ -134,6 +135,7 @@
 | `/stress-test` | 合规压测（标准任务 + 自动评分） | `.agent/workflows/stress-test.md` |
 | `/context-reset` | 清理上下文污染并按协议恢复 | `.agent/workflows/context-reset.md` |
 | `/finish` | 分支完成收尾（merge/PR/keep/discard + worktree 清理） | `.agent/workflows/finish.md` |
+| `/multi-agent` | 多Agent编排（任务拆解→分派→合并→验收） | `.agent/workflows/multi-agent.md` |
 | `/spec:propose` | 创建规格驱动的变更提案（proposal + specs + design + tasks） | `.agent/workflows/spec-propose.md` |
 | `/spec:archive` | 归档已完成变更并合并 delta specs 到主规格 | `.agent/workflows/spec-archive.md` |
 | `/autoresearch` | 自主迭代优化（修改→验证→保留/回滚→重复） | `.agent/skills/autoresearch/SKILL.md` |
