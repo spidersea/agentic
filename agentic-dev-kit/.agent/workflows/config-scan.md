@@ -6,7 +6,7 @@ description: Agent 配置安全扫描 — 检测规范文件中的安全风险
 
 > 扫描 Agent 配置文件（AGENT.md、rules、skills、workflows、agents）中的安全风险。
 > 触发方式: `/config-scan`
-> 前置技能: `.agent/skills/config-security/SKILL.md`
+> 前置技能: `.agent/skills/harden/SKILL.md`
 > ⚠️ 本工作流仅关注**安全维度**。配置完整性和 Token 效率 → `/harness-audit`
 
 ## 步骤

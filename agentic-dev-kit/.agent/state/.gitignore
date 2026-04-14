@@ -1,0 +1,3 @@
+# 运行时状态（不入库）
+*.json
+agent-messages/

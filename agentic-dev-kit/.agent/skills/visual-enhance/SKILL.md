@@ -1,6 +1,6 @@
 ---
-name: animate
-description: Review a feature and enhance it with purposeful animations, micro-interactions, and motion effects that improve usability and delight.
+name: visual-enhance
+description: 视觉增强 — 为界面添加有目的的动画、配色、微交互和动效，提升可用性和愉悦感。合并自 animate + colorize。
 user-invokable: true
 argument-hint: [TARGET=<value>]
 ---

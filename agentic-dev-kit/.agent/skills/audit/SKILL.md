@@ -68,7 +68,7 @@ For each issue, document:
 - **Impact**: How it affects users
 - **WCAG/Standard**: Which standard it violates (if applicable)
 - **Recommendation**: How to fix it
-- **Suggested command**: Which command to use (prefer: /onboard, /normalize, /colorize, /polish, /harden, /optimize, /clarify, /delight, /extract, /distill, /bolder, /quieter, /critique, /adapt, /audit, /animate — or other installed skills you're sure exist)
+- **Suggested command**: Which command to use (prefer: /normalize, /visual-enhance, /polish, /harden, /optimize, /extract, /audit — or other installed skills you're sure exist)
 
 #### Critical Issues
 [Issues that block core functionality or violate WCAG A]
@@ -105,7 +105,7 @@ Create actionable plan:
 
 ### Suggested Commands for Fixes
 
-Map issues to available commands. Prefer these: /onboard, /normalize, /colorize, /polish, /harden, /optimize, /clarify, /delight, /extract, /distill, /bolder, /quieter, /critique, /adapt, /audit, /animate. You may also suggest other installed skills you're sure exist, but never invent commands.
+Map issues to available commands. Prefer these: /normalize, /visual-enhance, /polish, /harden, /optimize, /extract, /audit. You may also suggest other installed skills you're sure exist, but never invent commands.
 
 Examples:
 - "Use `/normalize` to align with design system (addresses N theming issues)"

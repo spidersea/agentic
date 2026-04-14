@@ -55,38 +55,50 @@
 
 ## 技能路由 (Skill Routing)
 
+### 技能加载策略
+
+> ⚠️ **禁止全量加载所有技能**。按以下分层按需加载，控制 Token 预算。
+
+| 加载层级 | 何时加载 | 包含技能 | 估算 Tokens |
+|---------|---------|---------|------------|
+| **Always-on** | 每次会话自动 | autoresearch + escalation + agent-dsl | ~12,770 |
+| **Workflow-driven** | 工作流触发时 | 由 /new-feature /debug /review 等路由决定 | 按需 |
+| **On-demand** | 用户显式 `@` 引用 | graphify, spec-driven, multi-agent 等 | 按需 |
+| **Lazy-load** | 首次只读 frontmatter | Tier 2 微调技能 | ~200/个 |
+
 ### Tier 1 — 核心技能（主动加载）
 
 | 场景 | 加载技能 | 重点章节 |
 |---|---|---|
 | 新功能开发、核心代码修改、重构 | `.agent/skills/world_class_coding/SKILL.md` | 全文 |
 | 代码架构审查、质量检测、微观设计 | `.agent/skills/world_class_coding/coding-architecture/SKILL.md` | 全文 |
-| Git代码提交、版本控制合并控制 | `.agent/skills/world_class_coding/version-control/SKILL.md` | 全文 |
-| 编写测试用例、开发测试驱动设计开发 (TDD) | `.agent/skills/world_class_coding/testing-discipline/SKILL.md` | 全文 |
-| 动态进化与 Spa Day (规则清理重建) | `.agent/skills/world_class_coding/rule-evolution/SKILL.md` | 全文 |
+| Git 代码提交、版本控制 | `.agent/skills/world_class_coding/version-control/SKILL.md` | 全文 |
+| 编写测试用例、TDD | `.agent/skills/world_class_coding/testing-discipline/SKILL.md` | 全文 |
+| 规则进化与清理 | `.agent/skills/world_class_coding/rule-evolution/SKILL.md` | 全文 |
 | Debug、排查问题 | `.agent/skills/world_class_coding/SKILL.md` | Phase 4 + 中立提示词 |
-| 跨会话任务续作 | `.agent/skills/world_class_coding/SKILL.md` | 第五章：可持续节点协议 |
+| 跨会话任务续作 | `.agent/skills/world_class_coding/SKILL.md` | 第五章 |
 | 代码结构分析、知识图谱、影响评估 | `.agent/skills/graphify/SKILL.md` | 全文 |
-| 疑难杂症经验结晶 (按需提取微型技能) | `.agent/skills/captured/{名称}.md` | 全文 |
-| 需求规格管理、行为契约定义、变更归档 | `.agent/skills/spec-driven/SKILL.md` | 全文 |
-| 持续优化、自主迭代、安全审计、发布流程 | `.agent/skills/autoresearch/SKILL.md` | 全文（仅手动触发） |
-| 自然语言意图编译为三引擎强约束执行契约 | `.agent/skills/agent-dsl/SKILL.md` | 全文 |
-| 前端 UI 开发（生产级界面创建） | `.agent/skills/frontend-design/SKILL.md` | 全文 |
-| 上线前质量检查 | `.agent/skills/polish/SKILL.md` | 全文 |
+| 疑难杂症经验结晶 | `.agent/state/captured-patterns/{名称}.md` | 全文 |
+| 需求规格管理、行为契约 | `.agent/skills/spec-driven/SKILL.md` | 全文 |
+| 持续优化、自主迭代、安全审计 | `.agent/skills/autoresearch/SKILL.md` | 全文（仅手动触发） |
+| 自然语言意图编译为 DSL 执行契约 | `.agent/skills/agent-dsl/SKILL.md` | 全文 |
+| 前端 UI 开发（生产级界面） | `.agent/skills/frontend-design/SKILL.md` | 全文 |
+| 上线前质量检查（含设计评估） | `.agent/skills/polish/SKILL.md` | 全文 |
 | 审计（无障碍/性能/响应式） | `.agent/skills/audit/SKILL.md` | 全文 |
-| 响应式适配 | `.agent/skills/adapt/SKILL.md` | 全文 |
-| UI 健壮性（错误处理/i18n/溢出） | `.agent/skills/harden/SKILL.md` | 全文 |
-| API 文档检索（Phase 1 增强） | `.agent/skills/doc-lookup/SKILL.md` | 全文 |
+| UI 健壮性 + 安全加固 | `.agent/skills/harden/SKILL.md` | 全文 |
+| API 文档检索 | `.agent/skills/doc-lookup/SKILL.md` | 全文 |
+| 多 Agent 编排协议 | `.agent/skills/multi-agent/SKILL.md` | 全文（`--multi-agent` 时） |
+| 对抗推理质量模式库 | `.agent/skills/quality-patterns/SKILL.md` | 全文（审查/adversary 时） |
 
-> **情境触发技能**（检测到特定条件时自动加载，不常驻）：
-> `escalation`（连续失败 2+ 次时）· `hooks-lifecycle`（会话开始/结束/压缩时）· `continuous-learning`（`/learn`/`/evolve`/`/handoff` 时）
+> **情境触发技能**（检测到条件时自动加载）：
+> `escalation`（连续失败 2+ 次）· `hooks-lifecycle`（会话开始/结束/压缩）· `continuous-learning`（`/learn`/`/evolve`/`/handoff`）· `dark-cultivation`（`--dark` 或高风险变更）· `polanyi`（认识论深度，三引擎默认引用）
 
-> **按需加载技能**（使用对应命令时加载，不主动加载）：
-> `config-security`（`/config-scan` 时）· `skill-creator`（`/skill-create` 时）
+> **按需加载技能**（使用对应命令时加载）：
+> `skill-creator`（`/skill-create`）
 
-### Tier 2 — 微调技能（用自然语言触发，不主动加载）
+### Tier 2 — 微调技能（用自然语言触发，Lazy-load）
 
-> 描述需求时自动匹配：`animate`（动画/微交互）· `colorize`（配色体系）· `bolder`/`quieter`（视觉强度）· `delight`（愉悦感）· `distill`（精简复杂度）· `clarify`（UX 文案）· `critique`（设计评估）· `normalize`（Token 规范）· `extract`（组件提取）· `optimize`（性能优化）· `onboard`（引导流/空状态）· `teach-impeccable`（设计上下文初始化）
+> 描述需求时自动匹配：`visual-enhance`（动画/配色/微交互）· `normalize`（Token 规范）· `extract`（组件提取）· `optimize`（性能优化）· `teach-impeccable`（设计上下文初始化）
 
 > **渐进式加载**: 首次只读 frontmatter，相关后再全量加载。**Debug**: `/debug` 单次根因 / `/autoresearch:debug` 持续扫描。
 
@@ -166,14 +178,15 @@
 
 | Agent | 职责 | 权限模式 | 限定工具 | 定义文件 |
 |---|---|---|---|---|
-| explorer | 代码探索与调研（**纯只读**）。适用于 Phase 1 `new-feature`。 | ReadOnly | Read, Grep, Search, List | `.agent/agents/explorer.md` |
-| planner | Phase 1 技术规格规划。适用于 Phase 1 `new-feature`。 | ReadOnly | Read, Search, List | `.agent/agents/planner.md` |
-| reviewer | 代码审查（A/B/C 对抗）。适用于 `/review` A角。 | ReadOnly | Read, Grep, Search | `.agent/agents/reviewer.md` |
-| verifier | 对抗式验证（try to break it）。适用于 Phase 4 `new-feature`。 | WorkspaceWrite | Read, Execute, Search | `.agent/agents/verifier.md` |
-| tester | 测试编写和运行。适用于 `/test`, `/tdd`。 | WorkspaceWrite | Read, Write, Execute | `.agent/agents/tester.md` |
-| security-reviewer | 安全审查（OWASP/STRIDE）。适用于 `/review` / `autoresearch:security`。 | ReadOnly | Read, Grep, Search | `.agent/agents/security-reviewer.md` |
-| adversary | 红队攻击（纯破坏者视角）。适用于 Escalation L3+ / `--adversarial-mode`。 | ReadOnly | Read, Grep, Search | `.agent/agents/adversary.md` |
-| doc-updater | 代码变更后文档同步。适用于 Phase 6 `new-feature` 闭环。 | WorkspaceWrite | Read, Write, Search | `.agent/agents/doc-updater.md` |
+| explorer | 代码探索与调研（纯只读） | ReadOnly | Read, Grep, Search, List | `.agent/agents/explorer.md` |
+| planner | Phase 1 技术规格规划 | ReadOnly | Read, Search, List | `.agent/agents/planner.md` |
+| coder | 功能实现（独立 worktree） | WorkspaceWrite | Read, Write, Execute, Grep | `.agent/agents/coder.md` |
+| reviewer | 代码审查（A/B/C 对抗） | ReadOnly | Read, Grep, Search | `.agent/agents/reviewer.md` |
+| verifier | 对抗式验证 | WorkspaceWrite | Read, Execute, Search | `.agent/agents/verifier.md` |
+| tester | 测试编写和运行 | WorkspaceWrite | Read, Write, Execute | `.agent/agents/tester.md` |
+| security-reviewer | 安全审查（OWASP/STRIDE） | ReadOnly | Read, Grep, Search | `.agent/agents/security-reviewer.md` |
+| adversary | 红队攻击（纯破坏者） | ReadOnly | Read, Grep, Search | `.agent/agents/adversary.md` |
+| doc-updater | 代码变更后文档同步 | WorkspaceWrite | Read, Write, Search | `.agent/agents/doc-updater.md` |
 
 **Agent 能力声明协议：**
 > 借鉴 Claude Code 的 agent-specific MCP servers：每个 Agent 定义文件中可声明所需的外部能力。
@@ -241,20 +254,21 @@ Git 工作流 → @docs/git-workflow.md
 
 ## 强制规则 (Hard Rules)
 
-1. **禁用偏见提示**: Debug 时禁止使用"帮我找 bug"、"这段代码有什么问题"等预设偏见提示词，必须使用中立提示
-2. **禁止未授权依赖**: 不得自行引入技术规格中未定义的第三方依赖
-3. **契约优先**: 除非验收契约中的所有条件全部通过，否则不得标记任务完成
-4. **会话隔离**: 禁止在单个会话中串联超过 3 个不相关任务
-5. **检查点纪律**: 每个 Phase 完成后必须记录检查点，跨会话时必须产出交接备忘录
-6. **不确定时停下**: 当不确定某个实现细节时（置信度 < 80%），必须标注 `[不确定]` 并提供备选方案，不可自行猜测并继续
-7. **影响感知**: 修改任何被其他模块依赖的公共函数/类/接口前，必须先分析调用方列表并评估影响范围。如果代码图谱可用，必须通过 `get_impact_radius` 量化。修改公共 API 签名、参数、返回值后，必须搜索并同步更新所有引用该接口的文档（README、API 文档、JSDoc/注释、CHANGELOG 等）。
-8. **证据先行**: 禁止未验证就声称完成。详见 `.agent/rules/red-lines.md` 红线一（闭环意识）
-9. **第一性原理**: 从原始需求出发，拒绝路径盲从，评估 XY 问题。详见 `.agent/rules/red-lines.md` 红线二（事实驱动）
-10. **自主决策**: 能自己决定的不问用户。任务开始前先内部评估复杂度（Phase 0），轻量任务直接做完汇报；只有置信度 < 80% 或涉及不可逆变更时才确认。详见 `world_class_coding/SKILL.md` Phase 0。
-11. **禁止 Mock 实现**: 功能代码（非测试代码）中禁止使用 mock 数据、placeholder 函数或硬编码假数据代替真实实现。所有功能必须使用真实的框架、真实的 API、真实的数据处理逻辑。mock/stub 仅限测试文件中使用。详见 `.agent/rules/red-lines.md` 红线四。
-12. **规范链接完整性**: 修改 `.agent/` 目录下任何文件后，必须运行 `bash .agent/scripts/md-linker.sh .` 确认 0 CRITICAL。修改高依赖文件前，先运行 `bash .agent/scripts/md-linker.sh --impact <file>` 评估影响半径。
-13. **工具自造权**: 当现有工具无法满足分析需求时，允许在 `.agent/scratch/` 中创建一次性分析脚本（≤100行，纯读取，timeout 30s，执行后清理）。详见 `.agent/rules/tool-creation.md`。
-14. **对抗自检**: 在输出任何"看起来没问题"类结论前，必须至少生成 1 个可能使结论失败的反例场景。安全相关变更时升级为 3 个。详见 `.agent/rules/adversarial-persona.md`。
+> 以下规则按优先级排序。Agent 遵守率与规则数成反比——保持精简。
+
+1. **证据先行**: 禁止未验证就声称完成。所有修改必须有可验证的证据（测试通过/构建成功/lint 清零）
+2. **契约优先**: 验收契约中的所有条件全部通过才可标记完成
+3. **禁用偏见提示**: Debug 时禁止预设偏见提示词，必须使用中立提示
+4. **禁止未授权依赖**: 不得自行引入技术规格中未定义的第三方依赖
+5. **禁止 Mock 实现**: 功能代码中禁止 mock 数据/placeholder 函数，mock 仅限测试文件
+6. **影响感知**: 修改公共 API 前必须分析调用方 + 同步文档。代码图谱可用时必须用 `get_impact_radius`
+7. **不确定时停下**: 置信度 < 80% 时标注 `[不确定]` 并提供备选方案
+8. **自主决策**: 能自己决定的不问用户。轻量任务直接做完汇报
+9. **对抗自检**: 输出"没问题"类结论前必须生成 ≥1 个反例场景
+10. **检查点纪律**: 每个 Phase 完成后记录检查点，跨会话产出交接备忘录
+11. **工具自造权**: 可在 `.agent/scratch/` 中创建一次性分析脚本（≤100 行，纯读取，执行后清理）
+
+> 详细说明见 `.agent/rules/red-lines.md`（红线一~四）和 `.agent/rules/adversarial-persona.md`。
 
 ---
 

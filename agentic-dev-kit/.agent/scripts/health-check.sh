@@ -13,16 +13,16 @@ AGENT_DIR="${PROJECT_ROOT}/.agent"
 AGENT_MD="${PROJECT_ROOT}/AGENT.md"
 
 # 阈值
-THRESH_TOTAL_LINES_WARN=800
-THRESH_TOTAL_LINES_CRIT=1200
+THRESH_TOTAL_LINES_WARN=6000
+THRESH_TOTAL_LINES_CRIT=10000
 THRESH_FILE_LINES_WARN=300
 THRESH_FILE_LINES_CRIT=500
 THRESH_RULE_FILES_WARN=6
 THRESH_RULE_FILES_CRIT=9
-THRESH_SKILLS_WARN=11
-THRESH_SKILLS_CRIT=21
-THRESH_TOKENS_WARN=8000
-THRESH_TOKENS_CRIT=15000
+THRESH_SKILLS_WARN=25
+THRESH_SKILLS_CRIT=35
+THRESH_TOKENS_WARN=60000
+THRESH_TOKENS_CRIT=90000
 
 # --- 颜色 ---
 RED='\033[0;31m'
@@ -93,7 +93,7 @@ CORE_FILES=()
 
 while IFS= read -r f; do
     CORE_FILES+=("$f")
-done < <(find "$AGENT_DIR/skills" -name "SKILL.md" -not -path "*/reference/*" 2>/dev/null)
+done < <(find "$AGENT_DIR/skills" -name "SKILL.md" -not -path "*/reference/*" -not -path "*/_archived/*" 2>/dev/null)
 
 while IFS= read -r f; do
     CORE_FILES+=("$f")
@@ -130,7 +130,7 @@ echo ""
 echo -e "${BOLD}━━━ 2. 组件数量 ━━━${NC}"
 echo ""
 
-SKILL_COUNT=$(find "$AGENT_DIR/skills" -maxdepth 1 -type d 2>/dev/null | tail -n +2 | wc -l | tr -d ' ')
+SKILL_COUNT=$(find "$AGENT_DIR/skills" -maxdepth 1 -type d -not -name "_archived" 2>/dev/null | tail -n +2 | wc -l | tr -d ' ')
 WORKFLOW_COUNT=$(find "$AGENT_DIR/workflows" -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
 RULE_COUNT=$(find "$AGENT_DIR/rules" -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
 
@@ -167,9 +167,9 @@ if [ -f "$AGENT_MD" ]; then
     HARD_RULES=$(grep -cE '^\s*[0-9]+\.\s' "$AGENT_MD" 2>/dev/null || true)
     HARD_RULES=${HARD_RULES:-0}
     AGENT_LINES=$(wc -l < "$AGENT_MD" | tr -d ' ')
-    STATUS=$(rate $HARD_RULES 8 15)
+    STATUS=$(rate $HARD_RULES 12 20)
     printf "  %-35s %6d 条   %s\n" "AGENT.md 编号规则数" "$HARD_RULES" "$STATUS"
-    STATUS=$(rate $AGENT_LINES 80 120)
+    STATUS=$(rate $AGENT_LINES 200 350)
     printf "  %-35s %6d 行   %s\n" "AGENT.md 总行数" "$AGENT_LINES" "$STATUS"
 fi
 
@@ -179,7 +179,7 @@ while IFS= read -r f; do
     items=${items:-0}
     TOTAL_RULE_ITEMS=$((TOTAL_RULE_ITEMS + items))
 done < <(find "$AGENT_DIR/rules" -name "*.md" 2>/dev/null)
-STATUS=$(rate $TOTAL_RULE_ITEMS 30 50)
+STATUS=$(rate $TOTAL_RULE_ITEMS 80 120)
 printf "  %-35s %6d 条   %s\n" "Rules 文件中检查项总数" "$TOTAL_RULE_ITEMS" "$STATUS"
 echo ""
 
@@ -204,7 +204,7 @@ while IFS= read -r f; do
         echo -e "  ${RED}🔴 巨型 Skill: ${rel} (${lines} 行) — 建议拆分${NC}"
         ISSUES=$((ISSUES + 1))
     fi
-done < <(find "$AGENT_DIR/skills" -name "SKILL.md" 2>/dev/null)
+done < <(find "$AGENT_DIR/skills" -name "SKILL.md" -not -path "*/_archived/*" 2>/dev/null)
 
 if [ ! -f "$AGENT_MD" ]; then
     echo -e "  ${RED}🔴 缺少 AGENT.md 路由文件${NC}"

@@ -23,7 +23,7 @@ description: 配置健康度审计 — 评估 Agent 配置完整性和效率
    ```bash
    echo "=== 路由完整性 ==="
    # 检查技能路由
-   for skill in world_class_coding graphify spec-driven autoresearch frontend-design polish audit adapt harden continuous-learning hooks-lifecycle config-security skill-creator doc-lookup; do
+   for skill in world_class_coding graphify spec-driven autoresearch frontend-design polish audit harden continuous-learning hooks-lifecycle skill-creator doc-lookup; do
      [ -f ".agent/skills/$skill/SKILL.md" ] && echo "✅ $skill" || echo "❌ $skill"
    done
    # 检查工作流路由
