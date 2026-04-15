@@ -90,6 +90,7 @@
 | 多 Agent 编排协议 | `.agent/skills/multi-agent/SKILL.md` | 全文（`--multi-agent` 时） |
 | 对抗推理质量模式库 | `.agent/skills/quality-patterns/SKILL.md` | 全文（审查/adversary 时） |
 | AI 优先思维重构、脚手架工程、自愈系统设计 | `.agent/skills/ai-first/SKILL.md` | 全文 |
+| 领域精通协议 — 进入陌生领域时激活深层知识 | `.agent/skills/domain-mastery/SKILL.md` | 全文（检测到领域任务时） |
 
 > **情境触发技能**（检测到条件时自动加载）：
 > `escalation`（连续失败 2+ 次）· `hooks-lifecycle`（会话开始/结束/压缩）· `continuous-learning`（`/learn`/`/evolve`/`/handoff`）· `dark-cultivation`（`--dark` 或高风险变更）· `polanyi`（认识论深度，三引擎默认引用）
