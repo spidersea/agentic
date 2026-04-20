@@ -53,158 +53,40 @@ Scope: src/components/**
 
 ### /autoresearch:security — Autonomous Security Audit (v1.0.3)
 
-Runs a comprehensive security audit using the autoresearch loop pattern. Generates a full STRIDE threat model, maps attack surfaces, then iteratively tests each vulnerability vector — logging findings with severity, OWASP category, and code evidence.
+STRIDE threat model + OWASP Top 10 + red-team (4 adversarial personas). Load: `references/security-workflow.md`.
 
-Load: `references/security-workflow.md` for full protocol.
+**Flow:** Reconnaissance → Asset ID → Trust Boundaries → STRIDE → Attack Surface → Autonomous Loop → Final Report
 
-**What it does:**
-
-1. **Codebase Reconnaissance** — scans tech stack, dependencies, configs, API routes
-2. **Asset Identification** — catalogs data stores, auth systems, external services, user inputs
-3. **Trust Boundary Mapping** — browser↔server, public↔authenticated, user↔admin, CI/CD↔prod
-4. **STRIDE Threat Model** — Spoofing, Tampering, Repudiation, Info Disclosure, DoS, Elevation of Privilege
-5. **Attack Surface Map** — entry points, data flows, abuse paths
-6. **Autonomous Loop** — iteratively tests each vector, validates with code evidence, logs findings
-7. **Final Report** — severity-ranked findings with mitigations, coverage matrix, iteration log
-
-**Key behaviors:**
-- Follows red-team adversarial mindset (Security Adversary, Supply Chain, Insider Threat, Infra Attacker)
-- Every finding requires **code evidence** (file:line + attack scenario) — no theoretical fluff
-- Tracks OWASP Top 10 + STRIDE coverage, prints coverage summary every 5 iterations
-- Composite metric: `(owasp_tested/10)*50 + (stride_tested/6)*30 + min(findings, 20)` — higher is better
-- Creates `security/{YYMMDD}-{HHMM}-{audit-slug}/` folder with structured reports:
-  `overview.md`, `threat-model.md`, `attack-surface-map.md`, `findings.md`, `owasp-coverage.md`, `dependency-audit.md`, `recommendations.md`, `security-audit-results.tsv`
-
-**Flags:**
+**Key rules:** Every finding needs **code evidence** (file:line + attack scenario). Composite metric: `(owasp/10)*50 + (stride/6)*30 + min(findings,20)`.
 
 | Flag | Purpose |
 |------|---------|
-| `--diff` | Delta mode — only audit files changed since last audit |
-| `--fix` | After audit, auto-fix confirmed Critical/High findings using autoresearch loop |
-| `--fail-on {severity}` | Exit non-zero if findings meet threshold (for CI/CD gating) |
+| `--diff` | Delta mode — only changed files |
+| `--fix` | Auto-fix Critical/High after audit |
+| `--fail-on {sev}` | CI/CD gate (exit non-zero) |
 
-**Usage:**
-```
-# Unlimited — keep finding vulnerabilities until interrupted
-/autoresearch:security
-
-# Bounded — exactly 10 security sweep iterations
-/autoresearch:security
-Iterations: 10
-
-# With focused scope
-/autoresearch:security
-Scope: src/api/**/*.ts, src/middleware/**/*.ts
-Focus: authentication and authorization flows
-
-# Delta mode — only audit changed files since last audit
-/autoresearch:security --diff
-
-# Auto-fix confirmed Critical/High findings after audit
-/autoresearch:security --fix
-Iterations: 15
-
-# CI/CD gate — fail pipeline if any Critical findings
-/autoresearch:security --fail-on critical
-Iterations: 10
-
-# Combined — delta audit + fix + gate
-/autoresearch:security --diff --fix --fail-on critical
-Iterations: 15
-```
-
-**Inspired by:**
-- [Strix](https://github.com/usestrix/strix) — AI-powered security testing with proof-of-concept validation
-- `/plan red-team` — adversarial review with hostile reviewer personas
-- OWASP Top 10 (2021) — industry-standard vulnerability taxonomy
-- STRIDE — Microsoft's threat modeling framework
+Usage: `/autoresearch:security`, `--diff --fix --fail-on critical`, `Scope: src/api/**`
 
 ### /autoresearch:ship — Universal Shipping Workflow (v1.1.0)
 
-Ship anything — code, content, marketing, sales, research, or design — through a structured 8-phase workflow that applies autoresearch loop principles to the last mile.
+Ship anything through a structured 8-phase workflow. Load: `references/ship-workflow.md`.
 
-Load: `references/ship-workflow.md` for full protocol.
+**Flow:** Identify → Inventory → Checklist → Prepare (loop) → Dry-run → Ship → Verify → Log
 
-**What it does:**
-
-1. **Identify** — auto-detect what you're shipping (code PR, deployment, blog post, email campaign, sales deck, research paper, design assets)
-2. **Inventory** — assess current state and readiness gaps
-3. **Checklist** — generate domain-specific pre-ship gates (all mechanically verifiable)
-4. **Prepare** — autoresearch loop to fix failing checklist items until 100% pass
-5. **Dry-run** — simulate the ship action without side effects
-6. **Ship** — execute the actual delivery (merge, deploy, publish, send)
-7. **Verify** — post-ship health check confirms it landed
-8. **Log** — record shipment to `ship-log.tsv` for traceability
-
-**Supported shipment types:**
-
-| Type | Example Ship Actions |
-|------|---------------------|
-| `code-pr` | `gh pr create` with full description |
-| `code-release` | Git tag + GitHub release |
-| `deployment` | CI/CD trigger, `kubectl apply`, push to deploy branch |
-| `content` | Publish via CMS, commit to content branch |
-| `marketing-email` | Send via ESP (SendGrid, Mailchimp) |
-| `marketing-campaign` | Activate ads, launch landing page |
-| `sales` | Send proposal, share deck |
-| `research` | Upload to repository, submit paper |
-| `design` | Export assets, share with stakeholders |
-
-**Flags:**
+**Supported types:** `code-pr` · `code-release` · `deployment` · `content` · `marketing-email` · `marketing-campaign` · `sales` · `research` · `design`
 
 | Flag | Purpose |
 |------|---------|
-| `--dry-run` | Validate everything but don't actually ship (stop at Phase 5) |
-| `--auto` | Auto-approve dry-run gate if no errors |
-| `--force` | Skip non-critical checklist items (blockers still enforced) |
-| `--rollback` | Undo the last ship action (if reversible) |
-| `--monitor N` | Post-ship monitoring for N minutes |
-| `--type <type>` | Override auto-detection with explicit shipment type |
-| `--checklist-only` | Only generate and evaluate checklist (stop at Phase 3) |
+| `--dry-run` | Stop at Phase 5 |
+| `--auto` | Auto-approve dry-run gate |
+| `--force` | Skip non-critical items |
+| `--rollback` | Undo last ship |
+| `--monitor N` | Post-ship monitoring N mins |
+| `--checklist-only` | Stop at Phase 3 |
 
-**Usage:**
-```
-# Auto-detect and ship (interactive)
-/autoresearch:ship
+Metric: `ship_score = (passing/total)*80 + (dry_run?15:0) + (no_blockers?5:0)`. Score ≥80 = shippable.
 
-# Ship code PR with auto-approve
-/autoresearch:ship --auto
-
-# Dry-run a deployment before going live
-/autoresearch:ship --type deployment --dry-run
-
-# Ship with post-deployment monitoring
-/autoresearch:ship --monitor 10
-
-# Prepare iteratively then ship
-/autoresearch:ship
-Iterations: 5
-
-# Just check if something is ready to ship
-/autoresearch:ship --checklist-only
-
-# Ship a blog post
-/autoresearch:ship
-Target: content/blog/my-new-post.md
-Type: content
-
-# Ship a sales deck
-/autoresearch:ship --type sales
-Target: decks/q1-proposal.pdf
-
-# Rollback a bad deployment
-/autoresearch:ship --rollback
-```
-
-**Composite metric (for bounded loops):**
-```
-ship_score = (checklist_passing / checklist_total) * 80
-           + (dry_run_passed ? 15 : 0)
-           + (no_blockers ? 5 : 0)
-```
-Score of 100 = fully ready. Below 80 = not shippable.
-
-**Output directory:** Creates `ship/{YYMMDD}-{HHMM}-{ship-slug}/` with `checklist.md`, `ship-log.tsv`, `summary.md`.
+Usage: `/autoresearch:ship`, `--auto`, `--type deployment --dry-run`, `--monitor 10`
 
 ### /autoresearch:plan — Goal → Configuration Wizard
 
@@ -240,84 +122,30 @@ Goal: Make the API respond faster
 After the wizard completes, the user gets a ready-to-paste `/autoresearch` invocation — or can launch it directly.
 
 ## When to Activate
-
-- User invokes `/autoresearch` or `/ug:autoresearch` → run the loop
-- User invokes `/autoresearch:plan` → run the planning wizard
-- User invokes `/autoresearch:security` → run the security audit
-- User says "help me set up autoresearch", "plan an autoresearch run" → run the planning wizard
-- User says "security audit", "threat model", "OWASP", "STRIDE", "find vulnerabilities", "red-team" → run the security audit
-- User invokes `/autoresearch:ship` → run the ship workflow
-- User says "ship it", "deploy this", "publish this", "launch this", "get this out the door" → run the ship workflow
-- User invokes `/autoresearch:debug` → run the debug loop
-- User says "find all bugs", "hunt bugs", "debug this", "why is this failing", "investigate" → run the debug loop
-- User invokes `/autoresearch:fix` → run the fix loop
-- User says "fix all errors", "make tests pass", "fix the build", "clean up errors" → run the fix loop
-- User invokes `/autoresearch:review` → run the review loop
-- User says "continually review and fix this", "run an autoresearch review loop", "review and fix all issues" → run the review loop
-- User says "work autonomously", "iterate until done", "keep improving", "run overnight" → run the loop
-- Any task requiring repeated iteration cycles with measurable outcomes → run the loop
+- `/autoresearch` or "work autonomously" → main loop
+- `/autoresearch:plan` or "plan an autoresearch run" → planning wizard
+- `/autoresearch:security` or "security audit"/"STRIDE"/"OWASP" → security audit
+- `/autoresearch:ship` or "ship it"/"deploy this" → ship workflow
+- `/autoresearch:debug` or "find all bugs"/"debug this" → debug loop
+- `/autoresearch:fix` or "fix all errors"/"make tests pass" → fix loop
+- `/autoresearch:review` or "review and fix all issues" → review loop
 
 ## Bounded Iterations
 
-By default, autoresearch loops **forever** until manually interrupted. To run exactly N iterations, add `Iterations: N` to your inline config.
-
-**Unlimited (default):**
-```
-/autoresearch
-Goal: Increase test coverage to 90%
-```
-
-**Bounded (N iterations):**
-```
-/autoresearch
-Goal: Increase test coverage to 90%
-Iterations: 25
-```
-
-After N iterations Claude stops and prints a final summary with baseline → current best, keeps/discards/crashes. If the goal is achieved before N iterations, Claude prints early completion and stops.
-
-### When to Use Bounded Iterations
+Default: loop **forever**. Add `Iterations: N` for bounded runs. After N iterations, print summary (baseline → best). Early exit if goal achieved.
 
 | Scenario | Recommendation |
 |----------|---------------|
-| Run overnight, review in morning | Unlimited (default) |
-| Quick 30-min improvement session | `Iterations: 10` |
-| Targeted fix with known scope | `Iterations: 5` |
-| Exploratory — see if approach works | `Iterations: 15` |
-| CI/CD pipeline integration | `--iterations N` flag (set N based on time budget) |
+| Overnight | Unlimited |
+| Quick session | `Iterations: 10` |
+| Targeted fix | `Iterations: 5` |
+| CI/CD | `--iterations N` |
 
-## Setup Phase (Do Once)
+## Setup Phase
 
-**If the user provides Goal, Scope, Metric, and Verify inline** → extract them and proceed to step 5.
+**If Goal/Scope/Metric/Verify inline** → extract and proceed to step 5.
 
-**If any critical field is missing** → use `AskUserQuestion` to collect them interactively:
-
-### Interactive Setup (when invoked without full config)
-
-Scan the codebase first for smart defaults, then ask ALL questions in batched `AskUserQuestion` calls (max 4 per call). This gives users full clarity upfront.
-
-**Batch 1 — Core config (4 questions in one call):**
-
-Use a SINGLE `AskUserQuestion` call with these 4 questions:
-
-| # | Header | Question | Options (smart defaults from codebase scan) |
-|---|--------|----------|----------------------------------------------|
-| 1 | `Goal` | "What do you want to improve?" | "Test coverage (higher)", "Bundle size (lower)", "Performance (faster)", "Code quality (fewer errors)" |
-| 2 | `Scope` | "Which files can autoresearch modify?" | Suggested globs from project structure (e.g. "src/**/*.ts", "content/**/*.md") |
-| 3 | `Metric` | "What number tells you if it got better? (must be a command output, not subjective)" | Detected options: "coverage % (higher)", "bundle size KB (lower)", "error count (lower)", "test pass count (higher)" |
-| 4 | `Direction` | "Higher or lower is better?" | "Higher is better", "Lower is better" |
-
-**Batch 2 — Verify + Guard + Launch (3 questions in one call):**
-
-| # | Header | Question | Options |
-|---|--------|----------|---------|
-| 5 | `Verify` | "What command produces the metric? (I'll dry-run it to confirm)" | Suggested commands from detected tooling |
-| 6 | `Guard` | "Any command that must ALWAYS pass? (prevents regressions)" | "npm test", "tsc --noEmit", "npm run build", "Skip — no guard" |
-| 7 | `Launch` | "Ready to go?" | "Launch (unlimited)", "Launch with iteration limit", "Edit config", "Cancel" |
-
-**After Batch 2:** Dry-run the verify command. If it fails, ask user to fix or choose a different command. If it passes, proceed with launch choice.
-
-**IMPORTANT:** Always batch questions — never ask one at a time. Users should see all config choices together for full context.
+**If missing** → batch 2 rounds of `AskUserQuestion`: Batch 1 (Goal/Scope/Metric/Direction) + Batch 2 (Verify/Guard/Launch). Always batch — never ask one at a time. Dry-run verify command before accepting.
 
 ### Setup Steps (after config is complete)
 
@@ -349,6 +177,11 @@ Read `references/autonomous-loop-protocol.md` for full protocol details.
 ```
 LOOP (FOREVER or N times):
   1. Review: Read current state + git history + results log
+     🔒 **Frozen Input Injection (Anti-Drift)**:
+     在每次迭代开始时，重新读取 FROZEN 目标（Goal + Scope + Metric + Exit）。
+     如果当前工作方向与 FROZEN 目标偏差明显（如目标是"提高覆盖率"
+     但当前在"重构代码结构"），强制 rollback 到上次 keep 点并重新对齐。
+     灵感来源：OpenMythos `e = x` — 编码后的输入在每次循环中作为不变锚点注入。
   2. Ideate: Pick next change based on goal, past results, what hasn't been tried
   3. Modify: Make ONE focused change to in-scope files
   4. Commit: Git commit the change (before verification)
@@ -366,7 +199,10 @@ LOOP (FOREVER or N times):
   9. Repeat: Go to step 1.
      - If unbounded: NEVER STOP. NEVER ASK "should I continue?"
      - If bounded (N): Stop after N iterations, print final summary
-     - 🛡️ **OOM Protection**: Every 10 iterations, or if context usage is very high, automatically invoke `/context-reset` and persist tracker before continuing.
+     - 🛡️ **OOM Protection (弹性恢复)**: Every 10 iterations, or if context usage
+       is very high, automatically persist tracker → compress context → restore
+       execution position → seamlessly continue. 用户无感知，无需人工介入。
+       灵感来源：OpenMythos `except StopIteration: data_iter = iter(loader)` 模式。
 
 POST-LOOP (loop 结束或被中断后执行):
   10. Learning: 从 results log 提取经验并沉淀
@@ -376,6 +212,43 @@ POST-LOOP (loop 结束或被中断后执行):
       - 将高价值经验调用 /learn 写入 continuous-learning 本能存储
       - 输出：summary + 经验提取 + 建议下次起点
 ```
+
+## ACT 自适应停机 (Adaptive Computation Time)
+
+> 灵感来源：OpenMythos Recurrent-Depth Transformer 的 ACT Halting 机制。
+> 核心理念：简单子任务快速收敛退出，复杂子任务深度迭代直到稳定。节省 30-50% token。
+
+### 置信度累积规则
+
+在每次迭代的 Decide 阶段（步骤 7），除了 keep/discard 判定外，同步更新 **收敛置信度**：
+
+```
+confidence = 0.0  # 每个子任务/文件的独立置信度
+
+每次迭代后：
+  PASS (keep)              → confidence += 0.4
+  PASS_WITH_WARNINGS       → confidence += 0.2
+  FAIL (discard)           → confidence = 0.0  # 重置
+  CRASH                    → confidence = 0.0  # 重置
+
+  if confidence ≥ ACT_THRESHOLD (默认 0.99):
+      → 子任务收敛，标记为 CONVERGED，跳过后续迭代
+      → 在 results TSV 中记录 status="converged" + convergence_iter=N
+```
+
+### 效果
+
+| 子任务复杂度 | 典型收敛轮次 | 说明 |
+|------------|------------|------|
+| 简单 (添加注释、格式化) | 2-3 轮 | 连续 3 次 PASS → confidence=1.2 ≥ 0.99 |
+| 中等 (Bug 修复、小重构) | 4-6 轮 | 偶尔 FAIL 重置，需多次 PASS 累积 |
+| 复杂 (架构变更、安全修复) | 8+ 轮 | 频繁 FAIL，需深度迭代 |
+
+### 约束
+
+1. ACT 停机仅适用于**子任务级别**。全局 `until` 退出条件仍然是硬死锁，不受 ACT 影响
+2. ACT 阈值可通过 `Convergence: 0.8` 内联配置降低（适用于快速验证场景）
+3. 当使用 `--effort max` 时，ACT 自动禁用 — 强制跑满所有迭代
 
 ## Critical Rules
 

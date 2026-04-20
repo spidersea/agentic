@@ -211,3 +211,52 @@ version: 2.2.0
    - **仅当**用户显式声明 `--no-escalation` 时，移除压力升级
    - **仅当**用户显式声明 `--no-polanyi` 时，移除认识论深度
    - 三引擎是硬编码默认行为，而非可选装配
+
+5. **预配置模板 (Pre-configured Templates)**：
+   - 灵感来源：OpenMythos `mythos_1b()` ~ `mythos_1t()` — 一函数调用获得完整配置。
+   - 使用 `--template <name>` 修饰符启动内置任务模板，所有约束参数已预调优。
+   - 用户只需覆盖 SCOPE，其余自动装配。
+
+### 内置模板
+
+| 模板 | 触发方式 | 预配置内容 |
+|------|---------|-----------|
+| **bug-fix** | `--template bug-fix` | fix 循环 + guard 强制 + escalation L1-L4 + ACT 停机 |
+| **refactor** | `--template refactor` | review 循环 + Polanyi TTM 强制 + `--dark` 暗涌级 + ACT 停机 |
+| **security** | `--template security` | security 循环 + `--adversarial` + `--deep-think` + escalation L1-L5 |
+| **ship** | `--template ship` | ship workflow + checklist + dry-run + monitor 5min |
+
+### 模板展开规则
+
+当检测到 `--template <name>` 修饰符时，编译器按以下规则展开：
+
+```
+/dsl --template bug-fix "修复登录接口的空指针问题"
+
+→ 展开为：
+
+/autoresearch:fix scope="<auto-detect>" {
+    修复登录接口的空指针问题
+    -> { guard_cmd && verify_cmd }
+} until ( exit_code == 0 && guard_pass )
+  [PRESSURE: escalation L1-L4, phase-aware]
+  [POLANYI: Tacit Tradition Map]
+  [ACT: threshold=0.99]
+```
+
+### 自定义模板
+
+用户可在 `.agent/state/dsl-templates/` 目录下创建自定义模板 YAML：
+
+```yaml
+# .agent/state/dsl-templates/perf-optimize.yml
+name: perf-optimize
+base_command: /autoresearch
+effort: high
+escalation: L1-L5
+polanyi: true
+dark_level: surge      # 暗涌级
+act_threshold: 0.99
+guard: "npm run bench"
+exit: "benchmark_ms < baseline_ms * 0.9"
+```

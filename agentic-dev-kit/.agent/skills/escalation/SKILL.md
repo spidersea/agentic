@@ -214,6 +214,41 @@ iteration	level	target	trigger	checklist_completed	methodology_from	methodology_
 | `/learn` | 循环结束后从 escalation-log 提取经验沉淀 |
 
 
+## 阶段感知调节 (Phase-Aware Adaptation)
+
+> 灵感来源：OpenMythos LoRA Depth Adapter — 共享权重在不同循环深度自动微调行为。
+> 核心理念：同一套 escalation 规则在迭代的不同阶段，自动调节**严格程度**。
+
+### 三阶段行为微调
+
+| 阶段 | 迭代范围 | L1 动作 | L2 动作 | 容忍度 | 类比 OpenMythos |
+|------|---------|---------|---------|--------|----------------|
+| **早期** (Warm-up) | iter 1-3 | 建议换方案（温和提示） | 搜索 + 2 个假设 | 高 — 允许试错 | `loop_t=0-2` |
+| **中期** (Cruising) | iter 4-8 | **强制**换方案 | 搜索 + 读源码 + 3 个假设 | 中 — 标准约束 | `loop_t=3-7` |
+| **晚期** (Convergence) | iter 9+ | 强制换方案 + 搜索外部知识 | 强制方法论切换 | 低 — 零容忍 | `loop_t=8+` |
+
+### 判定规则
+
+```
+current_phase = 
+    if iteration <= 3:  "early"
+    elif iteration <= 8: "mid"
+    else:               "late"
+
+# 晚期阶段强化：
+if current_phase == "late":
+    L1 动作自动升级为 L2 级别
+    L2 动作自动升级为 L3 级别（七项清单）
+    同一思路微调 2 次（而非 3 次）即判定"原地打转"
+```
+
+### 与 ACT 停机的协同
+
+阶段感知与 ACT 自适应停机互补：
+- **ACT** 控制"何时收敛退出"（子任务级别）
+- **阶段感知** 控制"失败时多严格"（循环全局级别）
+- 两者独立运作，互不干扰
+
 ## 自动化合规与护城河兜底验证
 > 为了支撑 Autoresearch 闭环结构，当前技能库被强制挂载以下底层扫描探针。
 可以使用如下命令验证当前技能在环境中的被干扰盲区：

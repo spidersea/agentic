@@ -123,13 +123,14 @@ edges = defaultdict(list)        # source_file -> [(target_file, line_no, raw_re
 reverse_edges = defaultdict(set) # target_file -> set of source_files
 all_refs = []                    # (source, line_no, raw_ref, resolved_target, status)
 
-# Command routing table from AGENT.md
+# Command routing table from AGENT.md and router-tables.md
 cmd_routes = {}
-if agent_md.exists():
-    content = agent_md.read_text()
-    # Match | `/command` | desc | `path` |
-    for m in re.finditer(r'\|\s*`?/([\w\-:]+)`?\s*\|[^|]+\|\s*`?(\.agent/[\w\-/]+\.(?:md|sh))`?\s*\|', content):
-        cmd_routes[m.group(1)] = m.group(2)
+for f in [agent_md, PROJECT_ROOT / '.agent/references/router-tables.md']:
+    if f.exists():
+        content = f.read_text()
+        # Match | `/command` | desc | `path` |
+        for m in re.finditer(r'\|\s*`?/([\w\-:]+)`?\s*\|[^|]+\|\s*`?(\.agent/[\w\-/]+\.(?:md|sh))`?\s*\|', content):
+            cmd_routes[m.group(1)] = m.group(2)
 
 def resolve_ref(raw_ref, source_file):
     """Try to resolve a reference to an actual file path."""
@@ -238,25 +239,26 @@ for rel_path, abs_path in managed_files.items():
                     all_refs.append((rel_path, line_no, raw_ref, None, 'BROKEN'))
 
 # ────────────────────────────────────────────────────────
-# Phase C: Extract agent contracts from AGENT.md
+# Phase C: Extract agent contracts from AGENT.md and router-tables.md
 # ────────────────────────────────────────────────────────
 agent_contracts = {}  # agent_name -> {permission, tools[], skills[]}
-if agent_md.exists():
-    content = agent_md.read_text()
-    # Parse delegation table
-    for m in re.finditer(
-        r'\|\s*([\w\-]+)\s*\|[^|]+\|\s*(ReadOnly|WorkspaceWrite|DangerFullAccess)\s*\|'
-        r'\s*([^|]+)\|\s*`?(\.agent/agents/[\w\-]+\.md)`?\s*\|',
-        content
-    ):
-        name = m.group(1).strip()
-        perm = m.group(2).strip()
-        tools = [t.strip() for t in m.group(3).split(',')]
-        agent_contracts[name] = {
-            'permission': perm,
-            'tools': tools,
-            'file': m.group(4).strip(),
-        }
+for f in [agent_md, PROJECT_ROOT / '.agent/references/router-tables.md']:
+    if f.exists():
+        content = f.read_text()
+        # Parse delegation table
+        for m in re.finditer(
+            r'\|\s*([\w\-]+)\s*\|[^|]+\|\s*(ReadOnly|WorkspaceWrite|DangerFullAccess)\s*\|'
+            r'\s*([^|]+)\|\s*`?(\.agent/agents/[\w\-]+\.md)`?\s*\|',
+            content
+        ):
+            name = m.group(1).strip()
+            perm = m.group(2).strip()
+            tools = [t.strip() for t in m.group(3).split(',')]
+            agent_contracts[name] = {
+                'permission': perm,
+                'tools': tools,
+                'file': m.group(4).strip(),
+            }
 
 # ────────────────────────────────────────────────────────
 # MODE: Full validation

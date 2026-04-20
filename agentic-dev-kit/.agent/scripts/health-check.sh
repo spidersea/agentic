@@ -93,7 +93,7 @@ CORE_FILES=()
 
 while IFS= read -r f; do
     CORE_FILES+=("$f")
-done < <(find "$AGENT_DIR/skills" -name "SKILL.md" -not -path "*/reference/*" -not -path "*/_archived/*" 2>/dev/null)
+done < <(find "$AGENT_DIR/skills" -name "SKILL.md" -not -path "*/references/*" -not -path "*/_archived/*" 2>/dev/null)
 
 while IFS= read -r f; do
     CORE_FILES+=("$f")
@@ -101,7 +101,7 @@ done < <(find "$AGENT_DIR/rules" -name "*.md" 2>/dev/null)
 
 while IFS= read -r f; do
     CORE_FILES+=("$f")
-done < <(find "$AGENT_DIR/workflows" -name "*.md" 2>/dev/null)
+done < <(find "$AGENT_DIR/workflows" -name "*.md" -not -path "*/references/*" 2>/dev/null)
 
 TOTAL_LINES=0
 TOTAL_BYTES=0
@@ -131,7 +131,7 @@ echo -e "${BOLD}━━━ 2. 组件数量 ━━━${NC}"
 echo ""
 
 SKILL_COUNT=$(find "$AGENT_DIR/skills" -maxdepth 1 -type d -not -name "_archived" 2>/dev/null | tail -n +2 | wc -l | tr -d ' ')
-WORKFLOW_COUNT=$(find "$AGENT_DIR/workflows" -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
+WORKFLOW_COUNT=$(find "$AGENT_DIR/workflows" -name "*.md" -not -path "*/references/*" 2>/dev/null | wc -l | tr -d ' ')
 RULE_COUNT=$(find "$AGENT_DIR/rules" -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
 
 STATUS=$(rate $SKILL_COUNT $THRESH_SKILLS_WARN $THRESH_SKILLS_CRIT)
