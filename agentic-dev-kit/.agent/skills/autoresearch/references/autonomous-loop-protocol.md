@@ -100,11 +100,14 @@ When the guard fails but the metric improved, the optimization idea may still be
 
 **Critical:** Guard/test files are read-only. The optimization must adapt to the tests, never the other way around. If after 2 rework attempts the optimization can't pass the guard, discard it and move on to a different idea.
 
-## Phase 6: Decide (No Ambiguity)
+## Phase 6: Decide & ACT Halting (No Ambiguity)
+
+> ⚡ **ACT 自适应停机 (Adaptive Computation Time)**: Maintain a `confidence` score (defaults to 0.0) for the current sub-task/file. Simple tasks converge early; complex tasks iterate deeply. ACT_THRESHOLD defaults to 0.99.
 
 ```
 IF metric_improved AND (no guard OR guard_passed):
     STATUS = "keep"
+    confidence += 0.4
     # Do nothing — commit stays
 ELIF metric_improved AND guard_failed:
     IF optimization_is_revolutionary (massive metric gain but breaks existing guard):
@@ -132,8 +135,10 @@ ELIF metric_improved AND guard_failed:
     IF still failing after 2 attempts:
         STATUS = "discard"
         REASON = "guard failed, could not rework optimization"
+        confidence = 0.0
 ELIF metric_same_or_worse:
     STATUS = "discard"
+    confidence = max(0.0, confidence - 0.3)
     git reset --hard HEAD~1
 ELIF crashed:
     # Attempt fix (max 3 tries)
@@ -141,7 +146,16 @@ ELIF crashed:
         Fix → re-commit → re-verify → re-guard
     ELSE:
         STATUS = "crash"
+        confidence = 0.0
         git reset --hard HEAD~1
+
+# ACT Halting Check
+IF confidence >= ACT_THRESHOLD:
+    IF ENABLE_REFEREE_GATE:
+        GOTO Phase 8 (Referee Gate)
+    ELSE:
+        STATUS = "converged"
+        BREAK current sub-task and move to the next one
 ```
 
 **Simplicity override:** If metric barely improved (+<0.1%) but change adds significant complexity, treat as "discard". If metric unchanged but code is simpler, treat as "keep".
@@ -151,11 +165,31 @@ ELIF crashed:
 Append to results log (TSV format):
 
 ```
-iteration  commit   metric   status   description                          esc_level  methodology        methodology_switch
-42         a1b2c3d  0.9821   keep     increase attention heads from 8 to 12  L0         RCA根因分析         -
-43         -        0.9845   discard  switch optimizer to SGD                L1         RCA根因分析         -
+iteration  commit   metric   status    confidence  description                          esc_level  methodology
+42         a1b2c3d  0.9821   keep      0.4         increase attention heads from 8 to 12  L0         RCA根因分析
+43         -        0.9845   discard   0.1         switch optimizer to SGD                L1         RCA根因分析
+44         f9e8d7c  0.9850   converged 1.0         simplified redundant variables         L0         -
+
 44         -        0.0000   crash    double batch size (OOM)                L2         搜索优先            RCA→搜索优先
 ```
+
+## Phase 8: The Referee Gate (零疑点交付)
+
+**Condition:** Triggered ONLY when ACT `confidence >= ACT_THRESHOLD` and `--no-referee` is NOT set.
+
+Before declaring victory and delivering to the user, the Agent must perform an internal adversarial review against its own final solution.
+
+1. **Persona Shift:** Switch to the Adversary Persona (Red-Team).
+2. **Attack:** Critically review the entire diff generated for this sub-task against `.agent/rules/code-review.md`. Actively try to find logical holes, edge cases, or architectural regressions.
+3. **Referee Verdict:**
+   - **PASS (Zero Doubts)**: The adversary cannot find any valid flaws. 
+     → `STATUS = "converged"`, BREAK current sub-task.
+   - **FAIL (Flaws Found)**: The adversary successfully identified valid issues.
+     → `STATUS = "referee_rejected"`
+     → `confidence = max(0.0, confidence - 0.5)` (Slash confidence)
+     → Re-enter the loop at Phase 2 (Ideate) to fix the newly discovered flaws. DO NOT deliver to the user yet.
+
+*Note: This phase forces the LLM to reach internal consensus, eliminating the "Epistemological Oscillation" where the Coder thinks it's done but a subsequent Reviewer disagrees.*
 
 **Escalation 状态追踪（每次迭代必须记录）**：
 - `esc_level`：当前压力等级（L0-L4），基于连续 discard/crash 计数

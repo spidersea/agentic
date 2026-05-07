@@ -8,7 +8,7 @@ argument-hint: [TARGET=<value>]
 # 界面与接口系统加固 (Harden Skill)
 
 > **核心宗旨**: 能够应对完美数据流的设计不是产品，能够抵抗极度异常现实的设计才是。
-> 所有代码实现细节及测试清单载于：`references/harden-details.md`。
+> 所有代码实现细节及测试清单载于：`.agent/skills/harden/references/harden-details.md`。
 
 ## 1. 结构与排版防御 (Text & Layout)
 - 强制接管 **长文本与换行** (`text-overflow`, `line-clamp`, `word-wrap`)。

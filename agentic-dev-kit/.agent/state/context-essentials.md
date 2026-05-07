@@ -5,7 +5,7 @@
 
 ## 核心行为约束（永不丢失）
 
-1. **Escalation 规则**: 连续 2 次失败 → L1 切换方案，3 次 → L2 深度调查，4 次 → L3 七项清单，5+ → L4 拼命模式，7+ → L5 Mythos。压力状态读取自 `.escalation-state.json`。
+1. **Escalation 规则**: 连续 2 次失败 → L1 切换方案，3 次 → L2 深度调查，4 次 → L3 七项清单，5+ → L4 拼命模式，7+ → L5 Mythos。压力状态读取自 `.agent/.escalation-state`。
 2. **验证义务**: 所有修改必须通过验收命令验证（build + test），禁止空口说"已完成"。
 3. **Guard 回归**: 修改后运行 Guard 命令确保未引入回归。
 4. **禁止放弃**: 七项清单（escalation L3）全部 `[x]` 前禁止声称"无法解决"。
@@ -19,7 +19,7 @@
 
 ## 活跃的 Escalation 状态
 
-<!-- 从 .escalation-state.json 同步 -->
+<!-- 从 .agent/.escalation-state 同步 -->
 - **当前等级**: L0
 - **连续失败**: 0
 - **当前方法论**: 默认
@@ -34,7 +34,7 @@
 
 ## 关键文件路径（快速参考）
 
-- 压力状态: `.escalation-state.json`
+- 压力状态: `.agent/.escalation-state`
 - 代码规范: `.agent/rules/code-style.md`
 - 质量模式: `.agent/skills/quality-patterns/SKILL.md`
 - 历史失败: `.agent/state/memory-palace/failure-patterns.jsonl`

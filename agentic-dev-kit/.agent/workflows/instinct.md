@@ -7,6 +7,7 @@ description: 本能管理 — 查看、导入、导出、清理本能
 > 管理持续学习系统中的本能（instinct）数据。
 > 触发方式: `/instinct [子命令]`
 > 前置技能: `.agent/skills/continuous-learning/SKILL.md`
+> 程序化管理入口: `.agent/scripts/instinct-manager.sh`
 
 ## 子命令
 

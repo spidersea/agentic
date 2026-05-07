@@ -20,10 +20,10 @@ description: 完成开发分支 — 标准化的分支收尾与清理流程
 0. **归档 Escalation 状态（如存在）**
    ```bash
    # 如果存在 escalation 状态文件，归档到历史目录（保留排障经验避免重复排查）
-   if [ -f .escalation-state.json ]; then
+   if [ -f .agent/.escalation-state ]; then
      mkdir -p .agent/instincts/escalation-history
-     cp .escalation-state.json ".agent/instincts/escalation-history/escalation-$(date +%Y%m%d-%H%M).json"
-     rm .escalation-state.json
+     cp .agent/.escalation-state ".agent/instincts/escalation-history/escalation-$(date +%Y%m%d-%H%M).state"
+     rm .agent/.escalation-state
      echo "📦 Escalation 状态已归档"
    fi
    ```

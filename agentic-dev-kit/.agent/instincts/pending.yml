@@ -25,7 +25,7 @@ instincts:
     created: "2026-03-31"
 
   - id: inst-003
-    pattern: "用户口头说的'批准/行/同意'不应触发大模型立即执行，必须要求用户在物理文件（task.md）中将 [ ] 改为 [x] 才算真正授权"
+    pattern: "默认情况下，用户口头说的'批准/行/同意'不应触发大模型立即执行，必须要求用户在物理文件（task.md）中将 [ ] 改为 [x] 才算真正授权；唯一例外是 agent-dsl Route C 这类已产出 DSL artifact 且通过 Bridge Check 的执行桥"
     context: "用户截图中大模型自我诊断指出'Soft-rule Collapse'——自然语言中的批准被当作立即执行的许可证。修复方案：在 review.md 步骤 7 中引入 Artifact-Driven Chaining，禁止接受口头授权。"
     category: workflow
     confidence: 4

@@ -95,7 +95,7 @@ description: 通用智能体代码开发标准技能 — World-Class Agentic Cod
 
 ## 四、检查点与会话管理
 
-详细协议见 `references/detailed-protocols.md`，包含：
+详细协议见 `.agent/skills/world_class_coding/references/detailed-protocols.md`，包含：
 - 状态分层模型 (L1/L2/L3)
 - 检查点规范与模板
 - 上下文恢复协议（6步恢复序列）
@@ -106,7 +106,18 @@ description: 通用智能体代码开发标准技能 — World-Class Agentic Cod
 
 ---
 
-## 五、Rules 与 Skills 的区分
+## 五、配套路由
+
+| 场景 | 配套规范 |
+|---|---|
+| 写测试 / 执行 TDD | `.agent/rules/testing.md` + `.agent/skills/world_class_coding/testing-discipline/SKILL.md` |
+| 查 API / 项目文档 | `.agent/skills/doc-lookup/SKILL.md` |
+| Git 分支 / 提交 / 合并纪律 | `.agent/skills/world_class_coding/version-control/SKILL.md` |
+| 需要一次性分析脚本 | `.agent/rules/tool-creation.md` |
+
+---
+
+## 六、Rules 与 Skills 的区分
 
 | 类型 | 定义 | 用途 |
 |---|---|---|

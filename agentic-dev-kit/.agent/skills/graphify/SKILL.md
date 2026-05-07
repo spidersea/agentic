@@ -60,7 +60,7 @@ pip install graphifyy  # Python 3.10+
 
 ## 4. 执行流程（概要）
 
-执行时按 Step 1-9 顺序运行。**所有 Python 脚本详见 `references/execution-scripts.md`**。
+执行时按 Step 1-9 顺序运行。**所有 Python 脚本详见 `.agent/skills/graphify/references/execution-scripts.md`**。
 
 | Step | 操作 | 说明 |
 |------|------|------|
@@ -100,4 +100,8 @@ pip install graphifyy  # Python 3.10+
 
 图引擎 NetworkX · 社区检测 Leiden · 代码解析 tree-sitter · 可视化 vis.js · MCP stdio
 
-详见 `references/architecture.md`。
+详见 `.agent/skills/graphify/references/architecture.md`。
+
+## 8. 配套脚本
+
+- 首次初始化 graphify 环境与 `.graphifyignore` 时，使用 `.agent/scripts/setup-graph.sh`

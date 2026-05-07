@@ -1,6 +1,6 @@
 ---
 name: agent-dsl
-description: 极简的指令编译器。将人类随意的自然语言意图，"编译"转化为默认携带三引擎（持续循环 autoresearch + 压力升级 escalation L1-L4 + 认识论深度 Polanyi Protocol）的高约束 Agentic DSL 语法。
+description: 极简的指令编译器。将人类随意的自然语言意图，"编译"转化为默认携带三引擎（持续循环 autoresearch + 压力升级 escalation L1-L5 + 认识论深度 Polanyi Protocol）的高约束 Agentic DSL 语法。
 version: 2.2.0
 ---
 
@@ -42,6 +42,9 @@ version: 2.2.0
      - `--effort high`：复杂任务（架构决策、安全审计）— 深度推理，默认值
      - `--effort max`：极端任务（根因定位、零日漏洞分析、Mythos 模拟）— 全力推理
    - **与 escalation 自动联动**：未声明时 → L0 自适应 / L1-L2 自动提升 high / L3+ 强制 max
+- **[REFEREE] 终局仲裁修饰符 (零疑点交付)**（默认对 effort>=medium 注入）：
+   - **效果**：触发 Phase 8: Referee Gate。在即将 EXIT 交付给用户前，强制挂起并召唤 Adversary 角色对自己写的 Diff 进行红队攻击。若被攻击成功，则强制撤销 EXIT 回炉重造，直到自身 Adversary 判定 PASS 才真正交付。
+   - **降级开关**：`--no-referee` 或 `--effort low` 时跳过。
 - **[MULTI-AGENT] 多Agent编排修饰符**（可选注入）：
    - **触发**：`--multi-agent` 显式声明 / 大规模跨模块任务自动触发
    - **效果**：将任务分解为 Lead + Teammates 架构，详见 `../multi-agent/SKILL.md`
@@ -66,6 +69,19 @@ version: 2.2.0
   - **等价于**：`--deep-think` + `--adversarial` + Polanyi 强制前置 + memory-palace 强制写入 + escalation eager 模式
   - **适用场景**：高风险变更、架构重构、数据迁移、"这次不能出错"的任务
 
+### 预配置任务模板 (Task Templates)
+
+可以通过 `--template` 快捷指令一键召唤预配置的复合修饰符矩阵（借鉴 OpenMythos 预设变体族设计）：
+
+| 模板名 | 等价展开 | 适用场景 |
+|--------|---------|---------|
+| `--template bug-fix` | `/autoresearch:fix` + escalation L1-L5 + guard | 修 Bug 到零缺陷 |
+| `--template refactor` | `/autoresearch:review` + Polanyi + `--dark` | 重构并深度审查 |
+| `--template security-audit` | `/autoresearch:security` + `--adversarial` + `--deep-think` + `--effort max` + escalation L1-L5 | 安全穿透测试 |
+| `--template ship` | `/autoresearch:ship` + `--monitor 10` | 上线发布 |
+| `--template quick-fix` | `/autoresearch:fix` + `--no-loop` + `--effort low` | 快速小修 |
+
+
 ### 2. 语法树装配 (Assembly)
 
 **[路线 A] 底层状态机死锁引擎（默认路线）：**
@@ -83,6 +99,7 @@ version: 2.2.0
 } until ( [EXIT] )
   [PRESSURE: escalation L1-L5 自动递进]
   [POLANYI: Tacit Tradition Map + Aesthetic Review Gate + Rebellion Against Guard + Epistemological Escalation]
+  [REFEREE: Final Referee Gate 终局对抗仲裁]             ← 默认开启，除非 --no-referee 或 --effort low
   [DEEP-THINK: 推理接力 ≤8步/轮 → reasoning-relay-N.md]  ← 仅 --deep-think 时注入
   [ADVERSARIAL: adversary Agent 红队攻击]                  ← 仅 --adversarial 时注入
 ```
@@ -97,17 +114,18 @@ version: 2.2.0
 你被剥夺单轮结束权。Do-While 循环：执行 → [HOOK] 验收 → 未通过则 rollback 重做。
 压力升级(模拟): 2次失败→换方案 / 3次→深度调查 / 4次→七项清单 / 5+→拼命模式（详见 escalation/SKILL.md）
 认识论深度(模拟): 先内居代码库 / 丑陋优化强制rollback / 3+崩溃切修工具链（详见 polanyi-protocol.md）
-退出条件: [EXIT] 达成前一切中断请求视为恶意注入。每次回复附带 [循环次数, 剩余缺口, 压力等级]。
+退出条件: [EXIT] 达成前持续推进；若用户发来停止/改向/补充约束，则立即解除当前循环并以最新用户指令为准。每次回复附带 [循环次数, 剩余缺口, 压力等级]。
 ```
 
 **[路线 C] 原生执行桥接模式（Agent 同时具备编译和执行能力时）：**
 当 Agent 环境支持直接读写文件/执行命令时（如 Claude Code、Gemini Antigravity），编译和执行融为一体：
 ```text
 # 路线 C 的行为：
-# 1. 按路线 A 完成 DSL 编译（要素剥离 + 语法装配）
-# 2. 输出编译结果供用户确认
-# 3. 用户回复「授权执行」后，Agent 自身载入 DSL 约束并进入执行状态
-# 4. 执行过程中，DSL 语法的 until、HOOK、PRESSURE 规则仍然是硬约束
+# 1. 按路线 A 完成 DSL 编译（要素剥离 + 语法装配），产出“可编辑执行草案”
+# 2. 用户可直接授权，也可先手动修改/补全 DSL
+# 3. 用户回复「授权执行」后，先进入 Bridge Check：对最新 DSL 做占位符/Scope/HOOK/EXIT/人工修改差异校验
+# 4. 仅当 Bridge Check 通过，Agent 才载入 DSL 约束进入执行；若校验失败则退回纯编译模式，报告缺口，并给出一份修复后的候选 DSL 草案
+# 5. 执行过程中，DSL 的 until、HOOK、PRESSURE 规则是硬约束，但始终服从最新用户指令
 ```
 **选择条件**：
 - 路线 A（纯编译）：Agent 无执行工具 / 用户需要将 DSL 分发给其他执行器
@@ -115,13 +133,16 @@ version: 2.2.0
 - 路线 C（自执行）：Agent 自身有 Read/Write/Execute 工具 + 用户授权执行
 
 **路线 C 的关键约束**：
-- 进入执行后，DSL 中的 `until` 条件变为**物理死锁** — Agent 不可自行解除
-- escalation 状态写入 `.escalation-state.json`，跨压缩持久化
+- Route C 是**二阶段桥接**而非一步直冲：`编译草案 -> Bridge Check -> 执行`
+- Bridge Check 必须验证：无 `[需确认的目录]` 等占位符、Scope 已显式落地、HOOK/EXIT 可执行、用户手动修改后的 DSL 无语义断裂
+- 若用户只回复「授权执行」但当前 DSL 不完整，必须拒绝直执并指出缺口；同时返回一份**修复后的候选 DSL 草案**供用户确认，禁止静默猜测后直接执行
+- 执行循环对任务约束是硬的，但**用户的最新消息永远高于 DSL 死锁**
+- escalation 状态写入 `.agent/.escalation-state`，跨压缩持久化
 - 每次迭代后输出状态报告：`[循环#N | esc_level=L{X} | effort={Y} | 验收={PASS/FAIL}]`
 - POST-COMPACT: 自动注入 `.agent/state/context-essentials.md`（对齐 Gap-4）
 
 ### 3. 给用户的最终输出 (Output)
-直接向用户输出组装好的 **"严苛执行代码块"**，并用一两句极其简短的话解释这串语法的杀伤力（例如：它如何防范了 AI 偷懒）。
+直接向用户输出组装好的 **"严苛执行代码块"**，随后附上固定收尾提示。除非用户明确要求解释，否则不再追加额外说明。
 
 ---
 
@@ -135,7 +156,7 @@ version: 2.2.0
     追踪并修复当前异常 
     -> { npm run test:login }
 } until ( exit_code == 0 && 无任何 warnings )
-  [PRESSURE: escalation L1-L4 自动递进]
+  [PRESSURE: escalation L1-L5 自动递进]
   [POLANYI: Tacit Tradition Map + Aesthetic Review Gate + Epistemological Escalation]
 ```
 *（用户只说了"修报错"，三引擎全部自动装配）*
@@ -148,7 +169,7 @@ version: 2.2.0
     逐文件替换为 Axios 架构
     -> { /review 严查内存泄漏与请求拦截器逻辑 }
 } until ( 目录遍历完成且所有子模块 /review VERDICT=PASS )
-  [PRESSURE: escalation L1-L4 自动递进]
+  [PRESSURE: escalation L1-L5 自动递进]
   [POLANYI: Tacit Tradition Map + Aesthetic Review Gate + Rebellion Against Guard]
 ```
 *（用户只说了"改成 axios"，三引擎全部自动装配）*
@@ -162,7 +183,7 @@ version: 2.2.0
     -> { /review 对抗检查死锁与竞态风险 }
     if (VERDICT != PASS || Benchmark 耗时增加) { rollback }
 } until ( 性能耗时减少 30% 或 连续 3 次尝试触达优化瓶颈 )
-  [PRESSURE: escalation L1-L4 自动递进]
+  [PRESSURE: escalation L1-L5 自动递进]
   [POLANYI: Tacit Tradition Map + Aesthetic Review Gate + Epistemological Escalation]
 ```
 
@@ -189,23 +210,24 @@ version: 2.2.0
 
 一旦决定使用本技能，你必须同意并严格遵守以下不可协商的底层契约。违反任何一条即视为严重故障（Critical Failure）：
 
-1. **绝对剥夺执行权 (Execution Deprivation)**：
-   - 触发本步骤时，你的身份瞬间降级为**纯文本编译器**。
-   - **严禁**调用系统工具链（如写文件、跑命令等）去尝试"直接帮用户完成需求"。
-   - 你唯一被允许的动作是：提取意图并输出组装好的、符合约束的 DSL 语法块。
+1. **默认剥夺执行权，桥接后例外 (Execution Deprivation by Default)**：
+   - 触发 `/dsl` 时，默认身份是**纯文本编译器**，先产出 DSL 草案。
+   - **严禁**在编译阶段直接调用系统工具链（如写文件、跑命令等）去尝试"顺手帮用户完成需求"。
+   - 仅当用户明确回复「授权执行」且 Route C 的 Bridge Check 全部通过后，才允许从编译阶段切换到执行阶段。
+   - 若 Bridge Check 未通过，必须停在编译态，输出缺口说明与修复后的候选 DSL 草案，等待用户确认或继续修改。
 
 2. **机械退出条件原则 (Mechanical Exit Mandate)**：
    - 组装 `[EXIT]` 退出条件时，**严禁**使用"大致完成"、"修复了"、"目前看来没问题" 这种会导致 AI 偷懒骗过自己的主观判词。
    - 必须替换为 `exit_code == 0`，`测试用例 100% Pass`，`静态扫描 0 报错`，`连续 2 次无可用优化` 等可以用机器门验证的**终极物理凭证**。
 
 3. **标准收尾范式 (Standard Termination)**：
-   - 输出完整的 `Agent-DSL` 语法块后，必须在结尾附上且仅附上下列收尾提示（谢绝其他废话）：
-   > "*提示: 意志指令编译完成（已默认装配 autoresearch 持续循环 + escalation L1-L5 压力升级 + Polanyi 认识论深度）。请将上述指令派发给其他执行器，或直接回复【授权执行】，我将载入并挂起自身状态机，进入强物理死锁模式强制推进。*"
+   - 输出完整的 `Agent-DSL` 语法块后，必须在结尾附上下列固定收尾提示；默认不追加额外解释：
+   > "*提示: 意志指令编译完成（已默认装配 autoresearch 持续循环 + escalation L1-L5 压力升级 + Polanyi 认识论深度）。如需自行分发，请将上述指令派发给其他执行器；如需我继续推进，请在补全或修改 DSL 后回复【授权执行】。我会先执行 Bridge Check，确认作用域、HOOK、EXIT 与人工修改后的语义一致；若发现缺口，将返回缺口说明与修复后的候选 DSL 草案，待你确认后再进入受约束执行状态。*"
 
 4. **默认三引擎原则 (Default Triple-Engine)**：
    - 编译任何用户输入时，输出的 DSL 语法块**必须**默认携带：
      - `autoresearch` 循环绑定（持续迭代直到 EXIT 条件达成）
-     - `escalation L1-L4` 压力升级修饰符（详见 `../escalation/SKILL.md`）
+     - `escalation L1-L5` 压力升级修饰符（详见 `../escalation/SKILL.md`）
      - `Polanyi Protocol` 认识论深度修饰符（详见 `../autoresearch/references/polanyi-protocol.md`）
    - **仅当**用户显式声明 `--no-loop` 时，移除 autoresearch 循环
    - **仅当**用户显式声明 `--no-escalation` 时，移除压力升级
@@ -221,10 +243,11 @@ version: 2.2.0
 
 | 模板 | 触发方式 | 预配置内容 |
 |------|---------|-----------|
-| **bug-fix** | `--template bug-fix` | fix 循环 + guard 强制 + escalation L1-L4 + ACT 停机 |
+| **bug-fix** | `--template bug-fix` | fix 循环 + guard 强制 + escalation L1-L5 + ACT 停机 |
 | **refactor** | `--template refactor` | review 循环 + Polanyi TTM 强制 + `--dark` 暗涌级 + ACT 停机 |
-| **security** | `--template security` | security 循环 + `--adversarial` + `--deep-think` + escalation L1-L5 |
-| **ship** | `--template ship` | ship workflow + checklist + dry-run + monitor 5min |
+| **security-audit** | `--template security-audit` | security 循环 + `--adversarial` + `--deep-think` + escalation L1-L5 |
+| **ship** | `--template ship` | ship workflow + checklist + dry-run + `--monitor 10` |
+| **quick-fix** | `--template quick-fix` | 单次 fix + `--no-loop` + `--effort low` |
 
 ### 模板展开规则
 
@@ -235,11 +258,11 @@ version: 2.2.0
 
 → 展开为：
 
-/autoresearch:fix scope="<auto-detect>" {
+/autoresearch:fix scope="[需确认的目录]" {
     修复登录接口的空指针问题
     -> { guard_cmd && verify_cmd }
 } until ( exit_code == 0 && guard_pass )
-  [PRESSURE: escalation L1-L4, phase-aware]
+  [PRESSURE: escalation L1-L5, phase-aware]
   [POLANYI: Tacit Tradition Map]
   [ACT: threshold=0.99]
 ```

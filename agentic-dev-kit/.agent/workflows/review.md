@@ -29,7 +29,7 @@ description: 对抗式代码审查流程 — 使用 Expert A / Opponent B / Refe
    - 加载审查标准 `.agent/rules/code-review.md`（6 维度审查清单）
    - 📋 **Escalation 历史检查**：如果变更代码来源于 `/autoresearch:fix` 或 `/autoresearch:debug`：
      - 检查对应 `fix/` 或 `debug/` 目录中的 `escalation-log.tsv`
-     - 检查 `.escalation-state.json` 当前状态
+     - 检查 `.agent/.escalation-state` 当前状态
      - 将 escalation 峰值等级、methodology 切换记录作为审查上下文
      - 如果 peak ≥ L3 → 自动提升审查模式为**标准模式**（不可使用快速模式）
 
@@ -133,6 +133,7 @@ description: 对抗式代码审查流程 — 使用 Expert A / Opponent B / Refe
      `[ ] 等待人类核准：批准启动 /debug 流程修复上述漏洞`
    - 向人类说明：“请您在文件层面将上述打勾，然后回复我即可触发修复”。
    - **如果人类仅仅使用自然语言说“行、批准、去改吧”，你必须断然拒绝**，提示：“基于 Soft-rule Collapse 的防御，我没有获得文件层面的授权，请去物理打钩。”
+   - **例外（Agent-DSL Route C）**：如果当前修复链条是由 `.agent/skills/agent-dsl/SKILL.md` 的 Route C 驱动，且待执行动作已写入当前 DSL 草案并通过 Bridge Check，则该 DSL 草案可视为等价的授权产物；此时用户回复 `【授权执行】` 即可触发后续修复，无需额外在 `task.md` 打勾。
    - 只有检测到文件已变为 `[x]` 后，方可强制清空旧的上下文注意力，进入 `/debug` 流程修复问题（含举一反三 + 回测）。
    - 修复完成后执行 `/test` 验证全量测试通过
    - 如果修复过程触发了 escalation（L2+），在审查结论中记录

@@ -10,16 +10,14 @@ description: 会话生命周期钩子详细协议与插件配置 (从 SKILL.md �
 检查 exit code ≠ 0 或包含 `Error:`, `FAILED`, `Exception`, `Permission denied`, `fatal:` 等字样。
 若失败则累加失败计数。连续 2 次 L1，连续 3 次 L2。
 
-**持久化 `.escalation-state.json` 格式**:
-```json
-{
-  "level": "L2",
-  "consecutive_failures": 3,
-  "methodology": "搜索优先",
-  "methodologies_exhausted": ["RCA根因分析"],
-  "hypotheses_eliminated": ["JWT check"],
-  "session_id": "abc-123"
-}
+**持久化 `.agent/.escalation-state` 格式**:
+```dotenv
+FAIL_COUNT=3
+LEVEL=2
+METHODOLOGY=搜索优先
+METHOD_SWITCHES=1
+LAST_FAIL_TIME=2026-05-07T13:40:48
+ATTEMPTS_LOG=RCA根因分析|JWT check
 ```
 *必须在计数或等级变化时写入，并在 session-start 或 PreCompact 时读取。*
 
@@ -29,7 +27,7 @@ description: 会话生命周期钩子详细协议与插件配置 (从 SKILL.md �
 在上下文窗口截断前，将关键进展以 Markdown 写出：
 ```markdown
 # 压缩前状态快照
-- Escalation 等级: L{0-4} (见 .escalation-state.json)
+- Escalation 等级: L{0-4} (见 .agent/.escalation-state)
 - 当前活跃任务: ...
 - 已尝试/已排除: ...
 ```

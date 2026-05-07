@@ -24,7 +24,7 @@ Then implement working code that is:
 ## Frontend Aesthetics Guidelines
 
 ### Typography
-→ *Consult [typography reference](reference/typography.md) for scales, pairing, and loading strategies.*
+→ *Consult `.agent/skills/frontend-design/reference/typography.md` for scales, pairing, and loading strategies.*
 
 Choose fonts that are beautiful, unique, and interesting. Pair a distinctive display font with a refined body font.
 
@@ -35,7 +35,7 @@ Choose fonts that are beautiful, unique, and interesting. Pair a distinctive dis
 **DON'T**: Put large icons with rounded corners above every heading—they rarely add value and make sites look templated
 
 ### Color & Theme
-→ *Consult [color reference](reference/color-and-contrast.md) for OKLCH, palettes, and dark mode.*
+→ *Consult `.agent/skills/frontend-design/reference/color-and-contrast.md` for OKLCH, palettes, and dark mode.*
 
 Commit to a cohesive palette. Dominant colors with sharp accents outperform timid, evenly-distributed palettes.
 
@@ -48,7 +48,7 @@ Commit to a cohesive palette. Dominant colors with sharp accents outperform timi
 **DON'T**: Default to dark mode with glowing accents—it looks "cool" without requiring actual design decisions
 
 ### Layout & Space
-→ *Consult [spatial reference](reference/spatial-design.md) for grids, rhythm, and container queries.*
+→ *Consult `.agent/skills/frontend-design/reference/spatial-design.md` for grids, rhythm, and container queries.*
 
 Create visual rhythm through varied spacing—not the same padding everywhere. Embrace asymmetry and unexpected compositions. Break the grid intentionally for emphasis.
 
@@ -71,7 +71,7 @@ Create visual rhythm through varied spacing—not the same padding everywhere. E
 **DON'T**: Use modals unless there's truly no better alternative—modals are lazy
 
 ### Motion
-→ *Consult [motion reference](reference/motion-design.md) for timing, easing, and reduced motion.*
+→ *Consult `.agent/skills/frontend-design/reference/motion-design.md` for timing, easing, and reduced motion.*
 
 Focus on high-impact moments: one well-orchestrated page load with staggered reveals creates more delight than scattered micro-interactions.
 
@@ -82,7 +82,7 @@ Focus on high-impact moments: one well-orchestrated page load with staggered rev
 **DON'T**: Use bounce or elastic easing—they feel dated and tacky; real objects decelerate smoothly
 
 ### Interaction
-→ *Consult [interaction reference](reference/interaction-design.md) for forms, focus, and loading patterns.*
+→ *Consult `.agent/skills/frontend-design/reference/interaction-design.md` for forms, focus, and loading patterns.*
 
 Make interactions feel fast. Use optimistic UI—update immediately, sync later.
 
@@ -93,14 +93,14 @@ Make interactions feel fast. Use optimistic UI—update immediately, sync later.
 **DON'T**: Make every button primary—use ghost buttons, text links, secondary styles; hierarchy matters
 
 ### Responsive
-→ *Consult [responsive reference](reference/responsive-design.md) for mobile-first, fluid design, and container queries.*
+→ *Consult `.agent/skills/frontend-design/reference/responsive-design.md` for mobile-first, fluid design, and container queries.*
 
 **DO**: Use container queries (@container) for component-level responsiveness
 **DO**: Adapt the interface for different contexts—don't just shrink it
 **DON'T**: Hide critical functionality on mobile—adapt the interface, don't amputate it
 
 ### UX Writing
-→ *Consult [ux-writing reference](reference/ux-writing.md) for labels, errors, and empty states.*
+→ *Consult `.agent/skills/frontend-design/reference/ux-writing.md` for labels, errors, and empty states.*
 
 **DO**: Make every word earn its place
 **DON'T**: Repeat information users can already see

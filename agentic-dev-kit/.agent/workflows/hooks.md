@@ -58,6 +58,18 @@ Layer 3: Lifecycle         — 会话生命周期（session-start / session-end 
 #   HOOK_TOOL_IS_ERROR=0
 ```
 
+### 仓库内置 Post-Tool 脚本清单
+
+> 下列脚本已经随仓库提供，属于本规范体系的可审计组成部分，而不是隐式魔法。
+
+| 脚本 | 责任 |
+|---|---|
+| `.agent/hooks/post-tool/guard-enforcer.sh` | 对关键修改强制执行 guard / 测试纪律 |
+| `.agent/hooks/post-tool/memory-update.sh` | 将高价值结果沉淀到记忆层 |
+| `.agent/hooks/post-tool/overconfidence-detector.sh` | 检测“未验证就声称完成”的过度自信行为 |
+| `.agent/hooks/post-tool/polanyi-persist.sh` | 将新发现的隐性传统写回 `.agent/state/tacit-tradition-map.md` |
+| `.agent/hooks/post-tool/reasoning-relay-check.sh` | 检查 deep-think 推理接力文件是否完整落盘 |
+
 ### Layer 3: Lifecycle 钩子（保持现有功能）
 
 > 会话生命周期事件。

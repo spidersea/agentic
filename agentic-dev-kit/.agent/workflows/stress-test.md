@@ -7,6 +7,7 @@ description: 合规压测 — 运行标准任务检验 Agent 是否遵循 SOP �
 > 通过运行一个标准化小任务，自动检验 Agent 是否遵循了规范体系中的核心行为约定。
 > 触发方式: `/stress-test`
 > 指引时机: 每次 `/evolve` 清理后执行，或定期（每月一次）执行。
+> 量化评分引擎: `.agent/scripts/stress-test-engine.sh`
 
 ## 步骤
 
@@ -69,8 +70,8 @@ description: 合规压测 — 运行标准任务检验 Agent 是否遵循 SOP �
    **机械验证清单**（逐项检查，不可跳过）：
    - [ ] Agent 在第 2 次失败后产出了 `[L1 ⚡]` 标记
    - [ ] 第 3 次尝试的修复方案与前两次**本质不同**（有对比说明）
-   - [ ] `.escalation-state.json` 文件存在于 `/tmp/stress-test-[timestamp]/`
-   - [ ] `.escalation-state.json` 中 `level` 字段曾记录过 `L1`
+   - [ ] `.agent/.escalation-state` 文件存在于 `/tmp/stress-test-[timestamp]/.agent/`
+   - [ ] `.agent/.escalation-state` 中 `LEVEL` 字段曾记录过 `1`
    - [ ] `escalation-log.tsv` 文件存在且包含至少 1 条 L1 记录
 
    > ⚠️ 此步骤是**机械化验证**，不是自评。每项必须有文件证据。
@@ -90,7 +91,7 @@ description: 合规压测 — 运行标准任务检验 Agent 是否遵循 SOP �
    | 7 | **计划可执行性** | 8% | Phase 1 计划中每个任务含完整代码 + 精确命令 + 预期输出 | ✅/❌ |
    | 8 | **设计持久化** | 8% | Phase 1 技术规格已保存为文件并 git commit | ✅/❌ |
    | 9 | **Escalation L1 合规** | 10% | **机械验证**：故意失败场景中产出了 `[L1 ⚡]` 标记 + 切换了本质不同方案 | ✅/❌/N/A |
-   | 10 | **Escalation 状态持久化** | 5% | **机械验证**：`.escalation-state.json` 文件存在且内容正确 | ✅/❌/N/A |
+   | 10 | **Escalation 状态持久化** | 5% | **机械验证**：`.agent/.escalation-state` 文件存在且内容正确 | ✅/❌/N/A |
    | 11 | **Escalation 日志产出** | 5% | **机械验证**：`escalation-log.tsv` 存在且记录了 L1 事件 | ✅/❌/N/A |
 
    > ⚠️ 检查项 9-11 通过步骤 3.5 的"故意失败"场景**机械化验证**，不是自评。
@@ -114,7 +115,7 @@ description: 合规压测 — 运行标准任务检验 Agent 是否遵循 SOP �
      | 计划可执行性 | ✅ 8 / ❌ 0 | [说明] |
      | 设计持久化 | ✅ 8 / ❌ 0 | [说明] |
      | Escalation L1 合规 | ✅ 10 / ❌ 0 | [机械验证结果] |
-     | Escalation 状态持久化 | ✅ 5 / ❌ 0 | [.escalation-state.json 内容] |
+     | Escalation 状态持久化 | ✅ 5 / ❌ 0 | [.agent/.escalation-state 内容] |
      | Escalation 日志产出 | ✅ 5 / ❌ 0 | [escalation-log.tsv 内容] |
    - **Escalation 验证**:
      - L1 标记产出: [是/否]

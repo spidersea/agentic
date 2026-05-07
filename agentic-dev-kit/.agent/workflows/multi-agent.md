@@ -7,7 +7,7 @@ description: 多 Agent 编排工作流 — 将大任务拆解为 Lead + Teammate
 > 触发方式: `/multi-agent`
 >
 > 将跨模块任务拆解为多个 Teammate Agent 并行/有序执行，Lead 负责分派、监控、合并和验收。
-> 本流程调用 `.agent/skills/multi-agent/SKILL.md` 的架构和协议，执行细节见 `references/multi-agent-orchestration.md`。
+> 本流程调用 `.agent/skills/multi-agent/SKILL.md` 的架构和协议，执行细节见 `.agent/workflows/references/multi-agent-orchestration.md`。
 >
 > **与 `/new-feature` 关系**: 它是 `/new-feature` Phase 3 的**执行策略选项**。单Agent足够时切勿启动。
 
@@ -36,7 +36,7 @@ description: 多 Agent 编排工作流 — 将大任务拆解为 Lead + Teammate
 ## 2. 结构化拆解与防撞 (DAG / Conflict)
 - 将任务拆为不可拆的基元 (5-15mins)。每个包分配角色 (Coder/Tester 等)、独立 glob 边界。
 - 构建 `depends_on` 形成的 DAG，无依赖直接丢入等待池，循环依赖直接报错退回。
-- 【预检策略】：检测任意两任务 Glob 交集。交集文件>2 的任务直接判定为**不可并行**，强制建立串行链并记录，否则合并阶段会严重爆炸。详细算法见 `references/multi-agent-orchestration.md`。
+- 【预检策略】：检测任意两任务 Glob 交集。交集文件>2 的任务直接判定为**不可并行**，强制建立串行链并记录，否则合并阶段会严重爆炸。详细算法见 `.agent/workflows/references/multi-agent-orchestration.md`。
 
 ---
 
