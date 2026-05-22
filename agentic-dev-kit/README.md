@@ -26,6 +26,8 @@
    - 彻底解决大模型长上下文带来的 Token 溢出与降智危机。通过对巨型指令簇执行“剥离降维”，结合 `AGENT.md` 动态路由实现极致轻量的「按需挂载」。
 7. **⚔️ 左右互搏对抗审计 (Adversarial Verification Protocol)**
    - 内置结构化的独立判定审查（正方专家扫雷 -> 反方模型驳斥 -> 中立裁判靠编译证据定案），强绑基于物理磁盘的 Task Contract (任务契约单)，终结 AI 伪造进程的“口头执行”乱象。
+8. **🧱 AI 交付质量操作系统 (Quality Operating System)**
+   - 新增需求-测试矩阵、证据账本、风险登记和 Human Attention Firewall。AI 不再用“有信心”交付，而是必须把每个需求绑定到验收标准、验证命令、证据记录、对抗 review 和持续学习入口。
 
 ---
 
@@ -137,6 +139,7 @@ AI 不再需要您灌输指令背景，您只需在聊天框直接触发「预�
 ```bash
 make test           # 运行底座自动化验证所有状态机
 make validate       # 检查底层大脑架构的健康文件连接
+make quality-gate   # 检查 AI 交付质量矩阵与证据账本
 make stress-test    # 对 AI 能力集做量化大考
 ```
 

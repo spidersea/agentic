@@ -5,7 +5,7 @@ SHELL := /bin/bash
 PROJECT_ROOT := $(shell pwd)
 SCRIPTS := .agent/scripts
 
-.PHONY: all test validate health stress-test lint help
+.PHONY: all test validate health quality-gate stress-test lint help
 
 all: test
 
@@ -15,6 +15,9 @@ validate: ## 验证框架结构完整性
 
 health: ## 运行健康检查
 	@bash $(SCRIPTS)/health-check.sh $(PROJECT_ROOT)
+
+quality-gate: ## 运行 AI 交付质量门禁
+	@bash $(SCRIPTS)/quality-gate.sh $(PROJECT_ROOT)
 
 stress-test: ## 运行量化评分引擎
 	@bash $(SCRIPTS)/stress-test-engine.sh $(PROJECT_ROOT)

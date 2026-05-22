@@ -20,6 +20,7 @@
 遇到什么形态即开启什么辅助：
 - 📊 **图谱存在** → 强制 `get_impact_radius`
 - 🧪 **测试框架存在** → 改后必唤 `/test`
+- 🧱 **质量体系存在** → 交付前必跑 `bash .agent/scripts/quality-gate.sh .`
 - 🔒 **非互动模式** → 不请示，遇强卡点就跳过并标记
 
 ---
@@ -40,6 +41,7 @@
 | 编写/修改测试 | `.agent/rules/testing.md` |
 | 需要临时分析脚本 | `.agent/rules/tool-creation.md` |
 | 涉及质量关卡 | `.agent/rules/code-review.md` |
+| 需要端到端质量完整性 | `.agent/skills/quality-operating-system/SKILL.md` 与 `.agent/quality/quality-contract.md` |
 | 面临所有操作时 | `.agent/rules/security.md` 及 `.agent/rules/red-lines.md` |
 
 ## 强制规则 (Hard Rules)
@@ -50,6 +52,7 @@
 3. **查影响面再去动刀**: 修改公共 API 或共享模块前，必须检索调用方；如有图谱能力，优先跑 `get_impact_radius`。
 4. **高风险不带猜测推进**: 关键前提不明确时，先缩小不确定性；涉及破坏性操作、权限、数据迁移时必须停下确认。
 5. **禁止 Mock 伪实现**: 禁止用 placeholder、硬编码假数据、空壳逻辑冒充真实交付。
+6. **质量门禁先于信心**: 涉及功能、内容、UI、测试、回归或交付完整性的任务，最终回复前必须更新 `.agent/quality/requirement-test-matrix.tsv`、`.agent/quality/evidence-ledger.jsonl`、`.agent/quality/risk-register.tsv` 并运行 `bash .agent/scripts/quality-gate.sh .`。
 
 ---
 
@@ -65,6 +68,7 @@
 - 规范健康扫描：`bash .agent/scripts/health-check.sh .`
 - 结构校验：`bash .agent/scripts/validate-structure.sh .`
 - 链接校验：`bash .agent/scripts/md-linker.sh .`
+- 交付质量门禁：`bash .agent/scripts/quality-gate.sh .`
 - 详细路由表与运行时资产清单：`.agent/references/router-tables.md`
 
 ## 项目特色

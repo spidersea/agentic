@@ -1,0 +1,7 @@
+risk_id	requirement_id	risk	impact	mitigation	evidence_id	status
+RISK-001	QOS-001	Agent claims completion from confidence instead of evidence	User repeatedly finds bugs after AI delivery	quality-gate blocks missing matrix rows, missing evidence, and non-PASS evidence	EV-QOS-001	mitigated
+RISK-002	QOS-002	Content quality is treated as subjective polish	User spends time finding copy, state, and data-quality issues	content-quality-rubric makes content review explicit and evidence-backed	EV-QOS-002	mitigated
+RISK-003	QOS-003	Tests exist but do not cover changed behavior	False green builds and escaped regressions	requirement-test-matrix requires behavior-to-command-to-evidence traceability	EV-QOS-003	mitigated
+RISK-004	QOS-004	Process decays as requirements accumulate	Quality system stops tracking new scope	iteration rule requires matrix/risk/evidence updates for every new requirement	EV-QOS-004	mitigated
+RISK-005	QOS-005	Human attention is consumed by mechanical QA	Product design time is displaced by bug hunting	human-attention-firewall prohibits handing runnable verification back to humans	EV-QOS-005	mitigated
+RISK-006	QOS-006	Agent self-review misses mismatch with the user's original goal	Delivered process looks impressive but misses the actual pain	review-match artifact and Referee Gate compare implementation against original requirements	EV-QOS-006	mitigated

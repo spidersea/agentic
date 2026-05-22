@@ -17,6 +17,7 @@
 | 规格驱动(OpenSpec) | `.agent/skills/spec-driven/SKILL.md` |
 | 自主优化、安全审计 | `.agent/skills/autoresearch/SKILL.md` |
 | 自然语言转DSL | `.agent/skills/agent-dsl/SKILL.md` |
+| 端到端质量完整性、证据门禁 | `.agent/skills/quality-operating-system/SKILL.md` |
 | 前端UI开发 | `.agent/skills/frontend-design/SKILL.md` |
 | 上线前设计审查 | `.agent/skills/polish/SKILL.md` |
 | 无障碍/性能审计 | `.agent/skills/audit/SKILL.md` |
@@ -79,6 +80,8 @@
 - **security-reviewer**: 威胁模型分析 (ReadOnly)
 - **adversary**: 极度破坏红队 (ReadOnly)
 - **doc-updater**: 伴随文档同步 (WorkspaceWrite)
+- **quality-steward**: 需求-测试-证据-风险闭环门禁 (WorkspaceWrite)
+- **content-qa**: 内容、文案、状态与用户可理解性审查 (WorkspaceWrite)
 
 ## 3. 维护与体检入口 (Maintenance & Diagnostics)
 
@@ -92,6 +95,7 @@
 | Skills 密度扫描 | `.agent/scripts/score-skills.sh` |
 | Workflows 密度扫描 | `.agent/scripts/score-workflows.sh` |
 | Escalation 状态机实现 | `.agent/scripts/escalation-tracker.sh` |
+| AI 交付质量门禁 | `.agent/scripts/quality-gate.sh` |
 | Graphify 初始化脚手架 | `.agent/scripts/setup-graph.sh` |
 | 压测量化评分引擎 | `.agent/scripts/stress-test-engine.sh` |
 | 本能系统程序化管理 | `.agent/scripts/instinct-manager.sh` |
@@ -119,6 +123,9 @@
 | `.agent/state/review_checklist.md` | 审查期辅助清单 |
 | `.agent/state/memory-palace/README.md` | 失败模式和记忆宫殿说明 |
 | `.agent/state/captured-patterns/README.md` | 项目已捕获模式说明 |
+| `.agent/quality/requirement-test-matrix.tsv` | 需求、验收、测试、证据的可追踪矩阵 |
+| `.agent/quality/evidence-ledger.jsonl` | 每条交付声明的命令或审查证据 |
+| `.agent/quality/risk-register.tsv` | 未决风险、缓解措施和接受状态 |
 
 ## 6. 钩子脚本入口 (Hook Script Inventory)
 
