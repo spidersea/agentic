@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI 产品诊断"
+  short_description: "用高级PM视角判断AI产品成立性、体验闭环和战略取舍"
+  default_prompt: "使用 $analyze-ai-products 以高级产品经理视角诊断这个 AI 产品方案。"
