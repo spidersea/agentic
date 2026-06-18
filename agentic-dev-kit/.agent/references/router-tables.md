@@ -17,6 +17,7 @@
 | 规格驱动(OpenSpec) | `.agent/skills/spec-driven/SKILL.md` |
 | 自主优化、安全审计 | `.agent/skills/autoresearch/SKILL.md` |
 | 自然语言转DSL | `.agent/skills/agent-dsl/SKILL.md` |
+| AI/LLM 请求最后一公里、模糊 prompt 转任务合同、复杂 AI 使用闭环 | `.agent/skills/solve-ai-last-mile/SKILL.md` |
 | 端到端质量完整性、证据门禁 | `.agent/skills/quality-operating-system/SKILL.md` |
 | 前端UI开发 | `.agent/skills/frontend-design/SKILL.md` |
 | 上线前设计审查 | `.agent/skills/polish/SKILL.md` |
