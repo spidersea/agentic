@@ -22,5 +22,6 @@ version: 1.0.0
 ## 核心规约 (Rules)
 
 - **工具链融合**: 若使用 Claude Code 等 CLI，必须通过 `hooks.json` 挂载对应的 bash 拦截脚本（见 reference）。若是免安装交互模式，则由 Agent **在执行完每一次终端指令后自检执行结果、修改 json**。
+- **Codex Desktop 兼容**: post-tool hooks 必须同时识别执行类工具名 `run_command`、`exec_command`、`functions.exec_command`、`bash`、`Execute`，以及写入类工具名 `apply_patch`、`functions.apply_patch`、`write_to_file`、`replace_file_content`、`multi_replace_file_content`、`Write`。
 - **主动压缩制约 (Proactive Compaction)**: 上下文占用率超 60% 时，或 Autoresearch 一次跑了 >10 个 loop 后，必须手动声明 `/compact`。且必须附带白名单（保留当前目标、压力等级、回归范围）。禁止裸截断！
 - **不重置状态**: Compaction 会遗失短时记忆，但严禁以此为借口清零失败计数。计数只听从 `.agent/.escalation-state`。

@@ -69,6 +69,10 @@
 - 结构校验：`bash .agent/scripts/validate-structure.sh .`
 - 链接校验：`bash .agent/scripts/md-linker.sh .`
 - 交付质量门禁：`bash .agent/scripts/quality-gate.sh .`
+- 循环工程健康检查：`bash .agent/scripts/loop-health.sh --record .`
+- Hook 兼容性自测：`bash .agent/scripts/hook-self-test.sh`
+- 安全回滚状态检查：`bash .agent/scripts/safe-rollback.sh status`
+- 终态证据判定：`bash .agent/scripts/loop-terminal-verdict.sh 7`
 - 详细路由表与运行时资产清单：`.agent/references/router-tables.md`
 
 ## 项目特色

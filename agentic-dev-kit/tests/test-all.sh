@@ -34,7 +34,7 @@ while IFS= read -r test_file; do
 
     echo -e "${BOLD}▸ Running: ${test_name}${NC}"
 
-    if bash "$test_file" 2>&1 | tail -5 | sed 's/^/  /'; then
+    if bash "$test_file" "$PROJECT_ROOT" 2>&1 | tail -5 | sed 's/^/  /'; then
         PASSED=$((PASSED + 1))
         echo -e "  ${GREEN}→ PASS${NC}"
     else

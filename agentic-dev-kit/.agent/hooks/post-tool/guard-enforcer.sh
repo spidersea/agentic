@@ -20,12 +20,13 @@ set -uo pipefail
 TOOL_NAME="${HOOK_TOOL_NAME:-}"
 TOOL_IS_ERROR="${HOOK_TOOL_IS_ERROR:-false}"
 
-# Only trigger on file-write operations OR guard execution detection
+# Only trigger on file-write operations OR guard execution detection.
+# Keep legacy tool names and Codex Desktop function names in sync.
 case "$TOOL_NAME" in
-    write_to_file|replace_file_content|multi_replace_file_content)
+    write_to_file|replace_file_content|multi_replace_file_content|apply_patch|functions.apply_patch|Write)
         # File write — track guard skip
         ;;
-    run_command)
+    run_command|exec_command|functions.exec_command|bash|Execute)
         # Possible guard execution — check if it matches guard command and reset counter
         GUARD_CONFIG_FILE=".agent/state/.active-guard"
         GUARD_SKIP_FILE=".agent/state/.guard-skip-counter"

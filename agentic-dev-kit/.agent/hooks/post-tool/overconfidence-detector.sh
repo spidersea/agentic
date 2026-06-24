@@ -26,7 +26,7 @@ if [[ ! -f "$COUNTER_FILE" ]]; then
 fi
 
 # Only track execution-type tools (not reads)
-if [[ "$TOOL_NAME" != "run_command" && "$TOOL_NAME" != "write_to_file" && "$TOOL_NAME" != "replace_file_content" && "$TOOL_NAME" != "multi_replace_file_content" ]]; then
+if [[ "$TOOL_NAME" != "run_command" && "$TOOL_NAME" != "exec_command" && "$TOOL_NAME" != "functions.exec_command" && "$TOOL_NAME" != "bash" && "$TOOL_NAME" != "Execute" && "$TOOL_NAME" != "write_to_file" && "$TOOL_NAME" != "replace_file_content" && "$TOOL_NAME" != "multi_replace_file_content" && "$TOOL_NAME" != "apply_patch" && "$TOOL_NAME" != "functions.apply_patch" && "$TOOL_NAME" != "Write" ]]; then
     exit 0
 fi
 

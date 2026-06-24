@@ -19,7 +19,7 @@ TIMESTAMP=$(date -u +%FT%TZ 2>/dev/null || echo "unknown")
 mkdir -p "$MEMORY_DIR" 2>/dev/null || true
 
 # ── Record failure patterns on command errors ──
-if [[ "$TOOL_NAME" == "run_command" && "$TOOL_IS_ERROR" == "true" ]]; then
+if [[ ( "$TOOL_NAME" == "run_command" || "$TOOL_NAME" == "exec_command" || "$TOOL_NAME" == "functions.exec_command" || "$TOOL_NAME" == "bash" || "$TOOL_NAME" == "Execute" ) && "$TOOL_IS_ERROR" == "true" ]]; then
     # Extract error summary (first 200 chars of output)
     ERROR_SUMMARY=$(echo "$TOOL_OUTPUT" | head -c 200 | tr '\n' ' ' | tr '\t' ' ' | tr '"' "'")
     echo "{\"ts\":\"$TIMESTAMP\",\"tool\":\"$TOOL_NAME\",\"error\":\"$ERROR_SUMMARY\"}" \
@@ -27,10 +27,13 @@ if [[ "$TOOL_NAME" == "run_command" && "$TOOL_IS_ERROR" == "true" ]]; then
 fi
 
 # ── Record file modification decisions ──
-if [[ "$TOOL_NAME" == "write_to_file" || "$TOOL_NAME" == "replace_file_content" || "$TOOL_NAME" == "multi_replace_file_content" ]]; then
+if [[ "$TOOL_NAME" == "write_to_file" || "$TOOL_NAME" == "replace_file_content" || "$TOOL_NAME" == "multi_replace_file_content" || "$TOOL_NAME" == "apply_patch" || "$TOOL_NAME" == "functions.apply_patch" || "$TOOL_NAME" == "Write" ]]; then
     # Read full payload from stdin for file path extraction
     PAYLOAD=$(cat 2>/dev/null || echo "")
     FILE_PATH=$(echo "$PAYLOAD" | grep -oE '"TargetFile"\s*:\s*"[^"]+"' | head -1 | sed 's/.*"TargetFile"\s*:\s*"//;s/"//' 2>/dev/null || echo "unknown")
+    if [[ "$FILE_PATH" == "unknown" ]]; then
+        FILE_PATH=$(echo "$HOOK_TOOL_INPUT" | grep -oE '(^|\s)(/[^[:space:]]+|[.][^[:space:]]+)' | head -1 | tr -d '"' 2>/dev/null || echo "unknown")
+    fi
 
     if [[ "$FILE_PATH" != "unknown" && ! "$FILE_PATH" =~ memory-palace && ! "$FILE_PATH" =~ reasoning-relay ]]; then
         echo "{\"ts\":\"$TIMESTAMP\",\"file\":\"$FILE_PATH\",\"action\":\"$TOOL_NAME\"}" \

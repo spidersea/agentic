@@ -52,6 +52,15 @@ ATTEMPTS_LOG=RCA根因分析|JWT check
 }
 ```
 
+## 4.5 Codex Desktop 工具名兼容
+
+本地 `.agent/hooks/post-tool/*.sh` 必须同时识别旧工具名和 Codex Desktop 工具名：
+
+- 执行类：`run_command`、`exec_command`、`functions.exec_command`、`bash`、`Execute`
+- 写入类：`write_to_file`、`replace_file_content`、`multi_replace_file_content`、`apply_patch`、`functions.apply_patch`、`Write`
+
+若运行时没有原生 PostToolUse 挂载，这些脚本仍作为 `loop-health.sh` 的静态健康检查对象；Agent 在每次终端失败后必须手动同步 escalation 状态。
+
 ## 5. MCP(模型上下文协议) 与 Plugin 扩展点
 
 - 推荐 MCP：GitHub, Filesystem, Search, Postgres. (通过 `mcp add` 挂载，限 stdio)。

@@ -197,6 +197,16 @@ Decide 阶段同步维护子任务级收敛置信度：
 7. **Git is memory** — Every kept change committed. Agent reads history to learn patterns
 8. **When stuck, think harder** — Re-read files, re-read goal, combine near-misses, try radical changes. Don't ask for help unless truly blocked by missing access/permissions
 
+## Destructive Rollback Guard
+
+`git reset --hard`, `git checkout -- .`, and equivalent destructive rollback commands are allowed only inside an agent-owned worktree. Before destructive rollback, verify all of the following:
+
+1. The worktree is explicitly agent-owned: branch prefix `autoresearch/`, `agent/`, `codex/`, or marker file `.agent/state/agent-owned-worktree`.
+2. `git status --porcelain` shows no unrelated user edits.
+3. The commit being removed was created by the current loop and is recorded in the results log.
+
+If any condition is not true, use non-destructive rollback instead: `git revert HEAD --no-edit`, a scoped reverse patch, or stop and report the exact dirty files. Never erase user changes to satisfy a loop.
+
 ## Principles Reference
 
 See [`references/core-principles.md`](./references/core-principles.md) for the 7 generalizable principles from autoresearch.

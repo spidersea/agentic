@@ -57,7 +57,9 @@ git add <changed-files>
 git commit -m "experiment: <one-sentence description>"
 ```
 
-Commit BEFORE running verification so rollback is clean: `git reset --hard HEAD~1`
+Commit BEFORE running verification so rollback is clean.
+
+**Destructive rollback guard:** `git reset --hard HEAD~1` is only allowed inside an agent-owned worktree: branch prefix `autoresearch/`, `agent/`, `codex/`, or marker `.agent/state/agent-owned-worktree`; no unrelated dirty files; and the commit must be recorded in the loop results log. Otherwise use `git revert HEAD --no-edit`, a scoped reverse patch, or stop with a dirty-file report. Never erase user changes to keep the loop moving.
 
 ## Phase 5: Verify (Mechanical Only)
 
@@ -89,7 +91,7 @@ The guard is a command that must ALWAYS pass — it protects existing functional
 
 When the guard fails but the metric improved, the optimization idea may still be viable — it just needs a different implementation that doesn't break behavior:
 
-1. Revert the change (`git reset --hard HEAD~1`)
+1. Revert the change using the destructive rollback guard above. Prefer `git revert HEAD --no-edit` outside an agent-owned worktree.
 2. Read the guard output to understand WHAT broke (which tests, which assertions)
 3. Rework the optimization to avoid the regression — e.g.:
    - If inlining a function broke callers → try a different optimization angle

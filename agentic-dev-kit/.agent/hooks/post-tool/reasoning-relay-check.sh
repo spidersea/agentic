@@ -14,7 +14,7 @@ TOOL_NAME="${HOOK_TOOL_NAME:-}"
 TOOL_INPUT="${HOOK_TOOL_INPUT:-}"
 
 # Check if this is a write to a reasoning-relay file
-if [[ "$TOOL_NAME" != "write_to_file" && "$TOOL_NAME" != "replace_file_content" ]]; then
+if [[ "$TOOL_NAME" != "write_to_file" && "$TOOL_NAME" != "replace_file_content" && "$TOOL_NAME" != "multi_replace_file_content" && "$TOOL_NAME" != "apply_patch" && "$TOOL_NAME" != "functions.apply_patch" && "$TOOL_NAME" != "Write" ]]; then
     exit 0
 fi
 

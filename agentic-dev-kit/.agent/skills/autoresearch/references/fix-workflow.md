@@ -438,6 +438,8 @@ FUNCTION detectCompound(before_errors, after_errors):
 
 When a fix makes things worse (delta < 0) or breaks the guard:
 
+**Destructive rollback guard:** commands such as `git reset --hard`, `git checkout -- .`, or broad file deletion are only allowed in an agent-owned worktree. The worktree must be on a branch prefixed `autoresearch/`, `agent/`, or `codex/`, or contain `.agent/state/agent-owned-worktree`; it must have no unrelated user edits; and the commit being removed must be the current loop's own commit. If this is not true, use `git revert HEAD --no-edit`, a scoped reverse patch, or stop and report the dirty files.
+
 ```
 STEP 1: Identify the bad commit
   git log --oneline -5
@@ -445,8 +447,8 @@ STEP 1: Identify the bad commit
 STEP 2: Revert the specific commit
   git revert HEAD --no-edit
   # OR for harder cases:
-  git reset --soft HEAD~1  # unstage the commit
-  git checkout -- .        # discard working changes
+  git reset --soft HEAD~1  # only after the destructive rollback guard passes
+  git checkout -- .        # only after the destructive rollback guard passes
 
 STEP 3: Verify rollback succeeded
   Run original failing command — should return to pre-fix error count
