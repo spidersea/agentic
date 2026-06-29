@@ -4,12 +4,15 @@ description: |
   通用质量模式知识库。覆盖代码质量、性能、测试质量、安全基础四大领域。
   为 Adversary Agent 和 Reviewer 提供模式匹配"弹药"——从通用质疑升级为知识驱动的精准审查。
   触发: Adversary Agent 加载 / `/review` / 安全审计模式 / Escalation L3+
+version: 1.0.0
 ---
 
 # 质量模式知识库 (Quality Patterns)
 
 > 不只是安全。是全维度的代码质量守护。
 > 模拟 Mythos SWE-bench 93.9% 的核心手段：**模式匹配密度覆盖工程全领域**。
+>
+> ❌ 禁止把质量模式当成静态清单逐条打勾；必须结合具体代码上下文做精准审查。
 
 ## 使用协议
 

@@ -102,17 +102,17 @@ ref_patterns = [
     # `.agent/path/to/file.md` or .agent/path/to/file.md
     re.compile(r'`?(\.agent/[\w\-/]+\.(?:md|sh))`?'),
     # skills/name/SKILL.md
-    re.compile(r'(skills/[\w\-]+/SKILL\.md)'),
+    re.compile(r'(?<![\w\-])(skills/[\w\-]+/SKILL\.md)'),
     # skills/name (directory reference)
     re.compile(r'(?:skills/)([\w\-]+)(?:/|`|\s|$|\))'),
     # workflows/name.md
-    re.compile(r'(workflows/[\w\-]+\.md)'),
+    re.compile(r'(?<![\w\-])(workflows/[\w\-]+\.md)'),
     # agents/name.md
-    re.compile(r'(agents/[\w\-]+\.md)'),
+    re.compile(r'(?<![\w\-])(agents/[\w\-]+\.md)'),
     # rules/name.md
-    re.compile(r'(rules/[\w\-]+\.md)'),
+    re.compile(r'(?<![\w\-])(rules/[\w\-]+\.md)'),
     # scripts/name.sh
-    re.compile(r'(scripts/[\w\-]+\.sh)'),
+    re.compile(r'(?<![\w\-])(scripts/[\w\-]+\.sh)'),
 ]
 
 # Slash-command pattern

@@ -1,11 +1,16 @@
 ---
 name: normalize
 description: Normalize design to match your design system and ensure consistency
+version: 1.0.0
 user-invokable: true
 argument-hint: [FEATURE=<value>]
 ---
 
 Analyze and redesign the feature to perfectly match our design system standards, aesthetics, and established patterns.
+
+> **触发条件**: 当用户执行 `/normalize`、要求统一设计系统风格或修复视觉一致性问题时使用。
+> **输入**: 目标功能/组件代码 + 设计系统文档 → **输出**: 符合设计系统规范的重构代码。
+> ❌ 禁止创建设计系统中已有等价物的一次性组件，禁止硬编码应使用设计令牌的值。
 
 ## Plan
 

@@ -1,11 +1,14 @@
 ---
 name: extract
 description: Extract and consolidate reusable components, design tokens, and patterns into your design system. Identifies opportunities for systematic reuse and enriches your component library.
+version: 1.0.0
 user-invokable: true
 argument-hint: [TARGET=<value>]
 ---
 
 Identify reusable patterns, components, and design tokens, then extract and consolidate them into the design system for systematic reuse.
+
+> ❌ 禁止提取不稳定或仅使用一次的模式；禁止在未理解设计系统结构前盲目提取。
 
 ## Discover
 

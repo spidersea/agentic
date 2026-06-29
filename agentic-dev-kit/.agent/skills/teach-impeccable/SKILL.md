@@ -1,10 +1,15 @@
 ---
 name: teach-impeccable
 description: One-time setup that gathers design context for your project and saves it to your AI config file. Run once to establish persistent design guidelines.
+version: 1.0.0
 user-invokable: true
 ---
 
 Gather design context for this project, then persist it for all future sessions.
+
+> **触发条件**: 项目首次设置设计上下文时使用；执行一次后设计准则将持久化到 AI 配置文件中。
+> **输入**: 代码库探索结果 + 用户 UX 问答 → **输出**: 持久化 Design Context 写入 `.github/copilot-instructions.md`。
+> ❌ 禁止在未充分探索代码库的情况下直接提问；禁止猜测设计系统原则。
 
 ## Step 1: Explore the Codebase
 
@@ -67,3 +72,9 @@ Synthesize your findings and the user's answers into a `## Design Context` secti
 Write this section to .github/copilot-instructions.md in the project root. If the file exists, append or update the Design Context section.
 
 Confirm completion and summarize the key design principles that will now guide all future work.
+
+## 退出条件
+
+- `.github/copilot-instructions.md` 已创建/更新，包含完整的 Design Context section
+- 用户确认设计原则准确反映了项目愿景
+- **与体系关系**: 生成的设计准则供 `frontend-design`、`normalize`、`audit` 等 Skill 作为设计系统输入

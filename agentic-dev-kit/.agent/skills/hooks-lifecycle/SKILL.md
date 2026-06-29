@@ -9,6 +9,9 @@ version: 1.0.0
 > 确保在会话边界、上下文截断前、命令行执行后，状态能够被正确持久化和传递。
 > 这不是手动 `/checkpoint` 或 `/handoff` 的替代品，而是安全网。
 > 执行脚本与 JSON 配置详情见: `.agent/skills/hooks-lifecycle/references/hooks-details.md`。
+>
+> **触发条件**: 会话启动/退出、上下文压缩前后、工具执行后自动触发；或用户执行 `/hooks` 时手动激活。
+> **输入**: 会话状态 + 工具执行结果 → **输出**: 持久化 checkpoint + 压力状态文件。
 
 ## 钩子点定义 (Hook Points)
 

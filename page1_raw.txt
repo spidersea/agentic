@@ -1,0 +1,535 @@
+AcoderTesting - 全端验收智能引擎|||应用测试与质量保障（Acceptance Testing）工具集，覆盖移动应用与 Web 应用的完整测试、构建、安装、环境配置流程。当用户提到\"测试\"、\"验收\"、\"自动化测试\"、\"UI 测试\"、\"集成
+fund-code-review|||资金后端代码评审。触发：fund-code-review、后端CR、CR链接、本地分支/文件审查。支持 PRD 发现与需求一致性核查。
+bounty-log-investigator|||Use when investigating fund-center/bounty SLS logs by TraceId, order id, authorizationKey, or bounty
+traceable-logging|||审计并补全任意技术栈工程的日志（后端接口、jsb、蓝牙/socket 等通道联调），使上线出问题时能区分是我方代码问题还是上下游边界问题。用户说「审计日志/补日志/日志够不够/日志覆盖/可定位性/出问
+Agent自主学习-AgentLoop实践|||Self-improving error-correction knowledge base. Captures recurring mistakes and misunderstandings, a
+钉钉消息转aone|||一句话:“将和某某同学/某群的最近聊天记录生成一个aone需求/缺陷”，即可将钉钉单聊或群聊的消息自动读取、总结、识别分类，并在选择的项目中创建aone工作项
+1688-client-scenes-compiler|||三端统一的 UI 测试用例编译器。输入自然语言用例（纯文本/markdown / nl.yaml / xmind）+ 平台 + 设备 + 业务方提供的项目级 synonyms.yaml，通过 @ali
+dev-delivery|||Use when用户要求按研发交付流程处理需求、代码变更、MR 或发布，尤其涉及技术方案、任务拆分、TDD 实现、测试用例、Code Review、E2E 测试、a1 部署、日常/预发/线上验证、回滚
+harness-skill-manager|||Skill 批量管理工具，支持检查/安装/添加/删除/更新 Agent 所需的 Skill，通过本地配置文件持久化管理 Skill 列表。即使用户没有明确说\"skill\"，只要涉及 Agent 环境配
+task-doc-recorder|||把当前会话里正在做的\"任务\"整理成一套规范的文档（overview / facts / decisions / progress / experiences 共 5 个必选文件 + explore 可
+iOS Symbol Finder — 查找符号所属模块|||iOS 工程中查找符号（类/方法/常量）所属 Pod 模块及 Owner。触发词：查找符号、findsymbol、属于哪个模块、符号来源、模块归属。
+Aone需求缺陷自动处理|||自动化处理 Aone 工作项的完整流程，包含智能筛选、难度分析和自动开发。从 Aone 查询指派给指定人的工作项，分析难度，过滤高难度和硬件相关任务，检查已有 MR 避免重复开发，然后自动创建分支、修
+研发质量评估|||基于PRD文档自动生成测试用例、结合代码静态扫描进行质量评估的完整研发质量保障技能。通过语雀知识库维护测试用例库和服务端接口经验库，实现PRD解析→测试用例生成→代码扫描→质量评估→发放条件判断的自动
+harmony-napi-binding|||鸿蒙模块对外 API 接口自动生成工具。将 C++ Engine 模块能力通过 NAPI 胶水层 自动绑定为 ArkTS 可调用接口，涵盖 hm_model.h 定义、hm_model_gen.h 生
+e2e-harmony|||HarmonyOS 端到端开发总控技能。当用户提出 Harmony/鸿蒙需求开发、问题排查或缺陷修复任务时使用。负责阶段路由、全局约束和完成标准，阶段执行细节见 references/ 目录。
+aspect-api-dev|||切面 API（Aspect API）开发辅助工具，支持在 AJX 框架中定义并实现三端（Android/iOS/Harmony）或 C++ 切面 API。 覆盖 DSL 定义、三端代码生成、模块注册、
+dataworks-bff|||DataWorks BFF 一站式开发测试运维工具。覆盖脚本与函数 CRUD、双环境（弹内+弹外预发）接口调用、线上采样回放、异常诊断，内置 400+ BFF 内置函数字典与 GraphQL DSL 
+缺陷闭环处理专家|||用于修复产品或代码问题的结构化工作流。当用户需要排查和修复 bug、做影响面分析、定位受影响页面或接口、制定修复方案、编写修复计划、做代码变更、验证修复效果和写关闭总结时，使用此技能。即使用户只说\"帮
+repo-code-style-extractor|||应用级编码规范管理专家。为指定应用（app_name）系统性扫描本地代码仓库，提炼\"该仓库实际遵循的私有编码规范\"， 基于 3 天 TTL 的 guidelines.json 缓存命中机制，为下游 A
+AcoderTesting - 全端验收智能引擎|||应用测试与质量保障（Acceptance Testing）工具集，覆盖移动应用与 Web 应用的完整测试、构建、安装、环境配置流程。当用户提到\"测试\"、\"验收\"、\"自动化测试\"、\"UI 测试\"、\"集成
+移动端包体分析（iOS/Android/鸿蒙）Skill|||分析并优化移动端 App 包体积，支持 iOS (.ipa)、Android (.apk)、鸿蒙 (.hap)。 当用户想知道包为什么大、想给 app 瘦身/优化包体积或下载体积、想看清 ipa/ap
+站点可访问性探索（Site Accessibility Recon）|||对目标网站进行系统性的可访问性探索与反爬机制逆向分析。适用于 headless Chromium 渲染服务（如 page_renderer/web-whale）访问目标站点时遇到拦截、验证码、登录跳转
+鸿蒙性能透镜（harmonyos-perf-lens）——鸿蒙系统性能优化指导与性能分析工作流skill|||鸿蒙性能透镜（harmonyos-perf-lens）——鸿蒙系统性能优化指导与性能分析工作流skill。覆盖手机/平板等产品，当用户提及性能分析、优化、卡顿、丢帧、冷启动、内存泄漏、启动慢、CPU过
+冷启动性能分析|||分析 HarmonyOS 应用冷启动性能的 htrace trace 数据库。自动完成 htrace→DB 转换+索引、4 阶段时间线提取+子阶段、并行分析预加载SO/Import层/JS模块、调用链
+CMS数据模板自动编写器|||CMS数据模板自动编写器，自然语言描述所需的字段及条件，自动生成CMS JSON数据模板
+code-review|||Use when reviewing code changes for bugs, auditing PR or branch diffs, or performing a thorough code
+Android转鸿蒙|||将 Android (Java/Kotlin) 代码翻译转换为鸿蒙 HarmonyOS ArkTS 代码。支持 Activity/Fragment 转 Page、ViewModel 转换、数据模型转换
+客户端全链路开发工作流|||客户端全链路开发工作流（需求整理→需求拆解→技术方案→代码实施→合并审查）。覆盖从产品需求到代码上线的完整闭环，支持 Android/iOS/鸿蒙/KMP 四端。每个阶段独立可用，也可串联执行形成自动
+Bug 自驱分析引擎|||Bug 自驱分析引擎 — 即使用户未明确说\"使用 issue-autopilot\"，只要涉及 Bug 巡检、Bug 分析、自动分析 bug、自驱分析即应触发。每日定时拉取 Aone Bug（仅缺陷类型
+通用Java应用JDK升级 Skill|||Java 应用 JDK 升级范式(JDK 8/11/17 → JDK 21),覆盖盘点-确认-改造-审查全流程。触发场景包含 Spring Boot 大版本跨升、javax→jakarta 迁移、CM
+视频性能评估 Skill (video-perf-eval)|||视频性能评估 Skill。输入录屏视频+性能指标描述，自动分析视频中的性能数据。
+默认单模型快速出结果；用户明确要求\"多专家/多模型/交叉验证\"时才启用多模型流水线。
+触发场景：用户提供录屏视频并要求
+千问系移动端超音速打包技能|||Use when packaging or building any Qwen-family app — 夸克 Quark / 千问 Qwen / 夸克扫描王 ScanKing — on Androi
+需求澄清|||将原始 PRD、产品需求、需求草稿、钉钉/语雀导出的非结构化需求文档，转换为中文需求澄清 PRD / 设计拆解需求文档，供 AI 编码、研发实现和测试对齐使用。适用于用户要求“把原始 PRD 转成拆解
+AI 生成代码审查专家|||专门针对 AI 生成代码的 Code Review 技能。检测 AI 幻觉（不存在的 API/库）、上下文不一致、安全风险（硬编码密钥/注入漏洞）、健壮性缺失（空值检查/异常处理）、性能陷阱（N+1 
+agp-upgrade-skill|||Android Gradle Plugin (AGP) 版本升级与 maven-publish 发布配置。当用户提到
+\"升级 AGP\"、\"升级 Gradle Plugin\"、\"Android 构建工具
+Problem Investigate|||Generic evidence-backed problem investigation and report archive workflow. Use when Codex is asked t
+iflow-admin-ops-query|||Query user operation logs for iflow-operation-admin-gateway service via Aliyun SLS. Use when the use
+agent-collaboration-forge|||让复杂 AI 编程任务更安全：把单 Agent 执行升级为“主 Agent + 专家子 Agent”的受控协作流程，用于上下文探查、影响面审计、方案或 diff 独立审查、工具链诊断、边界清晰的实现和
+submit-mr|||当用户要求创建、提交、打开或检查 Code Merge Request / MR / CR / 代码评审，或要把当前 Git 分支发起合并请求时使用；普通 git commit、push、分支切换或代
+Grafana Dashboard Generator|||Generate Grafana Dashboard JSON based on Prometheus metric types (Counter, Gauge, Histogram, Summary
+drawio-to-image|||draw.io 架构图端到端生成工作流。覆盖从需求确认、布局规划、.drawio XML 生成/修改、校验对齐到超清 PNG 导出的完整闭环。支持系统架构图、微服务架构图、云架构图、业务流程图、数据流
+Navigation Log Analyzer|||分析导航模块 tlog 日志，诊断导航慢、不响应、未发起等问题，定位故障链路节点。当用户提供 tlog 文件要求分析导航问题时调用。
+instant-page|||一句话上线你的 HTML 页面，零后端实现页面内编辑。 Deploy static HTML to Aone Pages instantly, with optional Chrome extensi
+instant-page|||一句话上线你的 HTML 页面，零后端实现页面内编辑。 Deploy static HTML to Aone Pages instantly, with optional Chrome extensi
+instant-page|||一句话上线你的 HTML 页面，零后端实现页面内编辑。 Deploy static HTML to Aone Pages instantly, with optional Chrome extensi
+instant-page|||一句话上线你的 HTML 页面，零后端实现页面内编辑。 Deploy static HTML to Aone Pages instantly, with optional Chrome extensi
+多端实现一致性检查|||分析同一分支在多端（Android/iOS/鸿蒙等）的代码实现逻辑是否一致。
+触发场景：用户提到\"三端对比\"、\"跨端一致性\"、\"三端逻辑对齐\"、\"对比安卓和鸿蒙\"、\"iOS和Android一样吗\"、
+
+Navigation Log Analyzer|||分析导航模块 tlog 日志，诊断导航慢、不响应、未发起等问题，定位故障链路节点。当用户提供 tlog 文件要求分析导航问题时调用。
+Coder Tinker|||当编码任务需要人工掌控的技术方案或实施协作时使用。显式触发包括用户提到 coder-tinker/code-tinker、CT 标记、人工批阅、代码骨架、人工确认关键决策或 AI 审核人工代码。隐式触
+千问相机Trace制造工具|||Operate WPK/iTrace Chrome UI to create or edit Trace and Span configuration, especially filling span
+gerrit-review|||获取 Gerrit 代码评审的 review comments，用于本地 agent 根据线上评审意见修改代码。支持按 patch set 和 unresolved 状态过滤。
+需求开发全流程&本地开发桥接|||通用 Agent 工作流 skill 包的轻量安装与路由入口。用于安装、分享或适配内置的 Agent 工作流技能，包括知识库 Git 治理、本地开发桥接、远端需求陪伴与提测交付流程。
+无障碍 DX 页面适配|||DinamicX (DX) accessibility fix skill.
+扫描 DX XML 代码，识别缺失或错误的无障碍属性，推断正确值，直接修改代码并输出 diff。
+
+触发短语：
+- \"帮我
+无障碍 web 页面适配|||Web accessibility skill — 支持两种模式：
+1. **修复模式**（默认）：读取已有文件 → 识别违规 → 推断修复值 → 直接落盘 → 输出变更摘要
+2. **生码模式**：
+无障碍 weex 页面适配|||【Weex 2.0 专用】无障碍 accessibility skill — 支持两种模式：
+1. **修复模式**（默认）：读取已有文件 → 识别违规 → 推断修复值 → 直接落盘 → 输出变更摘要
+JVM 问题排查|||JVM 问题排查交互式诊断工具。当线上服务出现 GC 异常、内存泄漏、CPU 飙高、线程阻塞等 JVM 相关问题时，通过对话方式引导用户逐步收集数据、分析根因并给出修复方案。包含真实案例参考和完整命令
+夸克网盘flutter侧异常修复|||Flutter 异常端到端修复工作流。覆盖从 iTrace 异常发现、堆栈分析、精准代码修复、Aone Bug 创建、修复报告生成到钉钉通知的完整闭环。支持空指针、类型转换、数组越界、生命周期、并发修
+ManClaw Troubleshooting|||Use when 排查 ManClaw 线上、预发或日常环境问题，包括用户反馈、OpenClaw/Nanobot 会话异常、Agent 服务繁忙、WebSocket 断连、SLS 日志、Sunfire
+itrace监控方案生成技能|||Use when designing monitoring plans, trace/span plans, or monitor items for business scenarios. Trig
+手机真机验证agent|||Use when the user explicitly asks for pithos-verify, delivery readiness, strict/audit verification, 
+aes-tracker|||Use when the user wants to integrate AES/AEM frontend monitoring into a web project, diagnose missin
+qwen-card-debug|||千问 Android 问题排查（req_id + 卡片专项）：用 iTrace 还原用户行为与 SSE 全链路， 用 CardLifecycle ULog 还原本地卡片生命周期，交叉定位根因。 Use
+fliggy-cr-standard-gen|||通过读取和总结用户输入的历史线上故障文档（语雀/钉钉文档），提炼出飞猪服务端代码CR审查规范。产出包含通用审查规则和按应用/模块分类的专项审查规则，供AI代码审查使用。当用户提到生成CR规范、代码审查
+long-running-harness-skill|||为长时运行(long-running)、需要跨多个会话增量开发的中大型工程搭建并驱动一套 harness(脚手架)：把 PRD/需求拆成拓扑排序的任务清单、产出机器可消费的 JSON feature 
+提测质量评估|||务必使用此技能对研发提测版本进行质量评估。当用户提到\"提测评估\"、\"质量评估\"、\"代码评审\"、\"提测准入\"、\"提测前检查\"、\"评估提测质量\"、\"生成提测报告\"、\"MR评估\"时，您的用户将感谢您使用此标
+变更风险分析|||变更风险分析技能，支持四种分析类型按需输出：①接口用例召回；②变更代码风险评估（含代码风险/推荐测试点/变更影响调用图）；③回归测试点）；④全量分析→HTML报告+JSON用例。当用户提到\"变更分析\"
+代码评审|||自动化代码评审技能，支持评审前自动分析、上下文增强、PR 集成。适用于 diff、patch、Pull Request 评审场景。当用户提到代码评审、review 代码、diff 评审、PR 评审、合
+Skill 工程范式质量评估|||评估 Agent Skill（SKILL.md）的工程范式质量。对 SKILL.md 进行 12 维度加权评分（满分100分），输出评分报告并对低分项给出改进建议。当用户说\"评估skill质量\"、\"s
+1688-ug-code-review-multi|||1688用户增长团队多应用多分支协同代码审查系统。集成 alibaba-code-review 的专业代码审查能力，支持同时审查多个应用各自分支与master分支的diff，面向UG业务场景模拟专业角
+prd-detailed-design|||PRD 质量评审助手:对照阿里巴巴标准 PRD 模版,产出**三重门槛评分**、**PD 优化建议表**、**评审纪要**。当用户提到 PRD 评审、需求诊断、需求打分、评审优化建议时使用。
+AI Coding Infrastructure Audit Skill|||Use when auditing or hardening AI Coding infrastructure across Git repositories, including AGENTS.md
+Code Review Fix Loop|||Use proactively as an automatic post-implementation quality gate. Trigger right after completing any
+buy2-ext-advisor|||查询 buy2 下单系统扩展点的执行顺序、所在业务活动、以及执行时的数据就绪状态。当用户询问扩展点执行顺序、扩展点在哪个BPM步骤执行、某个扩展点执行时某些数据是否已就绪等问题时使用。
+Blueprinter 工程蓝图生成|||帮你生成一份工程蓝图文档，交给 Coding Agent 即可初始化出完整项目骨架。当用户说\"生成工程蓝图\"\"做一个 X 工程模板\"\"写一份让 Coding Agent 初始化项目的 blueprin
+构建 Coding Agent 文档体系|||为前端工程做 AI Coding 友好化改造——扫描项目后生成一套 Coding Agent 可直接当工作手册用的分层文档，附带测评体系和本地预览站点。当用户说\"给项目加 agent 文档\"\"AI 友
+mtop|||通过 tmo mtop CLI 管理 MTOP/UltraMax API：查/创建(Design First/Code First)/更新/删除/发布(日常/预发/线上)/测试调用/查流量分组/ask
+creating-through-reflection|||创作类 skill，适用于编码、文档、方案设计等。复杂创作任务时主动建议用户使用；用户明确要求\"反思创作\"时直接触发。简单任务不触发。
+重构代码审计refactor-audit|||对技术栈重构项目（如 WPF→Electron、jQuery→React、Java→Rust 等）执行功能等价性深度审计。采用六阶段递进式方法论，含检查点机制、证据置信度标注和文件快照基线，产出结构化
+重构代码审计refactor-audit|||对技术栈重构项目（如 WPF→Electron、jQuery→React、Java→Rust 等）执行功能等价性深度审计。采用六阶段递进式方法论，含检查点机制、证据置信度标注和文件快照基线，产出结构化
+code-prism深度分析代码棱镜|||将代码库蒸馏为分层、可锚定、双向可追溯的知识工件。产出\"业务-代码\"双向知识图（JSON + Markdown）， 作为下游测试技能（用例生成、测试分析、代码用例校验）的标准上游上下文。 优先支持 J
+code-style-guardian|||从项目自身的历史代码中提取真实编码规范，落地为本地文档，并在后续写代码时强制对齐项目风格（而非通用模板）。 当用户要\"初始化/提取/分析项目编码规范\"，或在某项目中首次写代码、新增接口/类、改文件、写
+code-style-guardian|||从项目自身的历史代码中提取真实编码规范，落地为本地文档，并在后续写代码时强制对齐项目风格（而非通用模板）。 当用户要\"初始化/提取/分析项目编码规范\"，或在某项目中首次写代码、新增接口/类、改文件、写
+code-style-guardian|||从项目自身的历史代码中提取真实编码规范，落地为本地文档，并在后续写代码时强制对齐项目风格（而非通用模板）。 当用户要\"初始化/提取/分析项目编码规范\"，或在某项目中首次写代码、新增接口/类、改文件、写
+Skill测试专家|||Skill测试专家是用于验证和评估其他Skill功能的专业工具。它通过全自动化的测试流程，对Skill进行功能验证、质量评估和边界测试，并从完整性、准确性、格式规范、可读性和一致性五个维度进行打分，最
+分层架构图生成器|||设计和生成企业级分层架构图（HTML/SVG）。当用户需要创建分层架构图、系统架构图、能力架构图、技术架构图或类似的多层次架构可视化时使用。支持自适应布局、样式、字体及字号，根据内容自动优化设计，一次
+Pipeline双重防线|||给你的智能助手项目装上两道防线：一道门禁防止跳步骤，一道拦截防止绕开流程直接写文件，再加一个溯源能力让每个产出都能查到是从哪来的。不守规矩也能被代码拦住。
+nc-aone-sls|||通用阿里集团 SLS (日志服务) 查询 —— 任何能执行 shell 的工具(Claude Code / Codex / Cursor / 终端 / CI)都可用 `npx @ali/nc-aone
+video-analysis-diagnostic|||【主动触发】用户描述视频问题时直接启动，无需用户说\"诊断\"：
+花屏/黑屏/马赛克/卡顿/冻结/绿屏/编码错误/音画不同步/无声音/
+文件损坏/无法播放/转码质量差/码率异常/PSNR/SSIM/画质评
+ODPS任务自动诊断和优化|||自动诊断 ODPS 离线计算任务，分析数据倾斜、长尾任务、资源利用率等问题，生成结构化治理报告。包含倾斜检测、根因分析、治理方案和 SQL 优化示例，并输出诊断报告。当用户提供 ODPS Logvie
+plan-organizer-skill|||当用户消息包含 `/plan-organizer` 时使用此 skill。用于整理 .aone_copilot/plans 目录，将 plan 按模块分类归档。支持 AI 全自动归类和引导式自定义分类
+antigravity-plan|||当用户消息匹配以下任意一项时触发本 skill：1) 包含 `/antigravity-plan`；2) 包含 `/plan`；3) 包含\"帮我规划\"；4) 包含\"制定方案\"；5) 包含\"设计方案\"；
+scm-arch-inspect-skill|||当用户消息包含 `/scm-arch-inspect` 时使用此 skill。对 alsc-saas-scm-* 系列仓库进行 SCM 架构规范全量巡检，覆盖模块依赖、调用链路、包路径命名、事务、HS
+scm-create-design-doc|||当用户消息包含 `/scm-create-design-doc`，或用户提到「系分」「设计文档」「系统分析」「系分文档」「技术方案」「方案设计」「功能设计」等关键词时，均应主动推荐并引导使用本 ski
+auto-dev-workflow|||自动化Issue驱动开发工作流。当用户说\"开始开发\"、\"自动认领需求\"、\"拉取需求开发\"、\"自动开发流程\"时触发。自动拉取远端Issue，分析依赖关系，选择最优Issue认领，创建分支开发，测试，推送
+code-change-risk-analysis|||基于代码变更的业务风险分析。对Java后端代码变更进行专业审查，从六大风险维度（高可用、业务合理性、一致性、时效性、数据正确性、配置正确性）全面分析核心链路影响、强弱依赖、业务终态、数据流和配置风险，
+重构代码审计refactor-audit|||对技术栈重构项目（如 WPF→Electron、jQuery→React、Java→Rust 等）执行功能等价性深度审计。采用六阶段递进式方法论，含检查点机制、证据置信度标注和文件快照基线，产出结构化
+dp-cli|||Use this skill when the user wants to interact with dp-cli (FinOps debugging platform CLI).
+Triggers
+kds-dev-workflow-skill|||KDS需求开发全流程技能。从需求输入到代码发布的10步workflow：PRD评审→技术方案生成→分支创建→编码实现→创建CR→部署环境→功能测试→自测确认→执行发布→知识库回流。每个需求独立文件夹管
+h5i-dispatch|||把 scope 清晰、可隔离的子任务后台派给另一个独立 agent(codex/claude/qoder/其它 CLI harness)并行执行——主 session 不阻塞，多 agent 独立配额
+Code Change · 分析器|||代码变更分析技能。基于代码仓库地址和时间范围，通过 Code MCP 获取提交历史和 diff，详细分析每个功能点的改动前后行为差异、影响范围，输出可与需求文档对照的回归测试建议。当用户提到\"代码变更
+agent-historian|||让 agent 学习如何获取 agent(opencode, claudecode, qoder...) 的历史会话数据
+private-cloud-frontend-skills|||PaaS 专有云控制台前端全链路 DevOps 技能。当用户提到以下任何场景时必须触发：产品定位（找产品代码库、分支、页面路径）、UniConsole/ASConfig 配置查改保存同步、创建 CIC
+dev-sync 开发协同|||「开发协同」多人 Agent 协作意图同步工具。开工前调一次，看别人在干嘛，告诉别人你在干嘛，检测冲突风险，建议更新 CLAUDE.md。当用户说「开工」「开始工作」「同步一下」「/dev-sync」
+dx-modify-ultra|||存量 DX 布局代码导入/修改 - 包含 DX IDE 导入模版等一系列 IDE 能力；修改现有 DX 模版 xml，新增动画，事件链支持 - 淘宝首猜/推荐/我淘/详情等业务定制事件链能力；
+爆改落地SDD：openspec-landing|||增强型 OpenSpec 初始化。用于 \"openspec init\"、\"openspec 初始化\"、\"初始化 openspec\"、\"openspec landing\"、\"openspec 落地\"、\"
+ConfigServer E2E测试用例生成|||【务必使用本 Skill，即便用户未明确提及 ConfigServer 名称】当用户的问题涉及 ConfigServer / ConfigData / ConfigSession / config-c
+frontend-dev-toolkit|||当用户进行前端开发任务时，即便用户未明确提及工具包，也应优先调用本入口。当用户提到项目初始化、创建页面、组件、接口、状态管理、设计稿分析、UI 验收、主题变量等场景时，按任务类型分发到 .qoder/
+Transform 脚本开发指南|||编写阿里内部 Transform 平台的 Groovy 脚本工具。当用户需要开发 Transform 脚本、编写小二后台运维工具、创建 Groovy 查询/订正脚本、或提到 Transform 平台相
+code-prism深度分析代码棱镜|||将代码库蒸馏为分层、可锚定、双向可追溯的知识工件。产出\"业务-代码\"双向知识图（JSON + Markdown）， 作为下游测试技能（用例生成、测试分析、代码用例校验）的标准上游上下文。 优先支持 J
+odps-log-x|||ODPS SQL 性能优化工具。当用户输入 ODPS Logview URL 时触发，自动获取任务的执行 SQL 代码和 Summary，分析性能瓶颈并给出可直接运行的优化 SQL 代码。当用户提到 
+datax-task-scan 数据同步任务分析告警|||扫描分析 DataX (DI) 同步任务的运行状态和数据量，按优先级筛选需要优化的任务。当用户提到「DataX 任务扫描」「任务优化筛选」「DataX 运行分析」「重点任务梳理」「任务运行时长分析」「
+Web Product Wiki · 生成器|||通过 builtin_browser 自动化探索任意 Web 前端页面，生成结构化的产品知识库（含页面地图、功能清单、操作元素唯一ID索引），最终上传到 aone-km 知识库供 AI Agent 召
+PAI PPU 推理引擎测试优化助手|||面向 PAI PPU-ZW810E 国产加速卡，自动化完成推理引擎（vLLM/SGLang）的环境部署、模型适配评估、多维度性能基准测试（延迟/吞吐/缓存命中/并发梯度）、参数调优，并明确标注自测能力
+code-review-ng(多维度CR)|||Use when reviewing code changes between feature branch and main branch - covers correctness, securit
+happer — 鸿蒙SDD 全自主工作流引擎|||Happer 是面向 HarmonyOS 的 SDD（Spec-Driven Development）全自主 6 阶段工作流引擎。
+issue-investigator（问题排查工具）|||Cross-analysis investigation using SLS logs, ARMS frontend monitoring, and project source code for r
+Pipeline执行环境|||给你的智能助手项目装上执行环境：流程状态机防止跳步骤，产出校验拦截不合格结果，写入保护防止绕过流程直接动手。不靠自觉靠代码兜底。
+sdd-all-in-one|||闭眼可执行的SDD全流程Skill。每当用户提到SDD、设计、需求到编码、生成技术方案、生成开发任务、从PRD生码、从技术方案生码时即触发。支持一句话需求/PRD链接/技术方案链接三种输入，输出伪代码
+i18n-resource-generator|||根据输入的文本或图片内容，智能生成 Android/iOS/HarmonyOS 平台的中英文国际化资源文件。支持 Key 预览确认、增量冲突智能处理、占位符索引校验、业务词典注入及结构化生成报告。当用
+superpowers-spec-plan-review|||Use whenever a Superpowers spec or plan is created, revised, rerun, or about to reach human review/i
+code-change-analyzer（代码变更范围自查工具）|||Use when analyzing a git feature branch's code changes against the main/master branch. Generates log
+骑士运营系分输出助手|||将钉钉PRD文档转换为系分文档（技术设计文档）。当用户提到以下内容时必须使用本技能： 系分、技术设计、系统设计、PRD转系分、PRD转设计文档、写系分文档、生成技术方案、 技术方案文档、从PRD生成设
+Java Blocker Checker|||扫描 Java 代码中的 81 个 Blocker 级别编码问题，这些问题大概率是 BUG 并很可能导致线上故障。每当生成 Java 代码、审查代码变更、或用户提及 Java 编码规范、代码质量、Bu
+设计稿像素级还原|||从设计稿/截图/MasterGo 高还原度生成前端代码。当用户提供设计稿并要求实现前端样式时强制使用。禁止自由发挥，强制像素级还原，每步验收。Use when user provides design
+淘宝闪购中间件|||淘宝闪购基础设施与中间件完整指南。覆盖中间件选型、产品介绍、弹内/弹外技术栈映射、编码参考等场景。 覆盖接入层、API网关、RPC、消息队列、数据库访问、缓存、配置中心、任务调度、服务发现、监控可观测
+淘宝闪购SDD|||SDD规范驱动开发主编排器。八阶段串行编排（初始化→侦察→探索→提案→实施→审查→CR部署测试→归档），支持标准模式（逐阶段确认）和快速模式（4/5/6自动连续执行）。触发词：SDD、规范驱动开发、s
+SimpleH5：一键发布H5程序|||h5的应用场景比较普遍， 开发游戏、表单、系统的天然优势让它能够快速孵化业务。 有了这个skill，你可以一键部署你的应用在阿里云上。
+Agent 审计官 — AI Agent 行为审计 · 信任评分报告|||AI Agent 行为审计工具。自动采集 Agent 执行 trace，通过 3 层 10 维混合检测引擎进行事后审计，输出标准化信任评分报告。支持 Qoder / Claude Code / Cur
+PRD打分审查|||PRD 多维度质量评估与澄清工具。从产品/交互/质量/架构四个视角并行评审 PRD，输出 D1-D8 八维度量化评分、P0/P1 澄清问题清单和交互式 HTML 报告。适用于需求评审前的 PRD 质量
+ODPS任务自动诊断和优化|||自动诊断 ODPS 离线计算任务，分析数据倾斜、长尾任务、资源利用率等问题，生成结构化治理报告。包含倾斜检测、根因分析、治理方案和 SQL 优化示例，并输出诊断报告。当用户提供 ODPS Logvie
+skill-import|||Import local files or directories as reusable QoderWork skills. Use when the user wants to convert e
+aone-requirement-to-deploy|||阿里集团内部端到端需求落地流水线：抓取需求/PRD → 生成技术方案文档 → 创建 Aone 变更与代码分支 → 修改代码 → 补充单元测试 → 提交推送 → 绑定发布单与预发部署 → CR（代码评审
+无障碍适配-weex|||a11y-dev-weex
+Java内存分析器|||基于决策树分支的系统化Java内存诊断流程，从症状直达根因。融合OS层（cgroup、glibc/jemalloc、pmap/vmmap）与JVM层（NMT、堆转储、GC）诊断，6道门控+7条诊断路径
+成本治理|||实时监控项目内 LLM API（OpenAI / Claude / Qwen / DeepSeek 等）的 token 消耗，按阈值触发 IM 告警。
+轻量级开发工作包协议 |||轻量级开发工作包技能。告诉 AI 你要做什么，自动拆包、派发 subagent 并行执行、验收合并，全程无需手动介入。零配置启动，说一句话就能跑起来。当用户提到 wpp、/wpp、拆包、工作包、WP、
+lazgame-qa-prd-review|||从资深测试开发工程师视角评审 PRD 文档，检查逻辑完备性、异常流覆盖、边界条件与歧义表述，输出主逻辑流程图和带优先级的问题澄清清单。当用户说\"评审需求/PRD\"、\"帮我看看这个需求\"、\"需求有没有问
+88vip-model-skill|||88VIP推荐算法模型探索实验的端到端完整研发流程。覆盖：实验方案设计 → 代码生成与提交 → 钉钉文档记录 → AOP REST API提交pipeline任务（训练+预测/纯预测） → 轮询监控 
+绘制架构图|||将自然语言描述转换为架构图、流程图、时序图等可视化图表。 输出自包含 HTML 文件，左侧可编辑源码，右侧实时渲染。 支持 Mermaid、PlantUML、D2、ECharts 等多种 DSL。 触
+多模型MoA讨论（深度分析）|||多智能体融合讨论技能。根据问题复杂度自动选择讨论模式：简单问题单模型快速回答，日常讨论双视角融合，重大决策多模型圆桌。先独立分析再结构化融合，最终产出融合报告。适用于代码审查、方案讨论、风险分析、架构
+basic-hsf-test-loop|||HSF接口测试闭环。当用户提到\"HSF测试\"、\"接口测试闭环\"、\"自动测试循环\"、
+\"HSF调用测试\"、\"接口联调\"、\"预发测试\"时使用此技能。
+自动循环执行：HSF调用 → 分析结果 → 修复代码 
+itest-review — Integration Test Review|||Audit a finished integration test session against an itest-doc.md. Checks coverage (chains/branches)
+itest-run — Integration Test Execution|||Execute integration tests against an itest-doc.md with strict \"fill-as-you-run\" enforcement. Walks t
+itest-planning|||Generate a self-contained, fill-in-the-blank integration test document (itest-doc.md) for any code c
+TTS 视频播报质量检测 - TTS Quality Check|||TTS 播报质量检测器。基于视频理解模型识别文字，检测 TTS 播报中的漏字、错字、卡顿、重复等质量问题。
+ASR 语音识别质量检测 - ASR Quality Check|||ASR 语音识别质量检测器。基于视频理解模型识别语音内容，检测 ASR 识别中的漏字、错字、专有名词错误、同音字错误、重复、卡顿等质量问题。
+测试用例生成|||基于 PRD 自动生成前端 E2E/GUI 测试用例（输出 XMind Markdown）。当用户提到\"生成测试用例\"、\"PRD 转测试用例\"、\"帮我写测试用例\"、\"帮我看看这个需求怎么测\"、\"写用例
+agent-team-alibaba|||双Agent协作开发框架：开发Agent负责编码实现，CR Agent负责代码审查，通过文档交互确保代码质量。当用户提到\"帮我开发\"、\"帮我CR\"、\"CR一下\"、\"开发agent\"、\"dev agen
+skill-generator|||基于当前会话历史，提炼并输出符合 Agent Skills 规范的结构化 SKILL.md 文档。
+当用户提到「生成 Skill」「总结为 Skill」「导出 Skill」「按 Skill 模板生成」
+CloudAgentsDemo生成Skill|||基于 Qoder Cloud Agents 构建、定制并验证可运行的业务 Agent 演示。当用户描述了一个 Agent 想法并希望得到一个可运行的 Cloud Agents 原型时使用，涵盖托管或多
+Touch AI Engineer|||AI Engineer intern role for marketing-cloud microservice projects. Covers Java backend (Spring Boot,
+AI Context Builder|||务必使用：当用户需要为代码库构建、审查、补强或评估面向 AI 编程的项目知识库、代码知识库、项目上下文、AI 上下文或 ai-context 时触发；即便用户未明确提及 ai-context，只要涉及
+Deep Rules|||Extract non-obvious deep rules (hidden invariants, traps, boundary behaviors) from mature specs into
+req-analysis|||从多源需求文档（钉钉文档、语雀文档、平台知识库、本地文件、在线文档、接口协议等）或用户自然语言描述中进行需求分析与整合， 产出结构化的需求分析文档。支持 OCR 解析图片提取需求意图。 当用户提供需求
+营销云QA-API2Code-skill|||A2C-Lite（轻量版 API-to-Code），用户仅需提供接口清单（Method + Path），自动匹配 system/group 并直接从 Swagger JSON API 获取接口定义，生
+前端交互方案（r2c-plan）生码|||基于 r2c-plan 产出的交互方案（interaction-plan + tasks），跳过编码方案文档阶段，**按 tasks.md 顺序逐 task 出码**,完成一条勾选一条。每模块依次执行
+PRD转前端交互方案|||R2C Plan —— 双场景。**主流程**:从 PRD 拆解交互方案,有 taoD2C 时阶段 1.7 强制调 d2c-codegen 场景一;Gate 1 通过后本 skill 立即终止,**用
+sre-agent-lds-lastmile-alert-diagnosis|||用于海外快递末端配送域场景的告警诊断与分析
+davidwldai_数字分身（Claude Code版本）|||戴文龙的数字分身 — 一个闭环交付、技术能力强、擅长用AI和新技术提效的高级研发工程师。当用户需要学习新项目、排查线上问题、写代码做需求、做工作总结、写技术方案时，必须使用此 skill。即使用户只是
+代码逻辑审核|||测试进入系统测试前的代码实现一致性审核。两种模式：(1) 审核模式(默认) - 基于测试用例 + 技术方案文档审核代码实现，重点识别『未实现功能 / 逻辑缺陷 / 实现偏差』三类核心问题，输出审核报告
+前端自动修复CR专家|||自主代码审查。通过 git diff 获取变更，逐文件读取完整上下文后对照规范审查，输出报告并由用户选择修复，追踪采纳率。触发方式：/auto-fix-cr 或用户要求代码审查。
+营销云CGP2.0前端开发|||CGP2.0 前端开发全流程技能，覆盖需求分析、需求开发、bug 修复和发布上线。支持从钉钉文档自动解析 PRD 并拆解前端任务，然后无缝进入开发流程。自动完成环境准备、分支管理（含 worktree
+技术口语化转结构化|||将技术开发人员的口语化、碎片化描述优化为结构化的、产品经理(PD)能听懂的专业沟通文案。适用于技术方案沟通、问题/Bug描述、项目进度同步、需求讨论等场景。当用户要求优化技术描述、帮忙写沟通文案、或提
+优酷数据研发助手|||Use when 用户需要从优酷数仓取数、写 ODPS SQL、查指标口径、找数仓表或做数仓建模咨询。基于 OneData 架构，支持自然语言取数、指标查询、SQL 生成与改写、参考 SQL 改写、用
+ai context上下文自动生成器|||一键为任意项目搭建 AI 上下文基础设施（CodeGraph 代码索引、mdm 文档索引、 知识清单 Manifest、doc-wiki 骨架、MCP 配置、CLAUDE.md、Git Hooks、n
+Spring Boot 应用 JDK 8/11/17 → JDK 21 升级 Skill|||将 Spring Boot 应用升级到 JDK 21（Spring Boot 3.5 + Spring Cloud 2025 + Spring Cloud Alibaba 2025），支持从 JDK 
+Spring Boot 应用 JDK 8 → JDK 17 升级 Skill|||将 Spring Boot 应用从 JDK 8 升级到 JDK 17，同步完成 Spring Boot 2.x → 3.x、Spring Cloud → 2023.x、Spring Cloud Ali
+z-platform-case-gen — 后端测试用例生成与用例库管理|||后端测试用例生成与用例库管理。当用户提到「生成测分」「写测分」「PRD转测分」「测试用例」「评测用例」「初始化用例库」「用例采纳入库」时主动触发。 四个命令：/gen-test（PRD+系分→三段式测
+ZeroToOne —— 闭环全栈开发助手|||ZeroToOne —— 闭环全栈开发助手
+开关迁移 Skill — Switch Migrate|||Java 开关迁移 Skill。将 @AppSwitch 开关字段从一个开关类迁移到另一个开关类， 结合 onlineSwitch.json 确定线上值作为新默认值，自动更新全部引用方和 import
+日志自动巡检技能|||巡检 Loghouse 日志中的错误信息，查询错误关键字（如 error、exception、fail、429-Throttling、RateLimit 等），匹配错误码文档解释含义，提取 reque
+QoderSDKDemo生成Skill|||用 Qoder CLI Python SDK 快速搭建可运行的业务 Agent Demo。当用户描述一个 Agent 想法并希望得到一个可运行的 Qoder SDK 原型时使用——包括一次性脚本、多轮
+应用水位巡检|||巡检核心应用水位，通过 Sunfire 查询监控日志，识别异常指标（对比上周同期上涨 50% 以上，或峰值 CPU>45%/内存>70%/错误日志>100），生成巡检报告并输出到钉钉文档个人空间。Us
+发布值守技能|||Monitor application metrics and logs for 60 minutes starting from when Aone deployment begins. Detec
+端到端的自动化 bug 修复工作流技能|||Automated production bug fixing workflow using Loghouse logs, Aone work items (Coop MCP), QoderCLI c
+淘宝闪购交易下单端到端研发指南|||淘宝闪购交易端到端全栈变更协调技能。基于一级域（前端/后端-buy2/后端-buy）× 二级域（餐饮/零售/跨行业）路由矩阵识别联动范围，支持 Handoff fan-out 多目标派发。各一级域/二
+巡检skill|||通用代码巡检专家，支持多系统实例扩展。
+基于 7 个 Agent 并行扫描：安全、性能、质量、可维护性、依赖、容量、业务规则。
+支持 9 种巡检模式：大促巡检/日常代码/按业务类型/按配置检测/事故排
+巡检skill|||通用代码巡检专家，支持多系统实例扩展。
+基于 7 个 Agent 并行扫描：安全、性能、质量、可维护性、依赖、容量、业务规则。
+支持 9 种巡检模式：大促巡检/日常代码/按业务类型/按配置检测/事故排
+mobile-cross-review-lens|||为移动端单仓库分支差异生成跨端 HTML 评审地图。每当用户需要评审自己不熟悉的平台代码、让 Android/Kotlin 工程师看懂 iOS/Swift 改动、让 iOS/Swift 工程师看懂 A
+prometheus-generic|||prometheus-generic: 通用代码巡检专家，支持多系统实例扩展。基于 7 个 Agent 并行扫描（安全/性能/质量/可维护性/依赖/容量/业务规则），支持 9\r
+  种巡检模式（大促巡
+init-harness|||为 SpringBoot 系统生成定制化 harness 工程(扫描代码 + 选择题提问 + 模板填充 + 全流程 skill 落地)。用户说\"初始化 harness\"、\"生成 harness 工程\"
+1688 iOS 单测执行|||为 iOS CocoaPods 模块配置并执行模拟器单元测试。涵盖标准化校验、test_spec 配置、三层 Stub 链接修复、+load/dlopen 运行时修复、测试执行与覆盖率收集。当用户说「
+Agent 接力棒 · 跨 Agent 任务交接协议|||跨 Agent 任务交接协议。当用户提到\"交接 / 接手 / handoff / 续做 / 下班 / 明天继续 / 之前的工作 / 切换到 {Agent}\"等场景信号，或主动要求生成/读取交接文档、查
+talkui|||当用户提出 Web UI 自动化测试需求时立即启用本 Skill。触发场景：（a）用户说到\"创建/生成/调试/运行用例\"、\"写个测试\"、\"增删改查/CRUD 测试\"、\"回归测试\"、\"修个自动化\"、\"E
+alsc-urgent-alarm-analyzer|||ALSC 订单系统紧急告警自动分析与报告生成。自动获取 urgent/critical 级别告警，分析 traceId 调用链和资源状态，生成详细分析报告并存储到钉钉知识库。使用场景：处理 alsc-
+代码清理code-cleanup|||Java 老工程代码清理 Skill。给定目标类和所属模块，向上分析引用树， 交互式逐层删除无用类，每次删除后进行编译验证（静态分析）。 关键词：代码清理、dead code、引用树、删除无用类。
+sdd-init|||SDD (Spec-Driven Development) 工作空间脚手架初始化工具。当用户想要搭建新项目工作空间、初始化多仓库开发环境、生成 AGENT.md/CLAUDE.md 项目指引、创建组织
+DingFlow — 钉钉需求全链路助手|||钉钉需求全链路助手。当用户给一个 Aone 需求/Bug ID（含
+从夯到拉锐评PRD|||giegie/紫啧~你的PRD写得真好。从夯到拉点评PRD质量，五档评级（夯>顶级>人上人>NPC>拉），输出加分项与减分项，生成McKinsey风格HTML报告，语气毒舌不留情面。当用户提到「评审P
+全栈开发闭环|||编排完整 Speckit 需求开发闭环：结合 /goal 目标管理能力与 Codex + GPT-5.5 + xhigh reasoning，从需求到 spec、plan、tasks、实现、Claud
+Aone 缺陷修复闭环|||Aone 缺陷闭环修复流程，用于指定 Aone 项目或明确缺陷列表的缺陷收集、完整取证、按需求或明确 ID 过滤、合理性判断、根因确认、修复、部署、回归、转派、标记 bydesign 或 Fixed。
+问题排查|||阿里集团应用问题排查技能。当用户描述线上报错、数据异常、消费失败等问题时使用。灵活组合 SLS日志、源码、Diamond配置、DMS数据库、MQ/HSF 进行逐层排查。
+claude-code-guide|||Claude Code 使用指南查询技能。当用户询问 Claude Code 的使用方法、命令、配置、最佳实践、工作流、技巧、MCP、Hooks、Skills、权限、环境变量、模型配置、会话管理、上下
+bespoke-flowchart-diagram|||生成「白底多列泳道 + 顶部贯通色带」风格的精细流程/架构图 PNG（方案配图）。这类图含图标节点、决策菱形、数据库圆柱、实色主控框、路由扇出、直角折线（elbow）彩色箭头与底部铁律条，用绝对定位逐
+are对接skill|||ARE 风控规则引擎接入与风控规则配置。面向研发：指导调用 analyzeWithRules 接口、HSF 依赖、代码接入。面向产品和运营：指导配置 Diamond 规则 JSON、设计风控策略、理解
+Java 设计模式速查与应用指南|||Java 23 种 GoF 设计模式的场景匹配、决策树、UML 类图、可运行代码模板、单测样板与常见陷阱；含 Spring 生态映射（Bean、FactoryBean、AOP、ApplicationE
+dw-workflow|||数仓研发全链路 Skill：建模 / 研发 / DQ / 监控 / 知识查询 / 分析 / 数据上传下载 / Schema 变更 / 知识自进化，9 套工作流统一入口。 当用户提到\"数仓建模/开发数仓
+gnosis-skill-forge-kit|||v0.0.3 (2026-06-15 18:18:11) Skill 开发全流程助手。唤醒词：skillkit。Use when 需要创建、规范同步、质量自检或发布 Skill 时。
+rider-operation-debug|||骑手正向作业线上问题全链路排障入口。**当骑手反馈线上作业问题时务必使用本 skill**——包括指派单看不到、抢单失败、取不了货、订单消失、金额异常等一切正向作业异常。覆盖 SLS 在线日志、客户端
+auto-hsf-testing|||通用 E2E/HSF 自测流程编排 skill（半托管模式，领域无关）。从变更代码/系分文档提取用例 → 确认 KV/字段/日志校验点 → 选用或组装 E2E 用例 → 确认项目环境与参数 → 执行用
+rider-order-tools|||饿了么E2E造数测试工具集，通过 aicr-tools MCP 执行造单、指派、扩散、履约、标签打标、报备、违规构造、转单等全链路操作。支持清背单、骑手开工、构造骑手账号、众包/专送/风神/观星台指派
+ali-tech-design|||Use when a PRD exists and you need to produce a 系分文档 (Alibaba server-side detailed technical design 
+zeus-regression|||自动触发alsc-zeus聚鼎仿真运行、查询结果、分析结果、异常排查和经验沉淀。支持两种入口：输入应用名走完整流程，输入批次号直接分析结果。触发词：仿真回归, 聚鼎回归, zeus regressio
+aone-deploy-tool|||Aone 应用部署工具，支持创建线下/预发项目环境、触发预发流水线、加入线下/预发项目环境，创建需求联调环境。触发词:创建/部署线下项目环境，创建/部署预发项目环境，触发预发流水线，部署到预发，加入项
+闪购App 三端远程打包|||面向淘宝闪购 App、手淘 App 三端的 MTL 平台持续集成变更单创建、添加模块、模块构建、整包构建、跟踪构建状态并获取安装包链接的完整流程。支持一次添加多个模块，所有模块构建成功后再触发整包构建
+spec-harness|||从需求到代码的完整 spec 驱动流程（spec→plan→tasks→code→memory）。单 agent 直接执行 + Verifier 独立 spawn 端到端验证 + AC 100% 覆盖
+nginx-operator|||Operate nginx services on remote machines via bastion-operator. Handles per-IP machine configs (inst
+auto-aigc-test|||Orchestrate automated tests on remote machines via bastion-operator, upload outputs to OSS, trigger 
+tmo-skills|||TMO 平台方案发现与交付引擎。双源并行搜索 Skill 市场与 CLI 工具，编排执行完整解决方案。 触发：用户提到以下产品名或领域概念时激活—— amdc：SPE调度、CDN域名解析、IP地理位置
+bastion-operator|||Use when user runs commands, deploys, syncs files/code, or operates on a remote machine via SSH (typ
+阿里健康数java模版代码生成SKILL|||阿里健康数据工程团队PC端服务端编码规范。当需要编写阿里健康PC端服务端代码时使用此技能，特别是涉及Mybatis代码生成、数据库表映射、DO/DAO/DTO对象创建、Mapper接口和XML文件生成
+us-trademark-scraper|||美国商标（USPTO）批量抓取工具，通过注册号查询商标详情（JSON）并截取详情页截图。Use when users say \"查商标\", \"抓取美国商标\", \"美国商标抓取\", \"fetch tra
+设计师前端样式开发|||设计师前端样式开发 Skill。面向纯设计背景、前端零基础的设计师，帮助其使用 AI Coding 产出符合团队规范的 React + CSS Modules 样式代码。**只要对话涉及以下场景，即使
+stdd-workflow|||座舱系统（应用层/服务层/框架层均适用）STDD（Specification & Test-Driven Development）全流程引导 Skill。支持 C++/Java/Kotlin/Type
+gaia-skill|||GAIA 函数计算平台全生命周期管理。GAIA 函数的构建和部署完全由平台托管， 不需要本地 mvn/gradle 构建，不需要 Aone 变更单（CR），只需通过 um gaia 命令操作。 覆盖函
+tmcp-skill|||tmcp-skill
+dingtalk-feedback 用于任意agent通过群消息通知用户，等用户输入响应|||Use when delivering a report/deliverable to the user, when the task needs user confirmation before p
+Branch Change Report|||分析任意代码仓库两个分支之间的代码变更，输出结构化变更清单报告（钉钉在线表格或本地 Excel），支持通过钉钉 Webhook 推送通知到群。通过本地 git clone（浅克隆）批量获取 diff（
+AI代码指南|||为项目仓库生成 AGENTS.md — AI 面向的项目 README。告诉 AI Coding Agent：项目是什么、怎么构建和测试、代码规范、编程原则等。 触发场景：用户需要创建 AGENTS.
+智能代码评审|||智能代码评审
+代码审查|||Review code for quality, bugs, performance, security vulnerabilities, and style issues. Use when the
+aliyun-api-definition|||查询阿里云 API 的详细接口定义。当用户需要了解阿里云产品的 API 参数、返回值结构、接口规范时使用此 skill。支持通过产品名称关键词（如\"轻量\"、\"ECS\"）+ API 名称查询，或通过完整
+ship-code|||代码提交、部署与CR的一站式流程。当用户说 提交、commit、提交代码、提交一下、提一下、提交变更、帮我提交、push、推送、部署、deploy、发布、上线、绑定Aone、绑定迭代、创建CR、代码评
+具身智能开源 github仓库一键部署在 ppu上|||Generate deployment commands for GitHub open-source projects on Alibaba Cloud PPU (T-Head) environme
+code-check-and-fix|||代码质检&修复skills，检测项包含四部分： 代码检测、逻辑检测、技术栈检测、Sonar
+jingang-cli|||金刚 AI CLI（jingang）完整操作助手。覆盖安装登录、交互式对话、单次提问、知识库查询、本地模式（服务端推理+本地执行）、定时任务管理、技能管理、MCP 服务管理、模型切换、会话恢复、Har
+DevFlow|||长期开发任务主入口。只要任务会分阶段推进、预计跨多轮继续、需要先讨论再写 plan、需要记录决策/bug/checkpoint/handoff，或用户说”先梳理””先讨论””先写 plan””保存进度
+tao-autoresearch|||Autonomous LLM training optimization. Analyzes training code, identifies tunable parameters, iterati
+现有JAVA工程的AI Friendly 优化辅助技能|||Java 后端应用 AI Friendly 改造，让 AI 能在 Java 工程中独立完成日常开发任务。当用户提到 Java 项目 AI 改造、代码库 AI 友好度评估、AI 协作能力优化、提升 AI
+全栈领航员v2|||Full-stack engineering navigator and low-noise guardrail for product and engineering teams doing cro
+接口迁移全流程|||新增接口全流程编排。输入接口名称和参考项目路径，自动执行「代码迁移→格式核对→逻辑对比→自动修复→复验」五步流水线，按接口顺序逐一处理，全程免交互留痕，最终输出四份结构化记录文件。触发词：\"新增接口\"
+后端系统知识库生成|||为单个后端微服务仓库生成 AI Coding Friendly 知识库（.knowledge/ 目录）并在仓库根目录生成 AGENTS.md 作为 Agent 工作入口（Bootloader）。通过扫
+vo-merge|||合并 BFF VO 草稿配置（ImportExportData JSON），处理字段级别的增删改冲突。
+当用户提到 VO 合并、草稿合并、三方合并、baseDraft、targetDraft、ance
+Lineage Skill|||VVP/TT 上游递归血缘溯源 Skill。配合 flink-platform 获取 VVP OpenAPI 元数据，给定任意 VVP SQL 任务或 TT Topic，递归追踪上游 TT produ
+ 前端自动化测试|||前端自动化 UI 测试元技能（路由层）。根据用户意图路由到 gen-test-case（生成用例）或 run-test-case（执行 Playwright 测试），或两者串联。覆盖\"出测试用例 / 
+wan2.7-lora|||万相 wan2.7-image-pro LoRA 微调一站式工作流。支持文生图(t2i)和图生图(i2i)两种模式，涵盖数据集自动生成（使用 qwen3.7-plus 多模态标注）、数据集上传、训练、
+自动化创建Aone迭代变更|||自动化创建Aone迭代变更
+lazgame-merge-testcase-creat|||【MergeBoss 专属】从 PRD/技术方案/设计稿等需求文档自动生成结构化测试用例（XMind/OPML），适配 Lazada MergeBoss 游戏业务场景。包含 PRD 完整性审查、玩法逻
+lazgame-merge-sls-log-query|||查询 lazada-lazgame-merge-prod 线上 SLS 日志并生成结构化用户行为分析报告。
+每当用户提到\"查日志\"、\"SLS\"、\"merge 日志\"、\"查用户行为\"、\"查操作记录\"、
+
+Agent Team|||基于看板的纯 Markdown 多智能体协作工作流。当用户希望启动 Mission、续接已有 Mission、发起 RoundTable 决策、打开看板 UI、查询 Mission 状态，或将 Mis
+code-map|||分析代码库，生成结构化的AI友好知识库，包含领域概念词典（含变量别名追踪）、业务流程索引和详细流程图。当用户想要理解代码库、梳理业务逻辑、追踪跨模块变量名称、或生成代码知识库时使用。
+ai-driven-release-engineering|||Use when designing CI/CD pipelines for AI Agent-driven development, when establishing code admission
+自动文献调研|||自动文献调研技能。当用户要求进行学术研究主题调研、文献综述、研究现状分析、auto research、自动生成调研报告时触发。支持从 arXiv、ACM 检索学术论文，以及从 ATA（阿里技术文章）检
+skill-evolve|||Automatic and manual skill evolution engine. TWO modes: (1) AUTO — injected as an epilogue into othe
+技能自博弈进化|||技能自博弈进化
+waf-migration-check|||WAF 新旧平台迁移对比检查。给定语雀文档 URL 和用户花名，自动提取该用户负责的域名列表，分别从旧平台（OneWAF）和新平台（灵甲-VANTA）查询回源IP，对比是否存在域名丢失或回源IP不一致
+SDD-Workbench：老应用新玩法的规格驱动工作台|||SDD-Workbench 是面向老旧巨型业务应用的规格驱动研发（Specification-Driven Development）AI Skill 套件，覆盖 PRD 审查 → Spec 生成 → 
+react-list-page-builder|||Use when creating, imitating, or restructuring React backend list, query, management, admin, or repo
+日常浏览器自动化|||日常浏览器自动化控制技能。触发场景：(1) 用户提及 browser-automation-skill 或 \"日常浏览器自动化\" (2) 控制浏览器操作页面元素（点击、输入、滚动等）(3) 获取网页内
+gen-project-devskill|||用户要为真实项目生成或升级 AI 开发 Skill / devSkill / AGENTS.md / CLAUDE.md / README 入口或 PRD→出码流程时，务必使用本 Skill。前端优先
+lazgame-tech-design|||技术方案设计技能。根据 PRD 或需求描述，结合项目架构约束和基础设施规范，自动生成完整的技术方案文档（TDD）和 API 文档。产出物包括：架构设计、数据模型、接口设计、缓存/幂等/并发/异常处理方
+lazgame-coding-guide|||编码指南技能。在编码开发阶段提供架构规范守护和 TDD 流程引导，确保代码遵循项目的架构分层、编码规范、命名规范等约束。自动读取上游技术方案，按 TDD Red-Green-Refactor 流程驱动
+dao-generator：Aligenerator工具平替|||数据访问层代码生成技能（脚本化版）。根据建表 SQL 自动生成 DAO 层代码（Mapper 接口、DO、Param、SQL XML），可选生成备库查询方法。采用 Python + Jinja2 脚本
+apsara-env-tools|||专有云曙光环境一站式操作技能。支持远程命令执行、文件上传下载、SQL查询、MQAdmin管理、磁盘清理、SLS Portal开启、应用部署与诊断。智能环境名称模糊匹配，XOR混淆认证。Use when
+需求自动交付|||当用户提供需求文档、PRD、需求链接或 Aone 工作项，要求需求分析、判断前端/后端影响面、创建后端 Aone 变更或前端 O2 迭代/变更、创建/关联 git 分支、按 OpenSpec 实现代码
+运营技术发布SOP|||发布SOP文档生成技能。根据提供的代码分支，与master比对识别变更，自动分析代码差异并生成完整的发布SOP文档。
+触发词：发布SOP、上线SOP、SOP生成、生成发布文档、写SOP、publish
+缓存 TTL 容量评估器|||根据缓存 TTL 变化估算数据库回源 QPS 与 CPU 增长。当用户问『缓存 TTL 缩短/调短后数据库压力涨多少』『TTL 从 X 改成 Y,数据库 QPS/CPU 会涨多少』『缩短缓存过期时间数
+猫超交易诊断助手|||猫超交易问题诊断与排查的统一入口。当用户消息涉及【猫超交易诊断 / 猫超交易排查 / 交易诊断 / 交易排查 / 猫超诊断 / 猫超报错 / 交易链路排查】等关键词，或涉及天猫超市交易链路（商品标 /
+前端代码 Java 类比解释器|||前端代码 → Java 类比解释器。用 Java 后端开发者熟悉的概念（Spring、OkHttp、CompletableFuture、Stream、DTO 等）拆解前端代码，按\"总结 → 逐行类比 
+aone平台全流程部署引导|||Aone 部署一站式 Skill：支持 Next.js 项目的部署文件生成、全链路部署引导、项目初始化。 面向非技术同学，从项目识别到 Aone 上线全程引导。 用户说「帮我部署」「加部署文件」「全流
+aone平台全流程部署引导|||Aone 部署一站式 Skill：支持 Next.js 项目的部署文件生成、全链路部署引导、项目初始化。 面向非技术同学，从项目识别到 Aone 上线全程引导。 用户说「帮我部署」「加部署文件」「全流
+Skill 发布助手|||发布、重命名 Skill 到 Aone 平台的全流程助手，输出分级质量报告与 description 100 分制评分。覆盖名称冲突检测、原子化重命名、可移植性扫描、ERROR/WARN/INFO 分
+微信云服务相关|||微信小游戏/小程序云开发全栈接入执行器。当用户说\"帮我接入云开发\"、\"接入云函数\"、\"接入云数据库\"、\"接入云存储\"、\"新项目要用微信云\"时激活。只需一个 envId 即可自动生成完整可运行骨架（客户
+一键分解协议测试点|||基于芯片 Spec 文档（JEDEC DDR/LPDDR 协议、DFI 接口规范等）和设计文档， 通过规范化流水线生成覆盖率驱动的验证计划 Excel，格式完全对齐团队 vplan 模板。 流水线：s
+Aone 工作精灵|||管理 Aone 工作项全生命周期（创建、关联 CR、状态流转、必填字段补填、CI 流水线）。 触发词: workmon, /workmon, work。 当用户提及开始/完成/同步/领养工作项、关联 
+AI Code Reviewer|||AI Code Review 能力，规则从 git 仓库按需拉取（两层缓存），支持两种模式：(1) 定时巡检——添加/移除/查看 CR 巡检仓库；(2) 即时 Review——用户提供 CR URL，
+ODPS 数据验证端到端技能|||ODPS 数据验证端到端技能。自动获取表结构和代码逻辑，支持基准表自动发现，生成验数 SQL， 在 ODPS 上执行查询，分析结果并组装验数报告文档。Use when：(1) 用户提供两个表名要求验数
+edge-center-harness|||高德打车质量效能 Harness 工程体系skill。用于 \"edge-center init\"、\"edge-center check\"、\"fix\"、\"代码检查\"、\"跑测试\"、\"发布前检查\"、\"质量卡
+aliyun-sls|||查询阿里云日志服务（SLS / Log Service / 日志服务）并自动生成可视化图表的专用技能。只要用户提到 SLS、阿里云日志、日志查询、日志分析，就应立即触发此技能，不要尝试自己写查询代码。
+编译并部署 iOS 工程到真机|||编译 iOS 工程（.xcworkspace）并自动部署到通过 USB 连接的真机。使用 xcodebuild 编译 .app 产物，优先使用 xcrun devicectl（Xcode 15+/iO
+将 Android 应用部署到已连接的设备|||Build, install, launch, and verify an Android app on the connected device. Use when the user asks to
+nc-d2c-design（按设计稿出码）|||MasterGo 设计稿出码：`npx -y @ali/nc-d2c-design@latest`（meta、screenshot、imageurl、node-style）。 先探索并确认节点，再搭骨
+ai-testcase-gen|||[user] AI驱动的测试用例全流程生成。基于PRD文档、MasterGo设计稿、业务规则库、UI交互规范和系统设计文档，经过结构化预处理、多源融合生成测试大纲，最终输出标准化手工测试用例表格。当用
+ai-testcase-gen|||[user] AI驱动的测试用例全流程生成。基于PRD文档、MasterGo设计稿、业务规则库、UI交互规范和系统设计文档，经过结构化预处理、多源融合生成测试大纲，最终输出标准化手工测试用例表格。当用
+Lego SDK 操作工具|||Lego 批处理平台 SDK 操作工具。基于 sm-scheduler-sdk 实现，免 Cookie、永不过期、独立可用。【触发场景】当用户需要操作或查询 Lego 流程、任务(节点)、目录时——包
+Teambition 任务只读查看器|||Teambition 任务只读查看器。通过 tb_report.py 一键生成离线 Markdown 报告 （含任务详情 / 备注图片 / 评论 / 动态 / 子任务 / 进展），同时自动下载备注中的
+Teambition 任务只读查看器|||Teambition 任务只读查看器。通过 tb_report.py 一键生成离线 Markdown 报告 （含任务详情 / 备注图片 / 评论 / 动态 / 子任务 / 进展），同时自动下载备注中的
+c5-sls-query|||查询阿里云日志服务（SLS / Log Service / 日志服务）并自动生成可视化图表的专用技能。当用户提到 C5、c5 相关的日志查询（如\"c5，查下日志\"、\"用c5看日志\"）时优先触发此技能。
+支付平台垂类验证|||收单支付全场景验证技能。子 skill 直调引导 + 与验证执行调度无关的功能（单条收银台执行、日志查询、数据查数、造单、环境检查）。当用户提到收银台、Pricing Table、支付方式验证、支付方
+慢SQL根因分析业务侧+EXPALIN+多重瓶颈分析|||对一条或一批慢SQL做多维根因分析：从EXPLAIN量化数据出发，逐层追踪Service层兜底逻辑、检查复合索引各列激活状态、识别所有潜在瓶颈（扫描行数爆炸、CPU密集聚合、TEXT列IO、files
+数字芯片形式验证 -- FPV Verification Plan Skill |||数字芯片形式验证 -- FPV Verification Plan Skill
+提交前自检skill|||提交前自检 + 自动生成 CR 描述。Use whenever the user mentions \"自检\" / \"提交前检查\" / \"review 一下我的改动\" / \"帮我看看改了什么\" / \"生
+钉钉机器人全功能开发脚手架|||钉钉机器人开发脚手架。覆盖 Stream 模式接入、群聊/单聊消息路由、互动卡片(带@高亮)、主动推送、DING工作通知、定时告警、输入验证与限流。当用户需要开发钉钉机器人、实现群聊卡片投放、@提醒、
+git常用复合操作|||通用 git 工作流（fork + upstream 模式）。首次使用自动询问项目信息并改写自身配置。子命令：commit、pr、amend、rebase main、review、setup。触发：用
+ai-coding-trace-troubleshoot|||排查 `@ali/ai-coding-trace` 的安装、采集、守护进程、Hook、仓库识别、日志、上报、补采、采纳率、报表异常与状态栏 App 问题。用户提到 `ai-coding-trace`、
+钉钉机器人全功能开发脚手架|||钉钉机器人开发脚手架。覆盖 Stream 模式接入、群聊/单聊消息路由、互动卡片(带@高亮)、主动推送、DING工作通知、定时告警、输入验证与限流。当用户需要开发钉钉机器人、实现群聊卡片投放、@提醒、
+weex-daily-monitor|||每日自动监控 Weex 2.0 相关动态，包括外部资讯、代码提交、ATA 文章，并将新发现补充到钉钉文档中
+后端排障MCP引导（引导你安装中间件mcp提升研发效率）|||阿里巴巴集团后端排障环境一次性初始化引导。覆盖 8 个集团内部 MCP（sls/sunfire/code/yuque/tickets/switch_query/get-diamond-info/dms
+Weex页面转Android Native代码|||Weex 页面转 Android 原生 Java 代码转换器。支持从 URL 或代码出发， 自动完成资源获取、页面分析、规范映射、代码生成。 默认 750px viewport，Android Vie
+Weex页面转iOS Native代码|||Weex 页面转 iOS 原生 Swift 代码转换器。支持从 URL 或代码出发， 自动完成资源获取、页面分析、规范映射、代码生成。 默认 750px viewport，纯 UIKit + comp
+技能广场发布准备助手|||校验、测试、打包并发布技能到技能广场。自动截取运行截图并上传到钉钉测评报告。输出 .zip 格式（解压后必须含 SKILL.md）。触发词：发布技能、打包技能、帮我打包、分享技能、发布到技能广场、pu
+mx-pay-gateway-dev|||MX-Pay-Gateway支付网关开发专家，提供支付渠道接入、代码规范、错误码管理、异步回调验签等开发指导。使用场景：(1) 新增支付渠道接入开发，(2) 支付接口实现和调试，(3) 代码规范检查和
+支付接入技术方案生成|||支付接入技术方案生成专家，根据支付文档评审报告和支付机构文档生成完整的技术方案文档。使用场景：(1) 接入新支付渠道时生成技术方案，(2) 根据评审报告补充和完善技术方案，(3) 生成接口定义和字段映
+payment-review|||支付接入文档评审专家，负责评审外部支付机构文档并输出评审报告。使用场景：(1) 评审新的支付机构接入文档，(2) 检查支付接口完整性，(3) 梳理支付流程（正向/逆向），(4) 识别核心接口及风险点，
+fee-item-dev|||菜鸟赔付费用项开发与逻辑梳理 Skill。当用户要求开发新费用项、修改已有费用项、梳理费用项取值逻辑、分析 Ability 影响范围、查询费用项执行记录、排查金额异常时触发。覆盖：逻辑梳理、需求分析、
+运行langfuse评测|||运行 Langfuse experiment 评测。支持四种模式：black-box（黑盒）、glass-box（玻璃盒）、white-box（白盒）、simulation（模拟多轮对话）。触发词：\"
+prd需求前端分析|||分析PRD/需求文档并提取前端改动方案。即便用户未明确提及本技能名称，每当用户提供 PRD 链接（钉钉文档/语雀）、需求文档链接、或要求分析需求时，必须主动使用此技能。从钉钉文档或语雀链接获取需求内容
+凭证运行结果仿真线上比对|||菜鸟财务数据工具中心，所有操作的统一入口，路由至各子模块。支持三类操作：(1) 数据同步——同步生产ODPS数据到仿真表；(2) 凭证比对/下载——下载并比对预发/线上凭证差异；(3) 端到端验证——
+npm 单包发布|||TNPM 单包发布专用 Skill。支持 beta 发包和正式发包的两阶段模型。触发词：帮我提交、帮我部署、提交部署；发布线上、上线、测试通过、验证OK；直接发正式、一步到位。
+display-test-shift-left|||AI驱动测试左移全流程自动化。依赖 MCP(aone-km, code) 和 Skill(java-codereview, kbase-mcp-skill)。支持两种模式：① 需求驱动模式（PRD+技
+test-knowledge-builder|||从PRD和技术方案中提取业务实体信息，生成结构化知识库文档（实体模型、操作手册SOP），更新语义索引（entity-index.json），供下游 test-data-plan-generator 索
+PDF 转图片|||将 PDF 文件转换为图片（支持 jpg/png/webp/bmp/tiff），支持本地文件与远程 URL、逐页输出和合并长图、文件大小限制自动降质量。当用户需要将 PDF 转为图片、提取 PDF 页
+O2 发布全流程（TNPM 单包）|||TNPM 单包发布专用 Skill。支持 beta 发包和正式发包的两阶段模型。触发词：帮我提交、帮我部署、提交部署；发布线上、上线、测试通过、验证OK；直接发正式、一步到位。
+mcp-to-cli|||Wrap any MCP (Model Context Protocol) server's Streamable HTTP endpoint into a reusable kit — a hand
+kbase-knowledge-retrieval|||Enterprise knowledge base retrieval and AI Q&A via KBase v2 API. Search documents with semantic vect
+vscode-tool-dev|||Develop VS Code tools and extensions with TypeScript/JavaScript. Covers project setup, command regis
+需求变更影响雷达|||分析需求变更、PRD、Aone 单、代码 diff、API/表结构变更、发布说明或故障复盘改造，输出变更影响图、风险分、缺失问题、测试计划、灰度发布清单、回滚方案和 owner-ready 任务。Us
+国际化打车财务业务工具|||调查 leopard-finance 相关问题（司机结算/钱包/提现/发票/退款/对账/抽佣规则/拼车/跨城/高德专属链路/巡改网营销提现）。当用户问\"司机XX为什么没结算/没到账/钱不对/发票没出/
+Spring Boot 应用 JDK 8 → JDK 17 升级 Skill|||将 Spring Boot 应用从 JDK 8 升级到 JDK 17，同步完成 Spring Boot 2.x → 3.x、Spring Cloud → 2023.x、Spring Cloud Ali
+Spring Boot 应用 JDK 8/11/17 → JDK 21 升级 Skill|||将 Spring Boot 应用升级到 JDK 21（Spring Boot 3.5 + Spring Cloud 2025 + Spring Cloud Alibaba 2025），支持从 JDK 
+ai-friendly-java-refactoring|||Java 后端应用 AI Friendly 改造，让 AI 能在 Java 工程中独立完成日常开发任务。当用户提到 Java 项目 AI 改造、代码库 AI 友好度评估、AI 协作能力优化、提升 AI
+LogHouse深度日志分析与排查专家|||LogHouse深度日志分析与告警排查专家。支持处理 [CID_...] 告警、TraceId 排查、报错日志根因分析。自动关联应用映射，多流查询，输出带序号的结构化报告并推送钉钉。触发词：分析日志、
+nebula-gpu-query|||基于 nebula-cli 查询 Nebula GPU 队列的实时资源与空闲卡数并推荐最优提交队列，也可按队列/状态/用户查在跑与排队任务。每当用户提及 GPU 空闲、队列状态、提交前选队列、资源紧张
+代码格式化|||Format the project's Java code with Spotless and check for Java 8 API violations that Spotless canno
+skill持续评测优化|||Use when a user needs to evaluate, regression-test, benchmark, or improve an agent skill; asks how t
+三板斧技术设计文档|||编写高质量技术设计文档、架构决策记录（ADR）和技术方案。强制三步结构：先对齐现状，再对齐目标，最后讨论方案。适用于涉及多利益相关方、需要在讨论方案前先对齐现状和目标的场景。
+aone流水线多分支冲突解决skill|||Resolve release or integration branch merge conflicts across one or more feature branches, then veri
+像素精灵图生成工作流|||Use when generating, repairing, validating, or applying WebP pixel-art action atlas sprite packs for
+消费医疗知识大脑|||消费医疗知识大脑，基于知识库回答消费医疗相关的任何问题。当用户询问消费医疗业务相关问题，如结算、订单、商品、门店、商家、交易、技术方案、架构设计、业务流程等任何消费医疗领域问题时使用此技能。支持的话术
+skill汉化|||根据用户提供的 GitHub 仓库地址，定位仓库中的 SKILL.md（含 references/ 等周边 markdown 文档），在严格保留 YAML frontmatter、Markdown 结
+消费医疗知识大脑|||消费医疗知识大脑，基于知识库回答消费医疗相关的任何问题。当用户询问消费医疗业务相关问题，如结算、订单、商品、门店、商家、交易、技术方案、架构设计、业务流程等任何消费医疗领域问题时使用此技能。支持的话术
+自我进化的Code Review技能|||端到端代码自查闭环编排器。把\"CR + 结构化报告 + 用户审核 gate + 执行修复 + 经验/规则沉淀\"五段串成一个流程，把单次 CR 的经验固化为长期约束。
+触发：用户提到 \"cr-loop\"
+自我进化的Code Review技能|||端到端代码自查闭环编排器。把\"CR + 结构化报告 + 用户审核 gate + 执行修复 + 经验/规则沉淀\"五段串成一个流程，把单次 CR 的经验固化为长期约束。
+触发：用户提到 \"cr-loop\"
+cr-loop|||端到端代码自查闭环编排器。把\"CR + 结构化报告 + 用户审核 gate + 执行修复 + 经验/规则沉淀\"五段串成一个流程，把单次 CR 的经验固化为长期约束。\r
+  触发：用户提到 \"cr-lo
+会话复盘 Skill|||对当前会话进行自我复盘，提取导致返工的根因，输出可落地的经验规则，写入 CLAUDE.md。当用户调用 /retrospect 或要求复盘、总结经验时使用。
+agent-dsl|||极简的指令编译器。将人类随意的自然语言意图，\"编译\"转化为带有严格闭包、事务回滚与防疲劳退出条件的高约束 Agentic DSL 语法。
+技能工具箱|||技能工具箱，集中管理和维护各类自动化技能脚本。
+自我进化的Code Review技能|||端到端代码自查闭环编排器。把\"CR + 结构化报告 + 用户审核 gate + 执行修复 + 经验/规则沉淀\"五段串成一个流程，把单次 CR 的经验固化为长期约束。
+触发：用户提到 \"cr-loop\"
+PRD 图解助手|||PRD 图解助手。阅读钉钉 PRD 文档(alidocs.dingtalk.com)的整体业务需求,在业务逻辑描述展开之前补充一张「业务流程图」和一张「系统交互时序图」(全文各一张,总览整篇 PRD)
+独立站接入阿里云SSO|||独立站一键接入阿里云主账号 SSO SDK（spring-boot-starter-maas-aliyun-sso）。当用户输入\"独立站接入阿里云SSO\"、\"add aliyun sso\"、\"/add
+Spring Boot 应用 JDK 8/11/17 → JDK 21 升级 Skill|||将 Spring Boot 应用升级到 JDK 21（Spring Boot 3.5 + Spring Cloud 2025 + Spring Cloud Alibaba 2025），支持从 JDK 
+Spring Boot 应用 JDK 8 → JDK 17 升级 Skill|||将 Spring Boot 应用从 JDK 8 升级到 JDK 17，同步完成 Spring Boot 2.x → 3.x、Spring Cloud → 2023.x、Spring Cloud Ali
+cr-team|||Use when needing to perform multi-role code review on current git changes. Triggers on code review, 
+cr-team|||Use when needing to perform multi-role code review on current git changes. Triggers on code review, 
+从代码库创建算法流程图|||从代码/文档中提炼算法、流程、架构等信息，生成汇报用的高质量 HTML 可视化图表，并导出为 PNG。适用于：算法流程图、系统架构图、数据流水线图、对比分析图、模块关系图等。当用户要求「画图」「画流程
+weex-daily-monitor|||每日自动监控 Weex 2.0 相关动态，包括外部资讯、代码提交、ATA 文章，并将新发现补充到钉钉文档中
+LogHouse深度日志分析与排查专家|||LogHouse深度日志分析与告警排查专家。支持处理 [CID_...] 告警、TraceId 排查、报错日志根因分析。自动关联应用映射，多流查询，输出带序号的结构化报告并推送钉钉。触发词：分析日志、
+aone日志下载|||从 Aone bug 工单中自动下载日志。支持 ATAP 平台日志、Aone 附件下载、file.alibaba-inc.com 链接识别。当用户需要下载 Aone bug 日志、获取工单日志、下载 
+Aone 研发流程快速助手|||用 `a1` CLI 操作 Aone：创建变更、提 MR、发预发、切分支、生成发布介绍。
+alive-rights-standardizer|||淘宝直播 alive 权益组件标准化改造 skill。把组件从「自研字段」迁移到「服务端标准字段（standardBizAb + standardPop*）」驱动。当用户提到「标准化」「standar
+Model 分级加载分析 Skill|||分析 AJX 页面的 models 依赖，自动判定哪些必须首屏加载、哪些可以延迟、哪些可以按需加载，输出 ModelScheduler 分级改造方案。当用户说「分析 XX 页面的 model 加载」「
+playwright-tester|||专业的Playwright自动化测试执行专家，基于JSON测试用例文件执行端到端测试，确保测试通过后生成标准的TypeScript测试脚本。
+线上问题排查|||线上问题诊断技能。用户输入 sellerId 等关键信息和问题描述，自动匹配业务场景和后端应用，查询 SLS 日志定位问题，结合代码逻辑分析根因，输出分析报告并上传知识库，发钉钉通知用户确认是否需要代
+jvs客户端日志排查工具|||Use when analyzing jvs-pc-client client logs, crash artifacts, installed runtime folders, or exact b
+HSF 接口 API文档生成器|||从Java源码或二方 client jar 包中读取、分析、提取接口及方法的签名、接口级依赖坐标、出入参和错误码，并生成格式化的Markdown接口文档；支持单次为多个接口多个方法生成同一份文档
+UMS日志助手|||UMS 日志助手 — 盒马仓储管理系统专用 SLS 日志排查技能。当用户需要查询 UMS 线上日志、排查出库/入库/库内/加工等业务域线上问题、分析日志数据、跨链路追踪时触发。关键词包括：SLS、lo
+MyBatis Generator (Python Edition)|||Pure-Python MyBatis code generator from MySQL DDL or DMS table name. No MySQL/JDK dependency. Genera
+sonar-check|||SonarQube 代码质量检查技能。从 SonarQube 服务器获取规则，本地分析代码（跳过测试）， 然后检查并修复未解决的 Sonar 问题。 所有代码修复必须严格遵循 TDD 流程（参考 te
+Skill Compliance Evaluator & Evolution Engine|||通过 9 步流程评估和进化任意 AI Skill。支持两种模式：评测模式（Harness 约束验证、A/B 对比、迭代收敛）和进化模式（多轨迹归纳、验证门控、学习率约束、负反馈记忆、元学习、Skill
+LogHouse深度日志分析与排查专家|||LogHouse深度日志分析与告警排查专家。支持处理 [CID_...] 告警、TraceId 排查、报错日志根因分析。自动关联应用映射，多流查询，输出带序号的结构化报告并推送钉钉。触发词：分析日志、
+cortex-review-ar|||提交并推送当前 Git 分支，创建 Code Merge Request，指定丛霄和靖苏为评审人，并在钉钉群“AR Token 战神小分队”中 @ 二人请求评审。仅在用户明确要求提交 MR 并要求评审
+prd到开发交付的review|||根据 PRD、用户 Story、验收标准和当前代码 diff，对 wuli-front / wuli-backend 做产品一致性、前端实现、后端实现、接口契约、数据、安全、性能、测试、发布风险的综合
+i18n-scan|||Scan Java/Python/Shell files for i18n violations (Chinese in logs, exceptions, error codes, string l
+客户端一站式测试执行|||全量测试执行专家。当用户提供测试用例文件（xmind）或提到\"执行测试用例\"、\"全量测试\"、\"一键测试\"时，务必优先调用此技能。即便用户只说\"帮我测一下这个需求\"也应主动触发。功能：同时执行代码分析测
+kqs-batch-analysis|||KQS 喀秋莎回放失败统一分析。即便用户只是粘贴了一个 kqs.alibaba-inc.com 链接而没有明确说明意图，也务必主动触发本 skill。当用户提到喀秋莎、KQS、回放分析、回放失败、DO
+行业云台用户鉴权 - 系统间对接|||行业云台用户鉴权系统间对接技能。自动检查并引入 auth-sdk / client Maven 依赖到目标应用，提供完整的鉴权对接文档。当用户提到\"接入云台鉴权\"、\"引入 auth-sdk\"、\"对接云
+SKILL标准化生成方案|||标准化 Skill 生成器：输入需求描述，自动完成需求分析→内容研究→验证→编写→质量检查的完整流程，生成符合开放标准的高质量 SKILL.md。
+触发词：「创建skill」「生成skill」「新建技
+前端项目迁移|||前端项目迁移专家。当用户提供新旧两个项目代码仓库，需要评估旧项目资产完整性、对比新旧差异、识别迁移风险并生成细粒度迁移清单时触发。本 Skill 专注于“资产盘点与完整迁移”，不绑定具体技术栈。
+sdd-fe-all-in-one|||前端需求端到端一键开发 Skill。即便用户未明确说\"使用本 skill\"，每当涉及前端开发（含环境准备、迭代创建、技术方案、D2C 生码、多语言、浏览器自动化、交互验证、部署、CR、归档等任一环节）
+unit-test-coverage|||资深测试架构师 - 基于 PRD、技术文档和代码仓库生成精炼的单元测试设计方案。当用户需要为某个功能或模块设计单元测试方案时，使用此 skill。输入包括：代码仓库地址、需求文档（PRD）、技术文档、
+d2-operation-skill|||DataWorks 实例运维与基线运维。当用户提到表信息、节点信息、实例状态、实例优先级、重跑实例、终止实例、实例日志、补数据、回刷数据、基线运行、基线甘特图、执行 SQL、SELECT 查询、kil
+ha3-qa-agent|||HA3 答疑统一入口，负责问题分类和多步骤编排。适用场景：（1）问题类型不确定、（2）需要跨多个步骤诊断（如先看监控再排查配置）、（3）用户描述模糊（\"有问题\"/\"看一下\"/\"怎么回事\"）。问题类型已
+VVR Flink SQL 作业全生命周期管理工具|||VVR Flink SQL 作业全生命周期管理工具。 SDK 封装：基于 VVR/ALake OpenAPI SDK，提供 Deployment 增删改查、Draft 草稿发布、作业启停与状态查询、S
+hotel-tddl-diff|||酒店标品数据比对工具。当用户需要比对高德酒店标品在任务执行前后的数据变化时使用。典型场景:验证数据同步任务是否成功更新标品信息、检查POI关联的房型数据变更、对比标品std_product表在任务执行
+campus-release-plan|||根据当前代码分支与 origin/master 的代码改动，自动生成发布计划文档。当用户提到\"发布计划\"、\"上线计划\"、\"发布文档\"、\"release plan\"、\"上线checklist\"、\"发布c
+大促水位采集|||根据用户提供的文档（钉钉文档或本地文件）或者其他指定的信息，解析出需要采集的应用和指标，通过 Sunfire 采集水位数据，可支持写回原文档。当用户提到采集水位、大促水位、水位巡检、水位记录、水位报告
+zebra-aone-bug-creator|||依据接口自动化测试执行结果自动创建 Aone Bug。当用户说\"帮我创建bug\"、\"提一个bug\"、\"根据执行结果创建bug\"、\"自动化发现了问题\"、\"测试失败了帮我提bug\"、\"创建缺陷\"时，必须使
+pcap分析|||使用 tshark (Wireshark CLI) 分析 pcap/pcapng/cap 网络抓包文件，诊断网络连接问题、协议异常和性能瓶颈。当用户提到抓包分析、pcap 文件、网络抓包、数据包分析、
+代码格式化|||Format the project's Java code with Spotless and check for Java 8 API violations that Spotless canno
+check-new-user-free-gift|||校验 AE 账号是否拥有新人买免（FreeGift）资格，并自动处理各种异常场景（非新人账号转换、脏数据清理等）
+Agent代理|||为每个 AI Agent 或人工调试任务提供本机隔离的 Chrome profile、whistle proxy、rule-list 和 namespace lease。 当 agent 需要在生产 
+happyhorse-video|||Generate and edit videos via Alibaba Cloud Bailian (Model Studio) HappyHorse models, including text-
+release-three-axes-review|||审阅技术方案设计文档中的「上线三板斧」(可灰度、可回滚、可监控)落地情况,基于钉钉文档链接(alidocs.dingtalk.com)做查漏补缺,并对文档里的上线步骤顺序做依赖关系/回滚边界/监控就位
+秒悟官方 meoo-cli|||从零到上线的全栈应用构建指南，基于秒悟（Meoo）平台。 触发条件： (1) 用户提到\"秒悟\"或\"Meoo\"； (2) 用户要从零构建应用，且需求可被以下架构覆盖：前端 SPA（React/Vue）+
+payment-project 排障 / 答疑助手|||汇金支付项目（payment-project / pp3）排障与答疑助手。适用于任何支持 MCP 协议的 AI 编码助手（Claude Code / QoderWorker / Codex 等）。当用
+会员系分转架构文档|||通过 aone-km MCP 读取语雀/钉钉文档，自动生成可汇报的语雀风格架构文档，配套手绘中文 SVG 架构图。根据文档主题自适应章节结构与图表数量，支持系统现状梳理、设计方案、链路梳理、能力演进、
+代码高可用风险扫描|||Scan code diffs or files for high-availability risks across 28 categories (timeout/retry, degrade/fa
+ai-cr-skill|||AI Code Review 主编排器。执行四阶段代码审查工作流：识别契约违反迹象、生成精准验证点、调用图追溯验证、合理性反思与最终判定。当用户提到以下场景时触发此技能：代码审查、CR、code re
+天猫APP互动 MTOP API 自动化测试工具集|||天猫APP互动 MTOP 端到端交付助手。适用于所有互动工程，开发完成后自动比对新增/变更的 MTOP API，完成预发部署、MTOP 配置发布、预发验证的全流程。当用户提到 MTOP 测试、冒烟测试
+测试用例生成|||一键生成 AI 测试用例。输入 Aone 需求与 PRD（可选附加技术文档），全程自动完成阿拉丁任务创建、知识库匹配与提示词获取，发起用例生成请求并静默上报执行事件。
+test-case-generator-with-xmind|||综合测试用例生成系统，从 PRD 和技术方案文档生成测试方案文档、测试用例文件和 XMind 思维导图。当用户明确说\"生成测试用例\"、\"创建测试用例\"、\"编写测试用例\"、\"设计测试用例\"、\"基于PRD
+code-review-and-testcase-generate|||基于代码变更分支的CR和功能用例生成
+ei-cli-creator|||引导研发同学从 0 到 1 设计、开发、打包、发布一个 Aone 企业 CLI。当前支持 5 种「接口 × 认证」组合 ——
+Aone开发助理|||自动化从 Aone 需求/缺陷到代码实现和 O2 部署的完整开发流程。当用户提到 Aone 工作项 ID（需求/缺陷）、想要实现 Aone 需求、修复 Aone 缺陷，或者要从 Aone 开发代码时使
+plantuml-chart|||Generate professional PlantUML diagrams for complex class diagrams, detailed sequence diagrams, and 
+JDK升级|||Use when 将 Java 项目从 JDK 8 升级到 JDK 11/17/21（含 Spring Boot 升级、javax→jakarta 迁移、阿里/菜鸟中间件适配、Dockerfile 镜
+人懂代码|||Non-Functional Requirements (NFR) code review based on the RoboNFR framework.
+Evaluates code across 
+batman-mic-sources-guide|||Batman MIC Sources 插件的安装、初始化验证、命令速查与排查指南。
+ai-testing-superpowers|||当用户需要设计自动化测试用例、执行 UI/API 测试、测试规划、测试代码审查、测试维护修复、管理 Aone 测试用例、或探索页面功能生成测试经验时使用。基于 AI 智能体驱动的全链路自动化测试元技能
+aone pipeline 官方 skill|||Guides agents through Aone pipeline deployment via the a1 CLI: submit CRs, monitor with --wait-until
+tac-microservice-dev|||TAC 微服务端到端研发闭环 skill，覆盖需求理解、编码、MCP 编译发布、回归验证（baseline diff）、知识沉淀全链路。 通过 tac-console MCP server 的 15 
+deploy-repair-flow|||Java 应用修复-编译-部署-验证全流程编排 skill，串联 a1 CLI（分支管理 / CR 变更单 / 流水线触发与监控）、 amaven（阿里内部 Maven 本地编译验证）、sf-smar
+test-quality-copilot|||测试质量保障一站式Skill，覆盖Bug创建、Bug追踪、测试日报、线上问题报告、发布总结、安全漏洞周报、部署明细查询7大场景，自动化测试全生命周期质量管理。
+ 变更影响分析|||输入 git diff，自动解析变更文件 → 定位所属模块 → 遍历依赖图找到受影响的下游模块和产品 → 输出影响范围报告 + 回归测试建议
+aihub-submit|||端到端管理通过 ai-hub-cli 提交到 Nebula 训练平台的训练/评估任务。执行 6 步强制校验流程：收集参数 → 读取校验 config.sh → 读取校验 train.json → 修改
+ 变更影响分析|||输入 git diff，自动解析变更文件 → 定位所属模块 → 遍历依赖图找到受影响的下游模块和产品 → 输出影响范围报告 + 回归测试建议
+aone-new-change|||为 Aone 应用创建变更（CR），支持关联需求、自动创建分支、遵循扁平化命名规范，并在创建后自动切换本地 Git 分支。当用户要求\"创建Aone变更\"、\"新建变更\"、\"基于需求建变更\"、\"为应用hi
+sdd-light|||轻量 Spec-Driven Development（规格驱动开发）SOP skill，适用于中大型编码任务。当用户输入\"进入探索\"、\"开始探索\"、\"启动探索\"、\"进入新需求\"、\"开始新需求\"、\"启动
+ut-case-generator|||代码仓库单元测试批量生成工具 + 红灯缺陷挖掘双轨产出。通过三步法（项目探测 → 类分级与 JaCoCo 排除 → 单测生成）为 Java 仓库批量补单测。支持公共 prompt + 仓库维度 pro
+skill-manager|||管理 Agent skill 的安装、更新和卸载，支持多 Agent 环境（如 Claude Code、AntCC、AntCodeX、CodeX、OpenClaw、Hermes 等）统一管理
+cr-loop|||会自我进化的CR Skill，把CR过程中发现的 BUG 代码落实为规则（如 CLAUDE.md 等），让 CR 成为 Coding 燃料
+TBContext7|||Use when the user wants to search or read source code, trace app or module info, or query DevOps wor
+内容种草媒体Marketing-api文档查询|||快速查阅国内主流媒体平台公开 API 在线文档。支持自然语言查询（如\"腾讯广告账户类型枚举\"）和精确 URL 查询，自动提取枚举值、接口参数、接口定义等结构化内容，支持多平台同类 API 对比。适用于
+Excalidraw AI 画图|||将文本内容转换为 Excalidraw JSON 格式的图形。当用户需要生成架构图、流程图、思维导图、分工表、看板等可视化图表，或提及 Excalidraw、画图、出图等需求时使用。输出可直接导入 E
+function-migration|||Methodology for migrating any legacy application/module into the toms (web pass-through layer) + tms
+teko-ios-whitebox-change-testing|||基于源码变更点识别，通过 yuda 白盒 /rpc 协议对 iOS 模块进行针对性测试，发现稳定性和逻辑缺陷。 适用场景：模块升级回归测试、新功能/重构代码的稳定性验证、UI布局/线程安全/内存管理等
+专有云 POP API 日志预分析|||查询专有云 POP API 日志查询 hybrid.openapi.aliyun.test 平台上指定环境名（EnvName）和 RequestId 的 SLS 日志并自动进行智能预分析，提高问题排查
+teko-android-whitebox-change-testing|||基于源码变更点识别，通过 yuda 白盒 /exec 协议对 Android 模块进行针对性测试，发现稳定性和逻辑缺陷。 TRIGGER when: 用户提及 Android 模块变更测试、白盒验证、
+harness-engineering-init|||Harness Engineering 基础设施搭建——打造可持续迭代的 AI 协作工程环境。
+为任意项目搭建完整的 Harness 框架（AGENTS.md + Skills + Hooks + R
+fullsight — 全自动测试|||Multi-environment automated testing orchestrator with Phase A-E pipeline.
+Trigger when user: runs /f
+payment-installment-development|||分期需求一站式开发助手——从需求到可自测环境一步到位。核心能力：根据Halo需求自动分析技术方案、自动coding、编译打包、SNAPSHOT部署、创建项目环境，直达开发自测状态。覆盖九大模式：A）分
+skill-lint|||Claude Skill 静态质量分析工具。采用四阶段审查流水线（结构扫描 →语义分析 → 多维评分 → 可操作报告），依据 Anthropic 官方最佳实践提炼的 37 条规则进行全面检。
+android-device|||操作 Android 设备的原子能力 Skill。基于 adb 命令，支持截屏、录屏、点击、滑动、输入文本、按键、启动应用、URL Scheme、UI 树查找等操作。零 npm 依赖，纯 Node.j
+spec-coding规格编码技能|||基于规格驱动开发(SDD)与Harness工程的AI编码模式。在编码前交付规格文档，全程严格遵循规格要求，维护错误日志防止回归问题，动态演进规格文档，支持对已有项目逆向生成spec，提供基于检查点的断
+conan-dynamic-tool|||在conan销售测试平台上新增、修改或调试动态工具。集成动态工具平台规则，支持Groovy/Java脚本编写、HSF接口调用、参数配置和调试运行。当用户提到新增动态工具、修改动态工具、调试动态工具、c
+Java 项目一键远程部署技能|||Java 项目一键远程部署技能。通过 SSH 连接到远程开发机，自动完成：拉取指定分支最新代码、Maven 构建、停止旧服务、启动新服务、健康检查。适用于任何标准 Maven 结构的 Java 项目。
+DrawIO 风格统一图表生成器|||将用户提供的原始内容（图片、Markdown 文本、自然语言描述、已有 DrawIO XML）转化为风格统一、规范一致的 DrawIO XML 图表。当用户提到\"生成 DrawIO 图\"\"画流程图\"\"
+sky-matrix-execute-api|||sky-matrix 应用的后端测试执行 HTTP 接口封装，通过 curl 调用 Execute API 替代原有 MCP 接口，支持数据库操作、HSF调用、HTTP请求、MetaQ消息、测试报告管
+凤凰开发流程|||凤凰研发全流程技能（8步）。覆盖 Aone 需求查询 → CR 分支创建 → PRD 分析 / 技术方案 / 实施方案 / 测试计划 / 发布计划 5 份钉钉文档生成 → 代码开发推送 → 发布。适用
+特征工程 FG 配置|||生成特征工程 FG 配置文件（fg.json），完整流程包括从样本表采样取数、计算特征分位数、读取分位数并补 0、生成 fg.json。当用户提到 fg配置文件、fg.json、特征配置、计算特征分位
+code-review|||Senior Code Review Expert. Performs comprehensive code scans and outputs results directly in the con
+arch-dna|||架构 DNA 测序——将代码库的架构模式视为基因组。扫描源码识别设计模式（基因），与健康参考基因组对比发现突变（反模式），生成交互式 DNA 双螺旋可视化。一眼看清项目的架构基因图谱。
+code-terrain|||代码地形图——将代码库渲染为交互式地形图。复杂度=海拔，测试覆盖=植被，变更频率=天气活动。一眼看清代码库的健康全貌，发现复杂度高山、测试沙漠和变更风暴。
+code-tarot|||代码塔罗牌——输入模块/文件/PR，自动分析代码风险并生成交互式塔罗牌可视化。每张牌基于真实代码分析，将枯燥的风险报告转化为有趣且直觉的塔罗占卜体验。
+git-detective|||Git 侦探——输入 bug 描述或可疑代码行，自动进行代码犯罪现场调查。通过 git blame、commit 关联、变更模式分析，生成交互式侦探调查板，还原 bug 引入的完整时间线。
+frontend-refactor|||当前端项目需要重构、迁移、旧新实现对齐、契约核对、回归扫描、功能查漏或重构验收时使用。该 skill 会先生成用户可审批的 HTML 重构计划，再指导按基线建模、分片执行、浏览器比对和最终验收。
+sepolicy-migrate|||安卓跨版本 SELinux/SEPolicy 安全策略迁移工具。当用户在 Android 16（或其他目标版本）上新增模块，需要从 Android 11/14（或其他参考版本）移植安全策略时触发。适用
+代码仓库拉齐同步工具|||代码仓库拉齐同步工具。当用户需要将两个代码仓库之间的代码进行同步、拉齐、对齐、移植时触发此 skill。适用场景包括：不同平台间同一代码的同步（如 Android/AliOS/Linux 等平台间的代
+feature-forge|||自适应 7 阶段结构化 Feature 开发工作流。自动发现项目技术栈、架构模式和约束，按发现的模式生成骨架、填充逻辑、编写测试、自审约束、验证构建。适用于任意 Java/Python/TypeScr
+chaos-scenario|||输入模块/组件名，自动分析级联故障场景，生成交互式 HTML 故障树可视化 + 结构化缓解手册。将 SRE 混沌工程理念前移到开发阶段——在代码写完、部署之前就识别级联故障风险。
+ai接口自动化|||本技能实现了从代码变更分析到自动化测试执行的完整流程
+VVR Flink SQL 作业全生命周期管理工具|||VVR Flink SQL 作业全生命周期管理工具。 SDK 封装：基于 VVR/ALake OpenAPI SDK，提供 Deployment 增删改查、Draft 草稿发布、作业启停与状态查询、S
+tao-autoresearch|||Autonomous LLM training optimization. Analyzes training code, identifies tunable parameters, iterati
+skill-evalater|||评测 Skill 的质量和效率，支持对比模式（基准 vs 迭代逐任务对比）和单 Skill 模式（按验收标准绝对打分）。当用户提到「评测 skill」「skill 对比」「skill eval」「对比
+基于测试用例的代码 Review|||基于测试用例的代码 Review。解析 .mm/.xmind 思维导图 / K3 Excel 导出 / K3Case URL / Markdown 测试用例文档中的测试用例，定位对应源码，逐条 rev
+aone-bug-lab|||Aone Bug 全流程工作台。用户提到 Bug ID 或缺陷分析即进入。触发词：添加项目、查看配置、删除项目、我的 bug、待办缺陷、bug 详情、#bugid、bug 80347128、分析 bu
+BG-Context -- 和 AI 协作前的背景对齐|||背景对齐：和 AI 协作前先对齐背景。/bg-context 加载历史背景上下文，/bg-context <总结> 将本次背景双写到语雀和项目本地 docs。背景按「业务」和「技术架构实现」两大类、按
+code-prism深度分析代码棱镜|||将代码库蒸馏为分层、可锚定、双向可追溯的知识工件。产出\"业务-代码\"双向知识图（JSON + Markdown）， 作为下游测试技能（用例生成、测试分析、代码用例校验）的标准上游上下文。 优先支持 J
+sdd-fe-all-in-one|||前端需求端到端一键开发 Skill。即便用户未明确说\"使用本 skill\"，每当涉及前端开发（含环境准备、迭代创建、技术方案、D2C 生码、多语言、浏览器自动化、交互验证、部署、CR、归档等任一环节）
+cnyz-fe-skills-url-platform|||解析域名背后对应的前端项目和页面。当用户输入一个或多个 URL/域名，需要知道这个网址对应哪个代码仓库、哪个页面时使用此 skill。触发场景包括\"这个网址对应什么项目\"、\"解析这个 URL\"、\"查一
+快速新增课程|||通过 Excel 批量导入 API 快速新增课程。当用户想要新增、创建、导入课程，或提到添加选修/必修课程时使用。
+项目工程知识专家|||为代码仓库建立完整的 AI 项目知识体系，让 AI（copilot/Claude/Agent）能长期稳定承接该项目的需求。当用户提到以下任何场景时必须使用此技能：接手新项目想让 AI 做需求、梳理/整
+offerweb-mtop-autotest-plus-v221|||OfferWeb MTOP接口自动化测试完整流程：流量录制 → 用例执行 → 等待完成 → 停止录制 → 分析报告。基于玛丽执行记录进行流量分类、精确字段路径匹配的diff二次验证（模版1106线上数
+Loom|||PRD → 部署 → 复盘的可编排交付工作流。单 skill 入口（codename Loom），按 phase 编排可校验 gate（含强制 phase checkpoint 与 patterns/
+ali-dev-toolkit|||阿里内部研发工具集。当用户需要：查SLS日志/查日志/traceId排查/查报错/搜日志、HSF调用/泛化调用/hsfops、DMS查数据库/SQL查询/查表、ODPS/MaxCompute离线数据、
+OneBridge Development Workflow|||Enterprise AI development workflow with knowledge accumulation. Guides structured development from r
+multi-lang-coverage-optimizer|||指导 Agent 为 Java、Python、Go 项目自动化提升单元测试覆盖率。通过“生成-执行-解析-优化”闭环，利用语言特定的解析脚本提取未覆盖行，并根据规范文件完善测试，直至达到目标覆盖率（默
+slf4j-log-completion|||日志补全大师。当用户提到补齐日志、增加日志、日志覆盖率、入口出口日志、SQL日志、业务链路日志、日志打印不全、排查缺少日志等场景时激活此 skill。按 SOP 分析现状、制定计划、分阶段补全入口出口
+vllm推理运维|||Query vLLM model deployment commands, startup configurations, tool-call-parser / reasoning-parser se
+api-performance-analyzer|||Java 接口性能分析与优化。当用户提到接口响应慢、接口性能问题、方法耗时排查、性能瓶颈定位、Arthas 诊断、慢接口优化、RT 高、超时、TP99 异常等场景时使用。适用于 Spring Boot
+db-query-guide|||TMS 数据库查询指南。指导 AI 正确查询 TMS 相关数据库（运输/分拨/履约/预约/运力/CNI 订单等）。覆盖 cnsc-tmsx-os、phdms、cnfreight-transocean、
+arthas-tools|||Arthas 命令生成器和使用指南。覆盖 vmtool、sc、sm、jad、classloader、ognl 等核心命令，适用于在线诊断 JVM、调用对象方法、查看类信息、反编译类、排查 ClassL
+maven依赖变化分析|||对比当前分支与基准分支的 Maven 依赖差异；本工具通过直接对比两个分支的实际 classpath，精确识别新增了哪些 jar、删除了哪些 jar、哪些 jar 发生了版本升降级。
+tms-desensitization|||TMS运配团队脱敏需求开发。当用户提供 Aone 需求 ID 并要求对某个接口返回结果进行脱敏时使用此 skill。完整流程包括：查询需求详情、创建 Aone 变更分支、定位接口 VO 及实现类、添加
+eagleeye-trace-analyze|||EagleEye 调用链分析工具。必须通过 sf CLI 管道 + 压缩脚本查询调用链，禁止直接读取 sunfire MCP 原始输出。根据 traceId 查询完整调用链，压缩噪音 span，支持按
+大促水位采集|||根据用户提供的文档（钉钉文档或本地文件）或者其他指定的信息，解析出需要采集的应用和指标，通过 Sunfire 采集水位数据，可支持写回原文档。当用户提到采集水位、大促水位、水位巡检、水位记录、水位报告
+diamond-config-audit|||[user] 分析Java应用中Diamond配置的使用情况，识别无效配置和已完成灰度的配置项。当用户提到Diamond配置清理、配置审计、灰度配置分析、无效配置排查、Diamond瘦身时使用此技能。
+web-design-skill|||Build high-quality visual Web artifacts using HTML/CSS/JavaScript/React — web pages, landing pages, 
+url-to-repo|||通过页面 URL 定位前端工程仓库。排查线上问题时拿到 URL 不知道代码在哪、想给某个页面提 bug/需求不知道该找哪个仓库、AI Agent 做代码修改时需要先定位到正确的工程——给定一个页面 U
+toms-order-filter-list-display|||TOMS 订单中心新增筛选项与列表展示字段的完整操作指南。当用户需要在 TOMS 订单列表中新增一个筛选条件或新增一列展示字段时使用此 skill。适用场景：新增订单列表筛选项、新增列表展示列、修改前
+sls-log-analysis|||自动化 SLS 日志异常分析、报告生成、代码修复和分支管理的完整流程。 当用户需要查询 SLS 日志异常、生成分析报告、自动修复代码或创建 Code Review 时使用此技能
+goal-loop-runner|||让「当前正在运行的 agent」用自身基模能力 + 多个子 agent（sessions_spawn）组成一个「目标守护循环」，模拟 Claude Code 的 /goal 与 /loop——咬住目标
+api-performance-analysis|||后端接口端到端性能根因分析与优化方案沉淀。整合慢 trace 采样、调用链下钻、SLS 日志取证、源码审查四大能力；强制执行调用方 vs 提供方双向核查矩阵 + 业务量级核实 + 已有基建优先复用，避
+git-impact-analysis（代码变更分析）|||Use when comparing two git branches, assessing change impact, or planning test coverage — even if th
+【黑码】AI验收|||当用户请求UI验收、设计稿与开发稿对比、还原度检测时触发。触发词：\"验收\"、\"UI还原\"、\"还原度检测\"、\"对比设计稿和开发稿\"、\"检查UI还原度\"。通过图片匹配、区域映射、差异检测和DSL节点定位完
+阿里云测试用例开发|||在用户指定的目录路径下部署（初始化）一套阿里云产品测试用例开发系统 vault。仅当用户明确提供了目标目录路径（如\"在 ~/Code/xxx 下部署\"、\"在当前目录初始化\"）时才触发。从 skill 
+非标商品一键生单|||飞猪非标商品（机票宝贝）在 MTOP 预发环境的一键「渲染 → 生单」技能。当用户需要对宝贝/机票宝贝/非标商品下单、生单、创建订单、测试下单时使用此技能。关键词：宝贝生单、下宝贝订单、机票宝贝下单、
+everything-code|||Aone Copilot 增强 hooks 套件，包含跨会话上下文恢复、进度快照、语雀文档自动同步、持续学习 skills 提炼、macOS 完成通知五大能力。安装方式：运行 assets/insta
+java-remote-deploy|||Java 项目一键远程部署技能。通过 SSH 连接到远程开发机，自动完成：拉取指定分支最新代码、Maven 构建、停止旧服务、启动新服务、健康检查。适用于任何标准 Maven 结构的 Java 项目。
+需求分析和结构化测试用例生成|||从PRD需求文档、技术方案文档、代码变更分支中提取需求点和测试点，生成Xmind格式的结构化测试用例。支持Aone需求自动关联代码变更、神盾测试计划创建和用例批量导入。当用户提到需求分析、测试用例生成
+skill-feedback-loop|||Meta-skill — closes feedback loop from working skills' md output back to spec upgrades. Manually tri
+order-tag-rule-builder-preview|||Preview and validate audit rule SQL for 订单标稽核 (domain=TAG_EXCEPTION, bizScene=27) — generate dimensi
+order-tag-rule-builder-write|||Execute writeRiskConfig to write audit rules into gold_miner.risk_config + dimension for 订单标稽核 (doma
+order-tag-rule-deriver|||Reverse-engineer 订单标稽核 (TAG_EXCEPTION) audit rules from source code. Traces field write path through
+order-tag-coordinator|||订单标稽核 (TAG_EXCEPTION) 总入口. Routes to builder-preview / builder-write / deriver / SLS analysis. Trigg
+git-commit-tool|||智能分析暂存区变更，处理冲突，生成符合 Conventional Commits 规范的提交信息并自动一键提交推送代码。 适用于日常开发的高效提交场景。当用户提到\"提交代码\"、\"代码提交\"、\"推送代码
+Weex 页面真机调试|||使用 @ali/wxdbg 在真机上调试 Weex 页面。用于淘宝/Weex 页面 pair、抓 Weex 日志、执行 CDP 方法、打开 Chrome DevTools、对比 DevTools Co
+pmd-rule-manager|||帮助你在 wdk-scm-tools 项目中增加或剔除 PMD 规则。当用户需要启用/禁用 P3C 规约规则类（并发编程、常量定义、异常处理、控制语句、面向对象、集合处理、ORM、命名规范、注释规范等
+smart-testcase-generator|||Unified test case generator supporting multiple project types with pluggable strategies, deep knowle
+commit-message-generator|||Use when users need to generate or validate Pangu-format commit messages that carry Aone IDs, bug-in
+手绘图灵|||手绘图灵——将文档、方案、梳理内容转化为卡通手绘风格的可视化图示（HTML+rough.js）。支持流程图、架构图、时序图、思维导图等图类型，生成独立可运行的 HTML 文件，视觉效果如同在白板上随手
+sg-semi-test-web|||管理测试全流程任务管理系统的需求和任务，支持查询需求列表、新建需求、查询任务列表、新建任务、编辑任务。触发关键词：需求管理、任务管理、查询需求、新建需求、查询任务、新建任务、编辑任务、测试任务、需求列
+接口测试场景分析|||基于代码分析、流量采集和 THub 用例，生成 HSF 接口的结构化测试场景分析报告。覆盖接口出入参结构解析、字段业务语义、枚举约束、场景组合分析（正常/异常/边界）和出参断言。当用户需要查询接口入参
+CaiNiaoRcsQtMac编译|||Build and package C++ Qt projects for macOS Apple Silicon (arm64). Covers Homebrew dependency instal
+openclaw-install-mcp|||通用内网 MCP 服务安装指南。基于 mcporter CLI，支持 OAuth 2.1 认证，适用于阿里内部各类 MCP 服务（如 Aone-KM、O2、中间件、运维等）。提供标准化安装流程、OAu
+node 项目 e2e 测试|||node 项目 e2e 测试
+har-api-chain-analyzer|||Analyze HTTP Archive (HAR) files to extract correlated API call chains, identify parameter passing b
+atask-gccase|||只要用户提到\"生成测试用例\"、\"生成测试分析\"、\"跑测试分析\"、\"出用例\"、\"测试分析与用例\"、\"帮我出用例\"、\"生成用例\"、\"跑一下测试分析\"时就必须自动触发。需要用户提供影演配置ID才能拉取需求等
+hm-scm-tool-empty-shop-sales-simulate-visualizer|||可视化解读「空白前置仓销量仿真」（ScmSimulateEmptyShopSalesCalHandler）的预测拆解过程。输入 sku_code + predict_date + shop_code，
+HSF接口变更影响评估|||通过 AST 解析与代码关系图分析 Java 分支变更对 HSF 接口的影响面。当用户需要评估 HSF变更影响、HSF接口影响面、Java代码变更评估、变更影响分析、调用链回溯、HSF blast r
+Webpack 构建产物体积优化工具箱|||Webpack 构建产物体积优化工具箱；核心能力：分析构建产物体积与依赖组成；提取 CSS 为独立文件；消除重复依赖；替换大体积库为轻量实现；启用 tree-shaking；将组件库改为直接路径引入。
+性能埋点插桩工具箱|||性能埋点插桩工具箱；核心能力：检测项目中已有的性能上报 API；在关键业务路径插入性能埋点；分析运行时日志还原执行链路；通过 Chrome DevTools MCP 自动采集浏览器运行时数据；根据埋点
+rum-perf-page-daily|||闪购首页Weex性能日报，使用fairy-cli rum-perf分析FSP P95、子阶段耗时的日环比/周同比变化。默认同时输出embed（容器起点FSP）和page（导航起点FSP）两份报告，也可
+CIPagePilot|||【唯一开发入口】编排 emonitor/dbgo/init/watchtower/xboot/edr/middleware/emq/edts/initadmin/workflow/finops/ssz
+mobile-use-automation|||当用户提到 \"mua\"、\"用 mua 跑\"、\"mua 执行\"、\"mua task\"、\"mua skill\" 时使用此技能。
+mua 是一个 CLI 工具，用于在 Android 真机上执行移动端自动化
+读取figma设计稿并转换为Android Compose代码|||Figma设计稿转Android Compose代码的完整规范，包括获取设计数据、颜色规范。在实现Figma设计稿时自动触发。
+diff-dom-api-data|||前端数据一致性监控接入 Skill，用于在 React 项目中接入 @ali/alsc-diff-api-data， 对页面渲染的 DOM 数据与接口返回数据做一致性比对，防范价格/金额/折扣率等易资
+券列表适配小助手|||[project] 催用条券列表权益适配指南。提供催用条（xsd-coupon-urge-bar）组件中新增权益类型、调整券列表坑位分配的标准流程和代码模式。当需要在催用条浮层中新增权益类型（如付费券
+AONE需求自动拉分支|||Create change requests from Aone requirement links, match frontend/backend applications. Uses coop M

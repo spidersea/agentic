@@ -1,6 +1,7 @@
 ---
 name: harden
 description: 界面弹韧性加固 — 处理边缘用例、长字符串、错误恢复、无网降级及 i18n。使理想状态的 Demo 转化为可用的生产级接口。
+version: 1.0.0
 user-invokable: true
 argument-hint: [TARGET=<value>]
 ---
@@ -9,6 +10,8 @@ argument-hint: [TARGET=<value>]
 
 > **核心宗旨**: 能够应对完美数据流的设计不是产品，能够抵抗极度异常现实的设计才是。
 > 所有代码实现细节及测试清单载于：`.agent/skills/harden/references/harden-details.md`。
+>
+> **触发条件**: 当用户执行 `/harden`、要求加固界面健壮性、处理边缘用例或进行生产级防御加固时使用。
 
 ## 1. 结构与排版防御 (Text & Layout)
 - 强制接管 **长文本与换行** (`text-overflow`, `line-clamp`, `word-wrap`)。

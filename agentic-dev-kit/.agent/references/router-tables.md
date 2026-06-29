@@ -39,6 +39,20 @@
 | 微交互与视觉增强 | `.agent/skills/visual-enhance/SKILL.md` |
 | 认识论 / 隐性知识视角 | `.agent/skills/polanyi/SKILL.md` |
 | Git 分支与提交纪律 | `.agent/skills/world_class_coding/version-control/SKILL.md` |
+| AI 产品终局诊断 | `.agent/skills/analyze-ai-products/SKILL.md` |
+| 从成熟规格中提取深层规则 | `.agent/skills/deep-rules/SKILL.md` |
+| Feynman 学习法 | `.agent/skills/feynman/SKILL.md` |
+| 创建新 Skill | `.agent/skills/skill-creator/SKILL.md` |
+| SDD-RIPER 方法论落地 | `.agent/skills/sdd-riper-one/SKILL.md` |
+| 教学与指导优化 | `.agent/skills/teach-impeccable/SKILL.md` |
+
+### Tier 3 — 系统级基座技能（自动加载，无需手动路由）
+| 场景 | 加载技能 |
+|---|---|
+| 知识复利系统编排 | `.agent/skills/memory-protocol/SKILL.md` |
+| 梦境记忆整理协议 | `.agent/skills/dreaming/SKILL.md` |
+| 持续学习与本能提取 | `.agent/skills/continuous-learning/SKILL.md` |
+| 会话生命周期钩子 | `.agent/skills/hooks-lifecycle/SKILL.md` |
 
 ### 工作流路由表 (Workflow Routing)
 
@@ -67,6 +81,9 @@
 | `/config-scan` | 配置扫描 | `.agent/workflows/config-scan.md` |
 | `/harness-audit` | 规范系统审计 | `.agent/workflows/harness-audit.md` |
 | `/instinct` | 本能管理 | `.agent/workflows/instinct.md` |
+| `/skill-lint` | Skill 质量治理 | `.agent/workflows/skill-lint.md` |
+| `/context-compile` | 上下文编译 | `.agent/workflows/context-compile.md` |
+| `/agent-audit` | Agent 行为审计 | `.agent/workflows/agent-audit.md` |
 | `/autoresearch:*` | 自主循环族（security/ship/fix/review/debug/plan） | `.agent/skills/autoresearch/SKILL.md` |
 
 ## 2. Agent 委派路由 (Delegation Agent Matrix)
@@ -113,6 +130,7 @@
 | 红线与禁区 | `.agent/rules/red-lines.md` |
 | 测试编写与执行纪律 | `.agent/rules/testing.md` |
 | 临时分析脚本自造边界 | `.agent/rules/tool-creation.md` |
+| AI 编码行为军规 | `.agent/rules/ai-coding-guard.md` |
 
 ## 5. 运行时状态文件 (Runtime State)
 

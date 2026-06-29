@@ -1,6 +1,7 @@
 ---
 name: polish
 description: Final quality pass before shipping. Fixes alignment, spacing, consistency, and detail issues that separate good from great.
+version: 1.0.0
 user-invokable: true
 argument-hint: [TARGET=<value>]
 ---
@@ -8,6 +9,9 @@ argument-hint: [TARGET=<value>]
 **First**: Use the frontend-design skill for design principles and anti-patterns.
 
 Perform a meticulous final pass to catch all the small details that separate good work from great work. The difference between shipped and polished.
+
+> **触发条件**: 用户调用 `/polish` 或功能开发完成进入发布前最终检查阶段时触发。
+> **输入**: 功能完整的 UI/代码 → **输出**: 通过 Polish Checklist 全部项目的发布级产物。
 
 ## Pre-Polish Assessment
 
@@ -196,3 +200,9 @@ Before marking as done:
 - **Check all states**: Don't just test happy path
 
 Remember: You have impeccable attention to detail and exquisite taste. Polish until it feels effortless, looks intentional, and works flawlessly. Sweat the details - they matter.
+
+## 退出条件
+
+- 上方 Polish Checklist 中所有项目已勾选通过
+- 在真实设备上交互验证无视觉或功能缺陷
+- **与体系关系**: 依赖 `teach-impeccable` 生成的设计准则；与 `normalize`（设计系统对齐）互补——normalize 保证系统一致性，polish 保证发布级细节品质。

@@ -1,11 +1,15 @@
 ---
 name: visual-enhance
 description: 视觉增强 — 为界面添加有目的的动画、配色、微交互和动效，提升可用性和愉悦感。合并自 animate + colorize。
+version: 1.0.0
 user-invokable: true
 argument-hint: [TARGET=<value>]
 ---
 
 Analyze a feature and strategically add animations and micro-interactions that enhance understanding, provide feedback, and create delight.
+
+> **触发条件**: 用户调用 `/visual-enhance` 或任务涉及 UI 动画、微交互、配色增强时自动加载。
+> **输入**: 目标组件/页面 → **输出**: 添加了有目的动画和微交互的增强 UI。
 
 ## MANDATORY PREPARATION
 
@@ -185,3 +189,10 @@ Test animations thoroughly:
 - **Adds value**: Makes interface clearer or more delightful
 
 Remember: Motion should enhance understanding and provide feedback, not just add decoration. Animate with purpose, respect performance constraints, and always consider accessibility. Great animation is invisible - it just makes everything feel right.
+
+## 退出条件
+
+- 动画在目标设备上均达到 60fps 无卡顿
+- `prefers-reduced-motion` 已适配
+- 每个动画有明确目的（反馈/引导/愉悦），无无意义装饰动效
+- **与体系关系**: 依赖 `frontend-design` 提供的设计准则；与 `polish`（最终发布打磨）互补——visual-enhance 负责动效层，polish 负责全局细节品质。

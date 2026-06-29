@@ -1,9 +1,14 @@
 ---
 name: frontend-design
 description: Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications. Generates creative, polished code that avoids generic AI aesthetics.
+version: 1.0.0
 ---
 
 This skill guides creation of distinctive, production-grade frontend interfaces that avoid generic "AI slop" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.
+
+> **触发条件**: 当用户要求构建 Web 组件、页面、海报、应用或任何前端产出物时加载本 Skill。
+> **输入**: 用户需求描述 + 可选设计参考 → **输出**: 生产级前端代码 + 审美方向文档。
+> **反模式**: ❌ 禁止使用 AI 色板（暗底青紫渐变）、禁止千篇一律的卡片网格、禁止纯装饰性动画。
 
 ## Design Direction
 
@@ -118,6 +123,11 @@ Review the DON'T guidelines above—they are the fingerprints of AI-generated wo
 ---
 
 ## Implementation Principles
+
+1. 确定审美方向并 commit 到一个大胆的设计语言
+2. 实现生产级可运行代码，匹配审美愿景的复杂度
+3. 加载 `@.agent/skills/teach-impeccable/SKILL.md` + `@.agent/rules/code-style.md` 作为结构规约准绳
+4. 审查通过 AI Slop Test — 确保无 AI 生成指纹
 
 Match implementation complexity to the aesthetic vision. Maximalist designs need elaborate code with extensive animations and effects. Minimalist or refined designs need restraint, precision, and careful attention to spacing, typography, and subtle details.
 

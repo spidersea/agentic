@@ -41,6 +41,7 @@
 | 编写/修改测试 | `.agent/rules/testing.md` |
 | 需要临时分析脚本 | `.agent/rules/tool-creation.md` |
 | 涉及质量关卡 | `.agent/rules/code-review.md` |
+| AI 辅助编码时 | `.agent/rules/ai-coding-guard.md` |
 | 需要端到端质量完整性 | `.agent/skills/quality-operating-system/SKILL.md` 与 `.agent/quality/quality-contract.md` |
 | 面临所有操作时 | `.agent/rules/security.md` 及 `.agent/rules/red-lines.md` |
 

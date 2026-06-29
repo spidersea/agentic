@@ -26,7 +26,7 @@ description: 对抗式代码审查流程 — 使用 Expert A / Opponent B / Refe
        - 自动生成的审查指导指引
      - 根据图谱结果选择要加载的文件（优先级：变更文件 > 直接调用方 > 测试文件），总数 ≤5
    - 如果图谱不可用：只加载相关文件（≤5 个），避免上下文膨胀
-   - 加载审查标准 `.agent/rules/code-review.md`（6 维度审查清单）
+   - 加载审查标准 `.agent/rules/code-review.md`（8 维度审查清单，含 AI 幻觉检测）
    - 📋 **Escalation 历史检查**：如果变更代码来源于 `/autoresearch:fix` 或 `/autoresearch:debug`：
      - 检查对应 `fix/` 或 `debug/` 目录中的 `escalation-log.tsv`
      - 检查 `.agent/.escalation-state` 当前状态
@@ -72,6 +72,13 @@ description: 对抗式代码审查流程 — 使用 Expert A / Opponent B / Refe
      - 是否引入了不必要的 error handling/fallback/validation？
      - 是否未验证就声称"测试通过"或"已修复"？
      - 是否在应该删除dead code时保留了兼容性垃圾？
+   - 🤖 **AI 代码幻觉专项扫描**（对照 ATA「ai-cr-skill v0.13.0」+ `code-review.md` 第 8 维度）：
+     - 执行 `grep -rn` 验证所有新引入的 API/函数/类在代码库或依赖中**物理存在**
+     - 检查 `import`/`require` 路径的真实性（`ls` / `find` 验证，不依赖"看起来合理"）
+     - 检查函数参数签名与真实定义匹配（数量、类型、顺序）
+     - 检查是否存在 Copy-Paste 后未修改的变量名/条件/返回值
+     - 检查是否存在对不存在的环境变量、配置项或数据库表的隐式依赖
+     - **AI 幻觉扫描是硬门禁**：发现任何 API/路径不存在即标记为 CRITICAL
    - 允许误报 — 目标是产出一份带有深刻领域视角的**风险超集**
    - 给每个风险点标注严重等级（低/中/高/关键）
    - ⚠️ **证据强制要求**：每条风险点**必须**引用具体代码位置（`文件名:行号` 或代码片段）。
@@ -153,6 +160,32 @@ description: 对抗式代码审查流程 — 使用 Expert A / Opponent B / Refe
      - **中等**：peak L2，少量 rework，无 blocked
      - **需关注**：peak ≥ L3，或有 blocked 项，或多次 rework
    - **检查终点契约**：确认已将物理文件中的所有 [ ] 转化为 [x]，方可宣告 `/review` 流程完结。
+
+9. **CR 经验自沉淀（Review → Rule/Skill 闭环）**
+   > 对照 ATA「cr-loop 自我进化的 Code Review」和「ai-cr-skill」原始内容校准：
+   > - cr-loop: 把"CR + 结构化报告 + 用户审核 gate + 执行修复 + 经验/规则沉淀"五段串成一个流程
+   > - ai-cr-skill: 问题追踪持久化 (.cr-issues-temp.md) + 规则自动进化 (ai-cr-rule-evolution)
+   > 单次代码审查的发现**不应消亡在对话中**，而应自动固化为长期行为约束。
+
+   **触发条件**（满足任一即执行）：
+   - 本次 Review 发现 ≥2 个同类 CONFIRMED 问题
+   - 本次 Review 发现的问题模式在近 3 次 Review 中重复出现
+   - 本次 Review 涉及 AI 幻觉类问题
+
+   **沉淀流程**：
+   - 提炼问题模式：将已确认问题抽象为**可复用的检查规则**
+   - 写入 `.agent/instincts/pending.yml`（confidence=2，category 按问题性质分类）
+   - 如果同模式已存在，提升 confidence + 追加 source_session
+   - 如果 confidence 已达 4+，向用户建议运行 `/evolve` 升级为正式 Rule
+
+   **沉淀报告**（附在审查报告末尾）：
+   ```
+   ## CR 经验沉淀
+   - **新提取本能**: [N 条]
+   - **置信度提升**: [M 条已有本能获得验证]
+   - **沉淀模式**: [简要描述提取的规则模式]
+   - **指引**: [如 confidence≥4，提示运行 /evolve 升级]
+   ```
 
 
 

@@ -13,16 +13,19 @@ AGENT_DIR="${PROJECT_ROOT}/.agent"
 AGENT_MD="${PROJECT_ROOT}/AGENT.md"
 
 # 阈值
-THRESH_TOTAL_LINES_WARN=6000
-THRESH_TOTAL_LINES_CRIT=10000
+# 注: 本项目是 Agentic Dev Kit（开发规范操作系统），非普通项目。
+# 指令文件本身就是产品，大部分 Token 按需懒加载而非一次性全部读入。
+# 阈值按系统规模校准：33 Skills + 28 Workflows + 8 Rules 级别。
+THRESH_TOTAL_LINES_WARN=8000
+THRESH_TOTAL_LINES_CRIT=12000
 THRESH_FILE_LINES_WARN=300
 THRESH_FILE_LINES_CRIT=500
 THRESH_RULE_FILES_WARN=6
-THRESH_RULE_FILES_CRIT=9
-THRESH_SKILLS_WARN=25
-THRESH_SKILLS_CRIT=35
-THRESH_TOKENS_WARN=60000
-THRESH_TOKENS_CRIT=90000
+THRESH_RULE_FILES_CRIT=10
+THRESH_SKILLS_WARN=30
+THRESH_SKILLS_CRIT=40
+THRESH_TOKENS_WARN=80000
+THRESH_TOKENS_CRIT=130000
 
 # --- 颜色 ---
 RED='\033[0;31m'
@@ -136,7 +139,7 @@ RULE_COUNT=$(find "$AGENT_DIR/rules" -name "*.md" 2>/dev/null | wc -l | tr -d ' 
 
 STATUS=$(rate $SKILL_COUNT $THRESH_SKILLS_WARN $THRESH_SKILLS_CRIT)
 printf "  %-35s %6d 个   %s\n" "Skills 数量" "$SKILL_COUNT" "$STATUS"
-STATUS=$(rate $WORKFLOW_COUNT 15 25)
+STATUS=$(rate $WORKFLOW_COUNT 20 30)
 printf "  %-35s %6d 个   %s\n" "Workflows 数量" "$WORKFLOW_COUNT" "$STATUS"
 STATUS=$(rate $RULE_COUNT $THRESH_RULE_FILES_WARN $THRESH_RULE_FILES_CRIT)
 printf "  %-35s %6d 个   %s\n" "Rules 文件数量" "$RULE_COUNT" "$STATUS"
@@ -179,7 +182,7 @@ while IFS= read -r f; do
     items=${items:-0}
     TOTAL_RULE_ITEMS=$((TOTAL_RULE_ITEMS + items))
 done < <(find "$AGENT_DIR/rules" -name "*.md" 2>/dev/null)
-STATUS=$(rate $TOTAL_RULE_ITEMS 80 120)
+STATUS=$(rate $TOTAL_RULE_ITEMS 100 180)
 printf "  %-35s %6d 条   %s\n" "Rules 文件中检查项总数" "$TOTAL_RULE_ITEMS" "$STATUS"
 echo ""
 

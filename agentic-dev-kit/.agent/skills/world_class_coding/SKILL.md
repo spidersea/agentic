@@ -1,5 +1,7 @@
 ---
+name: world_class_coding
 description: 通用智能体代码开发标准技能 — World-Class Agentic Coding Skill
+version: 1.0.0
 ---
 
 # 通用代码开发与执行技能
@@ -9,6 +11,9 @@ description: 通用智能体代码开发标准技能 — World-Class Agentic Cod
 > 它致力于解决大模型三大核心病灶：**上下文过载**、**谄媚幻觉**、**边界模糊**，最大化智能体的编码与执行效能。
 >
 > **根本心法**: 不要追逐花哨的外部插件和工具链。真正有用的能力会被前沿公司内置到产品中。保持工具链精简，只用基础 CLI + 理解核心原则，就足以完成世界级的工作。
+>
+> **触发条件**: 任何代码开发、重构、Debug 或测试编写任务时自动加载作为基线框架。
+> **输入**: 开发任务需求 → **输出**: 通过 Phase 4 闭环验证的生产级代码。
 
 ---
 
@@ -133,3 +138,12 @@ description: 通用智能体代码开发标准技能 — World-Class Agentic Cod
 bash .agent/scripts/health-check.sh .
 bash .agent/scripts/validate-structure.sh .
 ```
+
+## 退出条件
+
+本 Skill 为顶层编码框架，其退出条件等价于 Phase 4 闭环序列全部通过：
+- 自动化测试全量通过（单元→集成→E2E）
+- 验收契约中所有条目已核验
+- 无回归问题
+- 变更摘要已生成并提交人类审批
+- **与体系关系**: 子 Skill（`coding-architecture`、`testing-discipline`、`version-control`）各自独立执行并汇总到本框架的 Phase 4 验证环节。

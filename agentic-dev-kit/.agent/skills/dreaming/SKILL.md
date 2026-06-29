@@ -18,6 +18,8 @@ version: 3.0.0
 
 推荐频率：活跃项目每周一次；或任一 memory 文件超 300 行。
 
+> **输入**: `.agent/memory/*.md` 全部记忆文件 → **输出**: 整理后的记忆文件 + SHA 校验 + dreaming log。
+
 ---
 
 ## 第零步 · Backup（强制）⚠️

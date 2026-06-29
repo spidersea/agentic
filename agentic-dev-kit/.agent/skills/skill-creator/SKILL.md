@@ -8,6 +8,9 @@ version: 1.0.0
 
 > 灵感来源：[everything-claude-code](https://github.com/affaan-m/everything-claude-code) 的 `/skill-create` 命令。
 > 核心理念：新项目冷启动时，通过分析 Git 提交历史自动提取项目特有的编码模式和惯例，生成 SKILL.md 草稿。
+>
+> **触发条件**: 用户调用 `/skill-create` 或新项目接入需要生成编码规范时触发。
+> **输入**: Git 仓库提交历史 → **输出**: SKILL.md 草稿（包含编码规范、测试约定、Git 工作流约定）。
 
 ## 使用场景
 
@@ -64,3 +67,9 @@ git log --since="3 months ago" --format='%H %s' --no-merges
 - 只能提取**代码层面**的模式，无法提取设计决策背后的原因
 - 对小型项目（< 50 commits）效果有限
 - 无法识别反模式（哪些做法是错误的）——这需要人工标注
+
+## 退出条件
+
+1. SKILL.md 草稿已生成并包含：项目概述、编码规范（带示例）、测试约定、Git 工作流约定
+2. 草稿已提交人工审核
+3. **与体系关系**: 生成的 Skill 供 `skill-lint`（质量检查）验证；与 `continuous-learning`（持续学习）协作——skill-creator 提取显式模式，continuous-learning 捕获隐式经验。

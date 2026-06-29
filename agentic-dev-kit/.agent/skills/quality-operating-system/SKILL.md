@@ -6,6 +6,9 @@ version: 1.0.0
 
 # Quality Operating System
 
+> **触发条件**: 当用户要求更高的 AI 编码可靠性、完整交付、严格测试、内容质量或减少人工 QA 时使用。
+> ❌ 禁止在缺少证据的情况下声明完成；禁止跳过 Requirement-Test Matrix 直接交付。
+
 Use this skill whenever the user asks for higher AI coding reliability, complete delivery, strict testing, content quality, review quality, or reduced human QA labor.
 
 ## Core Principle

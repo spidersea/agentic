@@ -1,11 +1,15 @@
 ---
 name: optimize
 description: Improve interface performance across loading speed, rendering, animations, images, and bundle size. Makes experiences faster and smoother.
+version: 1.0.0
 user-invokable: true
 argument-hint: [TARGET=<value>]
 ---
 
 Identify and fix performance issues to create faster, smoother user experiences.
+
+> **触发条件**: 用户调用 `/optimize` 或 `audit` 发现性能问题需要修复时触发。
+> **输入**: 性能瓶颈诊断结果 → **输出**: 性能指标达标的优化方案（LCP < 2.5s, FID < 100ms, CLS < 0.1）。
 
 ## Assess Performance Issues
 
@@ -263,3 +267,10 @@ Test that optimizations worked:
 - **User perception**: Does it *feel* faster?
 
 Remember: Performance is a feature. Fast experiences feel more responsive, more polished, more professional. Optimize systematically, measure ruthlessly, and prioritize user-perceived performance.
+
+## 退出条件
+
+- Lighthouse 评分在优化后有可量化提升（或确认已达标）
+- Core Web Vitals 指标在阈值内（LCP < 2.5s, FID < 100ms, CLS < 0.1）
+- 无功能回归（全量测试通过）
+- **与体系关系**: 与 `audit`（审计发现性能问题）和 `polish`（发布前最终打磨）协作。audit 发现 → optimize 修复 → polish 验收。

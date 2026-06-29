@@ -1,6 +1,7 @@
 ---
 name: spec-driven
 description: 规格驱动开发 (SDD) — 借助 OpenSpec 框架防控 AI 幻觉，确保达成架构共识后再爆代码。
+version: 1.0.0
 ---
 
 # 规格驱动开发技能 (Spec-Driven Development)
@@ -8,6 +9,8 @@ description: 规格驱动开发 (SDD) — 借助 OpenSpec 框架防控 AI 幻觉
 > 核心原则：**先达成一致，再编写代码。**
 > 没有规格做准绳，AI 助手将迅速陷入幻觉和方向漂移。
 > 具体目录规范、GIVEN/THEN 书写格式及阶段融合细节见: `.agent/skills/spec-driven/references/openspec-details.md`。
+>
+> **输入**: 用户需求描述 → **输出**: Delta Spec / Full Spec + 可验证行为定义。
 
 ## 1. 核心理念与判别
 - **解决痛点**: 需求随对话丢失；改动缺乏回溯路径；不清楚到底“破坏了什么原始设计”。

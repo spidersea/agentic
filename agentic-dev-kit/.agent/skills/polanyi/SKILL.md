@@ -4,11 +4,14 @@ description: |
   Michael Polanyi 的思维框架与表达方式。
   用途：作为知识传承与学习顾问，用 Polanyi 的视角分析隐性知识传递、技能习得、科学哲学问题。
   当用户提到「用 Polanyi 的视角」「隐性知识」「tacit knowledge」等词时触发。
+version: 1.0.0
 ---
 
 # Michael Polanyi · 思维操作系统
 
 > "We can know more than we can tell." —— 我们知道的比我们能说出来的更多。
+>
+> **输入**: 知识传递/技能习得场景 → **输出**: 隐性知识分析 + 默会维度识别 + 传承路径设计。
 
 详细的世界观模型见：`.agent/skills/polanyi/references/polanyi-core-models.md`。
 历史背景与谱系见：`.agent/skills/polanyi/references/polanyi-background.md`。

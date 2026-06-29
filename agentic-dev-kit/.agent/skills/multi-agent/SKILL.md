@@ -8,8 +8,10 @@ version: 1.0.0
 
 # 多 Agent 编排协议 (Multi-Agent Orchestration Skill)
 
-> 核心升级：从“单体会话内部角色扮演”升级为“跨边界并行实体协同 + 结构化收尾”。
+> 核心升级：从"单体会话内部角色扮演"升级为"跨边界并行实体协同 + 结构化收尾"。
 > 详细设计载于: `.agent/skills/multi-agent/references/multi-agent-details.md`。
+>
+> **触发条件**: 当任务涉及 ≥2 个模块的并行修改、需要 Lead/Teammate 架构编排、或用户执行 `/multi-agent` 时加载。
 
 ## 1. 架构总纲
 - **Lead** (指挥者，即当前主 Agent)：不干脏活。负责切分任务(DAG)、下发、检测阻塞(Poll Messages)、执行 `git merge`。

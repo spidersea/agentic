@@ -1,5 +1,7 @@
 ---
+name: ai-first
 description: AI 优先思维框架 — AI-First Mindset & Harness Engineering Skill
+version: 1.0.0
 ---
 
 # AI 优先思维框架
@@ -9,6 +11,9 @@ description: AI 优先思维框架 — AI-First Mindset & Harness Engineering Sk
 > 核心命题：**不要问"AI 能怎么帮我写代码"，要问"我如何构建系统，让 AI 能可靠地完成构建工作"。**
 >
 > 来源：CREAO 公司 CTO 实战手记——一个 25 人团队如何在 AI 优先的架构下达到每日 3–8 次生产环境部署。
+>
+> **触发条件**: 项目架构设计、流程优化或评估 AI 工具链时自动加载。
+> **输入**: 现有工程流程/架构 → **输出**: 按 AI 优先原则重构的流程与验证机制。
 
 ---
 
@@ -254,3 +259,11 @@ description: AI 优先思维框架 — AI-First Mindset & Harness Engineering Sk
 > "我们构建了一个智能体平台，而这个平台，正是我们用智能体建起来的。"
 >
 > — 以此作为终极验证标准：你的系统能否自己构建自己？
+
+---
+
+## 退出条件
+
+本 Skill 为思维框架类知识，当第六章自检清单全部通过时视为已内化：规划时间 ≤ 实现时间、验证覆盖到位、约束条件已书面化、角色为"系统设计者"而非"建造者"。
+
+> **与体系关系**: 为 `world_class_coding`（编码执行）和 `spec-driven`（规格驱动开发）提供上层思维框架；与 `domain-mastery`（领域精通）互补。

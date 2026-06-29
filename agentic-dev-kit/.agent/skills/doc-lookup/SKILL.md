@@ -8,6 +8,9 @@ version: 1.0.0
 
 > 灵感来源：[everything-claude-code](https://github.com/affaan-m/everything-claude-code) 的 `documentation-lookup` 和 `search-first` 技能。
 > 核心理念：Phase 1（Research）的增强——在编码前进行结构化的文档检索，确保使用正确的 API 和最佳实践。
+>
+> **输入**: API 名称/库名/错误信息 → **输出**: 经验证的用法、最佳实践和版本注意事项。
+> ❌ 禁止未经文档验证就使用不熟悉的 API；禁止依赖过期文档。
 
 ## 使用场景
 
